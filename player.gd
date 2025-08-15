@@ -8,6 +8,7 @@ var max_health = 100
 var damage = 10
 var attack_speed = 1.0
 var num_enemies_strike = 1.0
+var move_speed = 400
 
 # Functions
 func take_damage(amount):
@@ -38,14 +39,20 @@ func _ready():
 	$AttackTimer.wait_time = 1.0/attack_speed
 	
 func _process(delta):
-	if Input.is_action_pressed("increase_speed"):
-		increase_attack_speed(0.01)
+	var velocity = Vector2.ZERO # The mob's movement vector.
 	
+	velocity.x -= 1
+
+	velocity = velocity.normalized() * move_speed
 	$AnimatedSprite2D.play()
+	
+
+	
+	
 
 
 func _on_attack_timer_timeout() -> void:
-	emit_signal("is_attacking", num_enemies_strike)
+	emit_signal("is_attacking", damage, num_enemies_strike)
 
 
 func _on_area_entered(area: Area2D) -> void:

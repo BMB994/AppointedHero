@@ -16,7 +16,7 @@ animations = [{
 "texture": ExtResource("2_s5nov")
 }],
 "loop": true,
-"name": &"idle",
+"name": &"attack",
 "speed": 5.0
 }, {
 "frames": [{
@@ -32,18 +32,23 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ieysi"]
-size = Vector2(136, 139.5)
+size = Vector2(236, 139.5)
 
 [node name="mob" type="RigidBody2D"]
+gravity_scale = 0.0
 script = ExtResource("1_s5nov")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(317, 195)
+position = Vector2(831, 383.5)
 sprite_frames = SubResource("SpriteFrames_gfurk")
-animation = &"idle"
-frame = 1
-frame_progress = 0.739526
+animation = &"walk"
+frame_progress = 0.819023
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(316, 193.75)
+position = Vector2(780, 382.25)
 shape = SubResource("RectangleShape2D_ieysi")
+
+[node name="AttackTimer" type="Timer" parent="."]
+wait_time = 2.0
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
