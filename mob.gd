@@ -4,13 +4,14 @@ signal dead_mob
 signal is_attacking
 
 # Properties
-var health = 101
+var health = 100
 var max_health = 100
 var damage = 1
 var attack_speed = 1.0
 var soul_worth = 1.0
 var mob_speed = 400
 var is_attacking_player = false
+var waiting_in_line = false
 
 # Functions
 func take_damage(amount):
@@ -37,16 +38,24 @@ func _ready():
 
 func _physics_process(delta):
 	# Set velocity based on whether the mob is attacking
-	if not is_attacking_player:
+	if not is_attacking_player && not waiting_in_line:
 		velocity = Vector2(-mob_speed, 0)
+		
 	else:
+		
 		velocity = Vector2.ZERO
+		
+	if velocity != Vector2.ZERO:
+		$HealthBar.indeterminate = true
+	else:
+		$HealthBar.indeterminate = false
 	
 	# Move the mob and handle collisions
 	move_and_slide()
 
 func _process(delta):
-	$HealthBar.value = max_health
+	$HealthBar.value = health
+	
 	
 func attack():
 	# Change state to attacking
@@ -64,10 +73,14 @@ func _on_detection_area_body_entered(body):
 	# Assumes you have an Area2D named "detection_area"
 	if body.is_in_group("player"):
 		attack()
+		waiting_in_line = false
+	elif body.is_in_group("mob"):
+		waiting_in_line = true	
 
 func _on_detection_area_body_exited(body):
-	# Stop attacking and start walking again
-	if body.is_in_group("player"):
-		is_attacking_player = false
-		$AnimatedSprite2D.animation = "walk"
-		$AnimatedSprite2D.play()
+	## Stop attacking and start walking again
+	#if body.is_in_group("player"):
+		#is_attacking_player = false
+		#$AnimatedSprite2D.animation = "walk"
+		#$AnimatedSprite2D.play()
+	pass
