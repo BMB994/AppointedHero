@@ -4,7 +4,8 @@ signal dead_mob
 signal is_attacking
 
 # Properties
-var health = 100
+var health = 101
+var max_health = 100
 var damage = 1
 var attack_speed = 1.0
 var soul_worth = 1.0
@@ -14,6 +15,7 @@ var is_attacking_player = false
 # Functions
 func take_damage(amount):
 	health -= amount
+	$HealthBar.value
 	if health <= 0:
 		die()
 
@@ -30,6 +32,8 @@ func _ready():
 	$AttackTimer.wait_time = 1.0 / attack_speed
 	$AnimatedSprite2D.animation = "walk"
 	$AnimatedSprite2D.play()
+	$HealthBar.max_value = max_health
+	$HealthBar.value = max_health
 
 func _physics_process(delta):
 	# Set velocity based on whether the mob is attacking
@@ -41,6 +45,9 @@ func _physics_process(delta):
 	# Move the mob and handle collisions
 	move_and_slide()
 
+func _process(delta):
+	$HealthBar.value = max_health
+	
 func attack():
 	# Change state to attacking
 	if not is_attacking_player:

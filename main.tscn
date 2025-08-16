@@ -12,7 +12,12 @@ mob_scene = ExtResource("2_1bvp3")
 position = Vector2(350, 750)
 
 [node name="MobStartPosition" type="Marker2D" parent="."]
-position = Vector2(1000, 750)
+position = Vector2(1794, 714)
 
 [node name="Player" parent="." instance=ExtResource("2_h2yge")]
 position = Vector2(-3, 5)
+
+[node name="MobSpawnTimer" type="Timer" parent="."]
+wait_time = 2.0
+
+[connection signal="timeout" from="MobSpawnTimer" to="." method="_on_mob_spawn_timer_timeout"]
