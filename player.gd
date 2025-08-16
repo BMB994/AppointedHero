@@ -1,4 +1,4 @@
-extends Area2D
+extends CharacterBody2D
 signal dead
 signal is_attacking
 
@@ -47,7 +47,10 @@ func _process(delta):
 	$AnimatedSprite2D.play()
 	
 
-	
+func start(pos):
+	position = pos
+	show()
+	$Collision.disabled = false	
 	
 
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://ohwfgiojvi05"]
+[gd_scene load_steps=9 format=3 uid="uid://ohwfgiojvi05"]
 
 [ext_resource type="Texture2D" uid="uid://culg7uybpupo1" path="res://art/playerGrey_up1.png" id="1_p11y5"]
 [ext_resource type="Script" uid="uid://dlvu6xhqnpjkj" path="res://mob.gd" id="1_s5nov"]
@@ -32,23 +32,33 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ieysi"]
-size = Vector2(236, 139.5)
+size = Vector2(110, 139.5)
 
-[node name="mob" type="RigidBody2D"]
-gravity_scale = 0.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s5nov"]
+size = Vector2(162, 58.5)
+
+[node name="mob" type="CharacterBody2D"]
+collision_layer = 3
 script = ExtResource("1_s5nov")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(831, 383.5)
+position = Vector2(184, 68)
 sprite_frames = SubResource("SpriteFrames_gfurk")
 animation = &"walk"
-frame_progress = 0.819023
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(780, 382.25)
+position = Vector2(183, 70)
 shape = SubResource("RectangleShape2D_ieysi")
 
 [node name="AttackTimer" type="Timer" parent="."]
 wait_time = 2.0
 
-[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[node name="detection_area" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="detection_area"]
+position = Vector2(101, 71)
+shape = SubResource("RectangleShape2D_s5nov")
+
+[connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
+[connection signal="body_entered" from="detection_area" to="." method="_on_detection_area_body_entered"]
+[connection signal="body_exited" from="detection_area" to="." method="_on_detection_area_body_exited"]

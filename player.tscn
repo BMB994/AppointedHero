@@ -104,15 +104,16 @@ animations = [{
 "speed": 10.0
 }]
 
-[node name="Player" type="Area2D" groups=["player"]]
+[node name="Player" type="CharacterBody2D" groups=["player"]]
+collision_mask = 3
 script = ExtResource("1_i3pqv")
 
 [node name="Collision" type="CollisionShape2D" parent="."]
-position = Vector2(279.5, 127)
+position = Vector2(64.5, 51)
 shape = SubResource("RectangleShape2D_onrkg")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(240, 124)
+position = Vector2(25, 48)
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_sh265")
 animation = &"idle"
@@ -120,8 +121,4 @@ animation = &"idle"
 [node name="AttackTimer" type="Timer" parent="."]
 wait_time = 0.872
 
-[connection signal="area_entered" from="." to="." method="_on_area_entered"]
-[connection signal="area_exited" from="." to="." method="_on_area_exited"]
-[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
