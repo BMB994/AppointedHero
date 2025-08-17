@@ -21,7 +21,7 @@ func take_damage(amount):
 		die()
 
 func die():
-	emit_signal("dead_mob", soul_worth)
+	emit_signal("dead_mob", self)
 	queue_free()
 
 func start(pos):
@@ -81,6 +81,7 @@ func _on_detection_area_body_exited(body):
 	## Stop attacking and start walking again
 	#if body.is_in_group("player"):
 		#is_attacking_player = false
-		#$AnimatedSprite2D.animation = "walk"
+	$AnimatedSprite2D.animation = "walk"
+	waiting_in_line = false
+	is_attacking_player = false
 		#$AnimatedSprite2D.play()
-	pass

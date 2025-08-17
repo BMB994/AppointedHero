@@ -1,29 +1,38 @@
 extends Node
 @export var mob_scene: PackedScene
-var mob_count
-var max_mob_count
+var mob_count = 0
+var max_mob_count = 10
+var mob_array = []
 
 func _ready() -> void:
 	
 	$Player.start($PlayerPosition.position)
 	var mob = mob_scene.instantiate()
+	mob_array.append(mob)
 	mob.start($MobStartPosition.position)
 	$MobSpawnTimer.start()
-	
-	
 	add_child(mob)
+	mob.dead_mob.connect(_on_mob_dead)
 	mob_count = 1
 
 func _process(delta: float) -> void:
 	pass
 
-
+func _on_mob_dead(mob_instance):
+	# Remove the specific mob instance from the array
+	mob_array.erase(mob_instance)
+	print("A mob died. Mobs left: ", mob_array.size())	
+	
 func _on_mob_spawn_timer_timeout() -> void:
 	
-	if mob_count < 10:
+	if mob_array.size() < max_mob_count:
 		var mob = mob_scene.instantiate()
+		mob_array.append(mob)
 		mob.start($MobStartPosition.position)
-	
-	
 		add_child(mob)
-		mob_count = mob_count + 1 # Replace with function body.
+		mob.connect("dead_mob", _on_mob_dead)
+		
+
+
+func _on_player_is_attacking(damage: int, num_enemies_strike: int) -> void:
+	mob_array[0].take_damage(damage)
