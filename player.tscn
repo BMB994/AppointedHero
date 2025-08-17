@@ -130,6 +130,11 @@ wait_time = 0.872
 position = Vector2(70, 47)
 shape = SubResource("RectangleShape2D_i3pqv")
 
+[node name="ReturnToIdleTimer" type="Timer" parent="."]
+wait_time = 0.221
+one_shot = true
+
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
 [connection signal="area_shape_entered" from="Area2D" to="." method="_on_area_2d_area_shape_entered"]
 [connection signal="area_shape_exited" from="Area2D" to="." method="_on_area_2d_area_shape_exited"]
+[connection signal="timeout" from="ReturnToIdleTimer" to="." method="_on_return_to_idle_timer_timeout"]

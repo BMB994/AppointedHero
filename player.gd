@@ -39,11 +39,7 @@ func _ready():
 	$AttackTimer.wait_time = 1.0/attack_speed
 	
 func _process(delta):
-	var velocity = Vector2.ZERO # The mob's movement vector.
-	
-	velocity.x -= 1
 
-	velocity = velocity.normalized() * move_speed
 	$AnimatedSprite2D.play()
 	
 
@@ -61,9 +57,14 @@ func _on_attack_timer_timeout() -> void:
 func _on_area_2d_area_shape_entered(area_rid: RID, area: Area2D, area_shape_index: int, local_shape_index: int) -> void:
 	$AnimatedSprite2D.animation = "attack"
 	if $AttackTimer.is_stopped():
-		$AttackTimer.start() # Replace with function body.
+		emit_signal("is_attacking", damage, num_enemies_strike)
+		$AttackTimer.start()
+		$ReturnToIdleTimer.stop()
 
 
 func _on_area_2d_area_shape_exited(area_rid: RID, area: Area2D, area_shape_index: int, local_shape_index: int) -> void:
 	$AttackTimer.stop()
-	$AnimatedSprite2D.animation = "idle" # Replace with function body.
+	$ReturnToIdleTimer.start()
+
+func _on_return_to_idle_timer_timeout() -> void:
+	$AnimatedSprite2D.animation = "idle"

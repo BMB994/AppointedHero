@@ -9,7 +9,7 @@ var max_health = 100
 var damage = 1
 var attack_speed = 1.0
 var soul_worth = 1.0
-var mob_speed = 400
+var mob_speed = 800
 var is_attacking_player = false
 var waiting_in_line = false
 
@@ -42,9 +42,8 @@ func _physics_process(delta):
 		velocity = Vector2(-mob_speed, 0)
 		
 	else:
-		
 		velocity = Vector2.ZERO
-		
+	
 	if velocity != Vector2.ZERO:
 		$HealthBar.indeterminate = true
 	else:

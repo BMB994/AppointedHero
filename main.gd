@@ -4,6 +4,8 @@ var mob_count = 0
 var max_mob_count = 10
 var mob_array = []
 
+#TODO: Add function to spawn a mob and clean the code up
+
 func _ready() -> void:
 	
 	$Player.start($PlayerPosition.position)
@@ -16,7 +18,10 @@ func _ready() -> void:
 	mob_count = 1
 
 func _process(delta: float) -> void:
-	pass
+	if Input.is_action_just_released("attack"):
+		$Player.increase_damage(10)
+	if Input.is_action_just_released("increase_speed"):
+		$Player.increase_attack_speed(0.1)
 
 func _on_mob_dead(mob_instance):
 	# Remove the specific mob instance from the array
