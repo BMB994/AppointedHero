@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://buau0bvqp17jt"]
+[gd_scene load_steps=6 format=3 uid="uid://buau0bvqp17jt"]
 
 [ext_resource type="Script" uid="uid://bq15miu4feoty" path="res://main.gd" id="1_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://ohwfgiojvi05" path="res://mob.tscn" id="2_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://dnhu5xg6x3sso" path="res://player.tscn" id="2_h2yge"]
 [ext_resource type="PackedScene" uid="uid://cbbv4pmkp1hlu" path="res://hud.tscn" id="4_1bvp3"]
+[ext_resource type="PackedScene" uid="uid://bog801j3flm1v" path="res://on_death_control_node.tscn" id="5_lquwl"]
 
 [node name="main" type="Node"]
 script = ExtResource("1_0xm2m")
@@ -19,8 +20,17 @@ position = Vector2(1794, 714)
 position = Vector2(-3, 5)
 
 [node name="MobSpawnTimer" type="Timer" parent="."]
+wait_time = 0.2
 
 [node name="HUD" parent="." instance=ExtResource("4_1bvp3")]
 
+[node name="OnDeathControlNode" parent="." instance=ExtResource("5_lquwl")]
+
+[connection signal="dead" from="Player" to="." method="_on_player_dead"]
 [connection signal="is_attacking" from="Player" to="." method="_on_player_is_attacking"]
 [connection signal="timeout" from="MobSpawnTimer" to="." method="_on_mob_spawn_timer_timeout"]
+[connection signal="exit" from="OnDeathControlNode" to="." method="_on_on_death_control_node_exit"]
+[connection signal="new_game" from="OnDeathControlNode" to="." method="_on_on_death_control_node_new_game"]
+[connection signal="upgrade_attack_speed" from="OnDeathControlNode" to="." method="_on_on_death_control_node_upgrade_attack_speed"]
+[connection signal="upgrade_health_button" from="OnDeathControlNode" to="." method="_on_on_death_control_node_upgrade_health_button"]
+[connection signal="upgrade_health_button" from="OnDeathControlNode" to="Player" method="_on_on_death_control_node_upgrade_health_button"]

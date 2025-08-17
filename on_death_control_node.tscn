@@ -1,0 +1,52 @@
+[gd_scene load_steps=2 format=3 uid="uid://bog801j3flm1v"]
+
+[ext_resource type="Script" uid="uid://6fqpksqn43ue" path="res://on_death_control_node.gd" id="1_lg0e3"]
+
+[node name="OnDeathControlNode" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_lg0e3")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 0
+offset_right = 849.0
+offset_bottom = 565.0
+
+[node name="IncreaseHealthButton" type="Button" parent="Panel"]
+layout_mode = 2
+offset_left = 342.0
+offset_top = 253.0
+offset_right = 471.0
+offset_bottom = 284.0
+text = "Increase Health"
+
+[node name="NewGame" type="Button" parent="Panel"]
+layout_mode = 0
+offset_left = 662.0
+offset_top = 493.0
+offset_right = 782.0
+offset_bottom = 524.0
+text = "Start New Run"
+
+[node name="IncreaseAttackSpeed" type="Button" parent="Panel"]
+layout_mode = 0
+offset_left = 319.0
+offset_top = 287.0
+offset_right = 498.0
+offset_bottom = 318.0
+text = "Increase Attack Speed"
+
+[node name="Exit" type="Button" parent="Panel"]
+layout_mode = 0
+offset_left = 699.0
+offset_top = 526.0
+offset_right = 736.0
+offset_bottom = 557.0
+text = "Exit"
+
+[connection signal="pressed" from="Panel/IncreaseHealthButton" to="." method="_on_increase_health_button_pressed"]
+[connection signal="pressed" from="Panel/NewGame" to="." method="_on_new_game_pressed"]
+[connection signal="pressed" from="Panel/IncreaseAttackSpeed" to="." method="_on_increase_attack_speed_pressed"]
+[connection signal="pressed" from="Panel/Exit" to="." method="_on_exit_pressed"]

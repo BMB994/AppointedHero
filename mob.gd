@@ -5,11 +5,11 @@ signal is_attacking
 
 # Properties
 var health
-var max_health = 100
-var damage = 10
+var max_health = 1000
+var damage = 100
 var attack_speed = 1.0
 var soul_worth = 1.0
-var mob_speed = 800
+var mob_speed = 1500
 var is_attacking_player = false
 var waiting_in_line = false
 
@@ -58,8 +58,7 @@ func _physics_process(delta):
 
 func _process(delta):
 	$HealthBar.value = health
-	
-	
+		
 func attack():
 	# Change state to attacking
 	if not is_attacking_player:

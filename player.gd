@@ -18,13 +18,13 @@ func take_damage(amount):
 		dead.emit()
 
 func increase_max_health(amount):
-	max_health += amount
+	max_health =  max_health + max_health * amount
 	
 func increase_damage(amount):
 	damage += amount
 	
 func increase_attack_speed(amount):
-	attack_speed += amount
+	attack_speed = attack_speed * amount
 	$AnimatedSprite2D.speed_scale = attack_speed
 	$AttackTimer.wait_time = 1.0/attack_speed
 	
@@ -45,17 +45,13 @@ func _process(delta):
 
 	$AnimatedSprite2D.play()
 	
-
 func start(pos):
 	position = pos
 	show()
 	$Collision.disabled = false	
 	
-
-
 func _on_attack_timer_timeout() -> void:
 	emit_signal("is_attacking", damage, num_enemies_strike)
-
 
 func _on_area_2d_area_shape_entered(area_rid: RID, area: Area2D, area_shape_index: int, local_shape_index: int) -> void:
 	$AnimatedSprite2D.animation = "attack"
@@ -64,10 +60,16 @@ func _on_area_2d_area_shape_entered(area_rid: RID, area: Area2D, area_shape_inde
 		$AttackTimer.start()
 		$ReturnToIdleTimer.stop()
 
-
 func _on_area_2d_area_shape_exited(area_rid: RID, area: Area2D, area_shape_index: int, local_shape_index: int) -> void:
 	$AttackTimer.stop()
 	$ReturnToIdleTimer.start()
 
 func _on_return_to_idle_timer_timeout() -> void:
 	$AnimatedSprite2D.animation = "idle"
+
+func _reset_player():
+	$AnimatedSprite2D.speed_scale = attack_speed
+	$AttackTimer.wait_time = 1.0/attack_speed
+	$HealthBar.max_value = max_health
+	$HealthBar.value = max_health
+	health = max_health

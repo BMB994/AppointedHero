@@ -9,6 +9,7 @@ var level = 1
 var level_count = 10
 
 func _ready() -> void:
+	$OnDeathControlNode.hide()
 	
 	# Start Player and spawn first mob
 	$Player.start($PlayerPosition.position)
@@ -26,7 +27,6 @@ func _process(delta: float) -> void:
 	if Input.is_action_just_released("increase_speed"):
 		$Player.increase_attack_speed(0.1)
 		
-
 func _on_mob_dead(mob_instance):
 
 	dead_mobs = dead_mobs + 1
@@ -38,13 +38,11 @@ func _on_mob_dead(mob_instance):
 		for i in range (mob_array.size()):
 			mob_array[i]._mob_difficult_scale(level)
 	_update_HUD()
-
 	
 func _on_mob_spawn_timer_timeout() -> void:
 	
 	if mob_array.size() < max_mob_count:
 		_spawn_mob()	
-
 
 func _on_player_is_attacking(damage: int, num_enemies_strike: int) -> void:
 	mob_array[0].take_damage(damage)
@@ -67,3 +65,37 @@ func _spawn_mob():
 		mob.connect("dead_mob", _on_mob_dead)
 		mob.connect("is_attacking", _on_mob_is_attacking)
 	
+func _on_player_dead() -> void:
+	_pause_game()
+	if(mob_array.size() > 0):
+		for mob in mob_array:
+			if is_instance_valid(mob):
+				mob.queue_free()
+	
+	mob_array.clear()
+	$OnDeathControlNode.show()
+
+func _on_on_death_control_node_upgrade_health_button() -> void:
+	$Player.increase_max_health(1)
+
+func _on_on_death_control_node_new_game() -> void:
+	_resume_game()
+	$Player._reset_player()
+	$OnDeathControlNode.hide()
+
+func _pause_game():
+	$MobSpawnTimer.stop()
+	$Player.hide()
+	
+func _resume_game():
+	dead_mobs = 0
+	level = 1
+	
+	$MobSpawnTimer.start()
+	$Player.show()
+
+func _on_on_death_control_node_upgrade_attack_speed() -> void:
+	$Player.increase_attack_speed(2)
+
+func _on_on_death_control_node_exit() -> void:
+	get_tree().quit()
