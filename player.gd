@@ -13,6 +13,7 @@ var move_speed = 400
 # Functions
 func take_damage(amount):
 	health -= amount
+	$HealthBar.value = health
 	if health <= 0:
 		dead.emit()
 
@@ -37,6 +38,8 @@ func die():
 func _ready():
 	$AnimatedSprite2D.speed_scale = attack_speed
 	$AttackTimer.wait_time = 1.0/attack_speed
+	$HealthBar.max_value = max_health
+	$HealthBar.value = max_health
 	
 func _process(delta):
 
