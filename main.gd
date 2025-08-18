@@ -9,7 +9,7 @@ var level = 1
 var level_count = 10
 
 func _ready() -> void:
-	$OnDeathControlNode.hide()
+	$DeathControlNode.hide()
 	
 	# Start Player and spawn first mob
 	$Player.start($PlayerPosition.position)
@@ -73,15 +73,15 @@ func _on_player_dead() -> void:
 				mob.queue_free()
 	
 	mob_array.clear()
-	$OnDeathControlNode.show()
+	$DeathControlNode.show()
 
-func _on_on_death_control_node_upgrade_health_button() -> void:
+func _on_death_control_node_upgrade_health_button() -> void:
 	$Player.increase_max_health(1)
 
-func _on_on_death_control_node_new_game() -> void:
+func _on_death_control_node_new_game() -> void:
 	_resume_game()
 	$Player._reset_player()
-	$OnDeathControlNode.hide()
+	$DeathControlNode.hide()
 
 func _pause_game():
 	$MobSpawnTimer.stop()
@@ -90,12 +90,15 @@ func _pause_game():
 func _resume_game():
 	dead_mobs = 0
 	level = 1
-	
+	_update_HUD()
 	$MobSpawnTimer.start()
 	$Player.show()
 
-func _on_on_death_control_node_upgrade_attack_speed() -> void:
+func _on_death_control_node_upgrade_attack_speed() -> void:
 	$Player.increase_attack_speed(2)
 
-func _on_on_death_control_node_exit() -> void:
+func _on_death_control_node_exit() -> void:
 	get_tree().quit()
+
+func _on_death_control_node_upgrade_damage_button() -> void:
+	$Player.increase_damage(100)

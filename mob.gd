@@ -6,7 +6,7 @@ signal is_attacking
 # Properties
 var health
 var max_health = 1000
-var damage = 100
+var damage = 10
 var attack_speed = 1.0
 var soul_worth = 1.0
 var mob_speed = 1500
@@ -16,6 +16,7 @@ var waiting_in_line = false
 func _mob_difficult_scale(level):
 	soul_worth = soul_worth * level
 	max_health = max_health * level * 0.7
+	damage = damage * level #* 0.15
 	
 func take_damage(amount):
 	health -= amount

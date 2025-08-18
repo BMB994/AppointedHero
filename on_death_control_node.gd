@@ -1,7 +1,8 @@
 extends Control
 signal upgrade_health_button
-signal new_game
+signal upgrade_damage_button
 signal upgrade_attack_speed
+signal new_game
 signal exit
 
 func _ready() -> void:
@@ -22,3 +23,7 @@ func _on_increase_attack_speed_pressed() -> void:
 
 func _on_exit_pressed() -> void:
 	exit.emit()
+
+
+func _on_increase_damage_pressed() -> void:
+	upgrade_damage_button.emit()
