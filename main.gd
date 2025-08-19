@@ -132,7 +132,6 @@ func _on_arrow_spawn_timer_timeout() -> void:
 		arrow_instance.start($ArrowPosition.position)
 		arrow_instance.set_target(random_mob.global_position)
 
-
 func _on_death_control_node_arrows() -> void:
 	$ArrowSpawnTimer.start()
 	arrows_unlocked = true
