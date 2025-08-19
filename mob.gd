@@ -4,9 +4,9 @@ signal dead_mob
 signal is_attacking
 
 # Properties
-var health
+var health = 100
 var max_health = 1000
-var damage = 10
+var damage = 100
 var attack_speed = 1.0
 var soul_worth = 1.0
 var mob_speed = 1500

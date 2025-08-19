@@ -1,15 +1,17 @@
-[gd_scene load_steps=7 format=3 uid="uid://buau0bvqp17jt"]
+[gd_scene load_steps=8 format=3 uid="uid://buau0bvqp17jt"]
 
 [ext_resource type="Script" uid="uid://bq15miu4feoty" path="res://main.gd" id="1_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://ohwfgiojvi05" path="res://mob.tscn" id="2_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://dnhu5xg6x3sso" path="res://player.tscn" id="2_h2yge"]
 [ext_resource type="Texture2D" uid="uid://bliodpk4x53ca" path="res://art/athens.png" id="3_7mycd"]
+[ext_resource type="PackedScene" uid="uid://1ox8vl7a2jlc" path="res://arrow.tscn" id="3_272bh"]
 [ext_resource type="PackedScene" uid="uid://cbbv4pmkp1hlu" path="res://hud.tscn" id="4_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://bog801j3flm1v" path="res://on_death_control_node.tscn" id="5_lquwl"]
 
 [node name="main" type="Node"]
 script = ExtResource("1_0xm2m")
 mob_scene = ExtResource("2_1bvp3")
+arrow_scene = ExtResource("3_272bh")
 
 [node name="Athens" type="TextureRect" parent="."]
 offset_right = 3850.0
@@ -24,11 +26,16 @@ position = Vector2(243, 631)
 [node name="MobStartPosition" type="Marker2D" parent="."]
 position = Vector2(1822, 617)
 
+[node name="ArrowPosition" type="Marker2D" parent="."]
+position = Vector2(143, 10)
+
 [node name="Player" parent="." instance=ExtResource("2_h2yge")]
 position = Vector2(-3, 5)
 
 [node name="MobSpawnTimer" type="Timer" parent="."]
-wait_time = 0.2
+wait_time = 0.05
+
+[node name="ArrowSpawnTimer" type="Timer" parent="."]
 
 [node name="HUD" parent="." instance=ExtResource("4_1bvp3")]
 
@@ -37,6 +44,8 @@ wait_time = 0.2
 [connection signal="dead" from="Player" to="." method="_on_player_dead"]
 [connection signal="is_attacking" from="Player" to="." method="_on_player_is_attacking"]
 [connection signal="timeout" from="MobSpawnTimer" to="." method="_on_mob_spawn_timer_timeout"]
+[connection signal="timeout" from="ArrowSpawnTimer" to="." method="_on_arrow_spawn_timer_timeout"]
+[connection signal="arrows" from="DeathControlNode" to="." method="_on_death_control_node_arrows"]
 [connection signal="exit" from="DeathControlNode" to="." method="_on_death_control_node_exit"]
 [connection signal="new_game" from="DeathControlNode" to="." method="_on_death_control_node_new_game"]
 [connection signal="upgrade_attack_speed" from="DeathControlNode" to="." method="_on_death_control_node_upgrade_attack_speed"]

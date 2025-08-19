@@ -2,6 +2,7 @@ extends Control
 signal upgrade_health_button
 signal upgrade_damage_button
 signal upgrade_attack_speed
+signal arrows
 signal new_game
 signal exit
 
@@ -27,3 +28,7 @@ func _on_exit_pressed() -> void:
 
 func _on_increase_damage_pressed() -> void:
 	upgrade_damage_button.emit()
+
+
+func _on_unlock_arrows_pressed() -> void:
+	arrows.emit()

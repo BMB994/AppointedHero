@@ -64,12 +64,20 @@ text = "Increase Attack Speed"
 
 [node name="IncreaseDamage" type="Button" parent="Panel"]
 layout_mode = 0
-offset_left = 836.0
-offset_top = 552.0
-offset_right = 978.0
-offset_bottom = 583.0
+offset_left = 832.0
+offset_top = 550.0
+offset_right = 974.0
+offset_bottom = 581.0
 theme_override_styles/normal = SubResource("StyleBoxTexture_ubkj5")
 text = "Increase Damage"
+
+[node name="UnlockArrows" type="Button" parent="Panel"]
+offset_left = 840.0
+offset_top = 600.0
+offset_right = 969.0
+offset_bottom = 631.0
+theme_override_styles/normal = SubResource("StyleBoxTexture_h4f0u")
+text = "Unlock Arrows"
 
 [node name="NewGame" type="Button" parent="Panel"]
 layout_mode = 0
@@ -92,5 +100,6 @@ text = "Exit"
 [connection signal="pressed" from="Panel/IncreaseHealthButton" to="." method="_on_increase_health_button_pressed"]
 [connection signal="pressed" from="Panel/IncreaseAttackSpeed" to="." method="_on_increase_attack_speed_pressed"]
 [connection signal="pressed" from="Panel/IncreaseDamage" to="." method="_on_increase_damage_pressed"]
+[connection signal="pressed" from="Panel/UnlockArrows" to="." method="_on_unlock_arrows_pressed"]
 [connection signal="pressed" from="Panel/NewGame" to="." method="_on_new_game_pressed"]
 [connection signal="pressed" from="Panel/Exit" to="." method="_on_exit_pressed"]
