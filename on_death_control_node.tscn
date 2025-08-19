@@ -72,12 +72,29 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_ubkj5")
 text = "Increase Damage"
 
 [node name="UnlockArrows" type="Button" parent="Panel"]
-offset_left = 840.0
-offset_top = 600.0
-offset_right = 969.0
-offset_bottom = 631.0
+layout_mode = 0
+offset_left = 553.0
+offset_top = 441.0
+offset_right = 682.0
+offset_bottom = 472.0
 theme_override_styles/normal = SubResource("StyleBoxTexture_h4f0u")
 text = "Unlock Arrows"
+
+[node name="UpgradeArrows" type="Button" parent="Panel"]
+offset_left = 553.0
+offset_top = 497.0
+offset_right = 682.0
+offset_bottom = 528.0
+theme_override_styles/normal = SubResource("StyleBoxTexture_h4f0u")
+text = "Upgrade Arrows"
+
+[node name="IncreaseArrowSpeed" type="Button" parent="Panel"]
+offset_left = 533.0
+offset_top = 547.0
+offset_right = 702.0
+offset_bottom = 578.0
+theme_override_styles/normal = SubResource("StyleBoxTexture_h4f0u")
+text = "Increase Arrow Speed"
 
 [node name="NewGame" type="Button" parent="Panel"]
 layout_mode = 0
@@ -101,5 +118,7 @@ text = "Exit"
 [connection signal="pressed" from="Panel/IncreaseAttackSpeed" to="." method="_on_increase_attack_speed_pressed"]
 [connection signal="pressed" from="Panel/IncreaseDamage" to="." method="_on_increase_damage_pressed"]
 [connection signal="pressed" from="Panel/UnlockArrows" to="." method="_on_unlock_arrows_pressed"]
+[connection signal="pressed" from="Panel/UpgradeArrows" to="." method="_on_upgrade_arrows_pressed"]
+[connection signal="pressed" from="Panel/IncreaseArrowSpeed" to="." method="_on_increase_arrow_speed_pressed"]
 [connection signal="pressed" from="Panel/NewGame" to="." method="_on_new_game_pressed"]
 [connection signal="pressed" from="Panel/Exit" to="." method="_on_exit_pressed"]

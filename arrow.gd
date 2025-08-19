@@ -8,12 +8,25 @@ func set_target(target: Vector2):
 	target_position = target
 	look_at(target)
 
-func start(pos):
+func start(pos, lvl):
 	position = pos
+	
+	if(lvl == 1):
+		$AnimatedSprite2D.animation = "upgrade_one"
+		damage = 150
+	elif(lvl == 2):
+		$AnimatedSprite2D.animation = "upgrade_two"
+		damage = 300
+	elif(lvl == 3):
+		$AnimatedSprite2D.animation = "upgrade_three"
+		damage = 1000
+	else:
+		$AnimatedSprite2D.animation = "norm"
 	show()
 
 func _ready() -> void:
 	$AnimatedSprite2D.animation = "norm"
+	$AnimatedSprite2D.play()
 	
 func _increase_arrow_damage(amount):
 	damage = damage*amount
@@ -24,8 +37,8 @@ func _process(delta):
 	global_position += direction * speed * delta
 
 	# If the arrow is close enough to the target, delete it
-	#if global_position.distance_to(target_position) < 20:
-		#queue_free()
+	if global_position.distance_to(target_position) < 5:
+		queue_free()
 
 func _on_body_entered(body: Node2D) -> void:
 	# This assumes your mobs have a "take_damage" function

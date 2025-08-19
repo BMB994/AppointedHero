@@ -11,6 +11,7 @@ var soul_bank = 0
 var level = 1
 var level_count = 10
 var arrows_unlocked = false
+var arrow_level = 0
 
 func _ready() -> void:
 	$DeathControlNode.hide()
@@ -129,9 +130,17 @@ func _on_arrow_spawn_timer_timeout() -> void:
 		arrow_array.append(arrow_instance)
 
 		# Set the starting position and target for the arrow
-		arrow_instance.start($ArrowPosition.position)
+		arrow_instance.start($ArrowPosition.position, arrow_level)
 		arrow_instance.set_target(random_mob.global_position)
 
 func _on_death_control_node_arrows() -> void:
 	$ArrowSpawnTimer.start()
 	arrows_unlocked = true
+
+func _on_death_control_node_arrow_level() -> void:
+	if(arrow_level < 3):
+		arrow_level = arrow_level + 1
+
+
+func _on_death_control_node_arrow_speed() -> void:
+	$ArrowSpawnTimer.wait_time = $ArrowSpawnTimer.wait_time/2

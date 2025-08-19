@@ -36,7 +36,6 @@ position = Vector2(-3, 5)
 wait_time = 0.05
 
 [node name="ArrowSpawnTimer" type="Timer" parent="."]
-wait_time = 0.75
 
 [node name="HUD" parent="." instance=ExtResource("4_1bvp3")]
 
@@ -46,6 +45,8 @@ wait_time = 0.75
 [connection signal="is_attacking" from="Player" to="." method="_on_player_is_attacking"]
 [connection signal="timeout" from="MobSpawnTimer" to="." method="_on_mob_spawn_timer_timeout"]
 [connection signal="timeout" from="ArrowSpawnTimer" to="." method="_on_arrow_spawn_timer_timeout"]
+[connection signal="arrow_level" from="DeathControlNode" to="." method="_on_death_control_node_arrow_level"]
+[connection signal="arrow_speed" from="DeathControlNode" to="." method="_on_death_control_node_arrow_speed"]
 [connection signal="arrows" from="DeathControlNode" to="." method="_on_death_control_node_arrows"]
 [connection signal="exit" from="DeathControlNode" to="." method="_on_death_control_node_exit"]
 [connection signal="new_game" from="DeathControlNode" to="." method="_on_death_control_node_new_game"]

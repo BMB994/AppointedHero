@@ -1,11 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://1ox8vl7a2jlc"]
+[gd_scene load_steps=17 format=3 uid="uid://1ox8vl7a2jlc"]
 
 [ext_resource type="Script" uid="uid://wbf7mtmsm2u3" path="res://arrow.gd" id="1_2ndhl"]
 [ext_resource type="Texture2D" uid="uid://dpf7jb2p6p2yu" path="res://art/Arrows_pack.png" id="1_l5ahi"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2ndhl"]
 radius = 1.0
-height = 42.0
+height = 72.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_acd0x"]
 atlas = ExtResource("1_l5ahi")
@@ -18,6 +18,42 @@ region = Rect2(1024, 0, 1024, 1024)
 [sub_resource type="AtlasTexture" id="AtlasTexture_i4m3f"]
 atlas = ExtResource("1_l5ahi")
 region = Rect2(2048, 0, 1024, 1024)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2ndhl"]
+atlas = ExtResource("1_l5ahi")
+region = Rect2(0, 1024, 1024, 1024)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fo0gb"]
+atlas = ExtResource("1_l5ahi")
+region = Rect2(1024, 1024, 1024, 1024)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_24k4p"]
+atlas = ExtResource("1_l5ahi")
+region = Rect2(2048, 1024, 1024, 1024)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_khv6i"]
+atlas = ExtResource("1_l5ahi")
+region = Rect2(0, 3072, 1024, 1024)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vbexn"]
+atlas = ExtResource("1_l5ahi")
+region = Rect2(1024, 3072, 1024, 1024)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lxpbi"]
+atlas = ExtResource("1_l5ahi")
+region = Rect2(2048, 3072, 1024, 1024)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2r8xx"]
+atlas = ExtResource("1_l5ahi")
+region = Rect2(0, 2048, 1024, 1024)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lb27g"]
+atlas = ExtResource("1_l5ahi")
+region = Rect2(1024, 2048, 1024, 1024)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uq2iu"]
+atlas = ExtResource("1_l5ahi")
+region = Rect2(2048, 2048, 1024, 1024)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_fo0gb"]
 animations = [{
@@ -34,6 +70,48 @@ animations = [{
 "loop": true,
 "name": &"norm",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2ndhl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fo0gb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_24k4p")
+}],
+"loop": true,
+"name": &"upgrade_one",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_khv6i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vbexn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lxpbi")
+}],
+"loop": true,
+"name": &"upgrade_three",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2r8xx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lb27g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uq2iu")
+}],
+"loop": true,
+"name": &"upgrade_two",
+"speed": 5.0
 }]
 
 [node name="Arrow" type="Area2D" groups=["Arrow"]]
@@ -44,9 +122,11 @@ rotation = 1.5708
 shape = SubResource("CapsuleShape2D_2ndhl")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -9.53674e-07)
 scale = Vector2(0.0949219, 0.0607422)
 sprite_frames = SubResource("SpriteFrames_fo0gb")
-animation = &"norm"
-frame_progress = 0.25765
+animation = &"upgrade_three"
+frame = 1
+frame_progress = 0.198508
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
