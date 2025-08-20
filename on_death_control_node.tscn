@@ -89,12 +89,20 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_h4f0u")
 text = "Upgrade Arrows"
 
 [node name="IncreaseArrowSpeed" type="Button" parent="Panel"]
-offset_left = 533.0
+offset_left = 514.0
 offset_top = 547.0
 offset_right = 702.0
-offset_bottom = 578.0
+offset_bottom = 580.0
 theme_override_styles/normal = SubResource("StyleBoxTexture_h4f0u")
 text = "Increase Arrow Speed"
+
+[node name="UnlockLightning" type="Button" parent="Panel" groups=["lightning"]]
+offset_left = 1099.0
+offset_top = 443.0
+offset_right = 1241.0
+offset_bottom = 477.0
+theme_override_styles/normal = SubResource("StyleBoxTexture_h4f0u")
+text = "Unlock Lightning"
 
 [node name="NewGame" type="Button" parent="Panel"]
 layout_mode = 0
@@ -120,5 +128,6 @@ text = "Exit"
 [connection signal="pressed" from="Panel/UnlockArrows" to="." method="_on_unlock_arrows_pressed"]
 [connection signal="pressed" from="Panel/UpgradeArrows" to="." method="_on_upgrade_arrows_pressed"]
 [connection signal="pressed" from="Panel/IncreaseArrowSpeed" to="." method="_on_increase_arrow_speed_pressed"]
+[connection signal="pressed" from="Panel/UnlockLightning" to="." method="_on_unlock_lightning_pressed"]
 [connection signal="pressed" from="Panel/NewGame" to="." method="_on_new_game_pressed"]
 [connection signal="pressed" from="Panel/Exit" to="." method="_on_exit_pressed"]

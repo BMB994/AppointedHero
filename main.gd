@@ -2,15 +2,17 @@ extends Node
 
 @export var mob_scene: PackedScene
 @export var arrow_scene: PackedScene
+@export var lightning_scene: PackedScene
 
 var max_mob_count = 10
 var mob_array = []
-var arrow_array = []
+
 var dead_mobs = 0
 var soul_bank = 0
 var level = 1
 var level_count = 10
 var arrows_unlocked = false
+var lightning_unlocked = false
 var arrow_level = 0
 
 func _ready() -> void:
@@ -127,7 +129,6 @@ func _on_arrow_spawn_timer_timeout() -> void:
 		# Create a new arrow instance
 		var arrow_instance = arrow_scene.instantiate()
 		add_child(arrow_instance)
-		arrow_array.append(arrow_instance)
 
 		# Set the starting position and target for the arrow
 		arrow_instance.start($ArrowPosition.position, arrow_level)
@@ -136,11 +137,24 @@ func _on_arrow_spawn_timer_timeout() -> void:
 func _on_death_control_node_arrows() -> void:
 	$ArrowSpawnTimer.start()
 	arrows_unlocked = true
-
+	
 func _on_death_control_node_arrow_level() -> void:
 	if(arrow_level < 3):
 		arrow_level = arrow_level + 1
 
-
 func _on_death_control_node_arrow_speed() -> void:
 	$ArrowSpawnTimer.wait_time = $ArrowSpawnTimer.wait_time/2
+
+func _on_death_control_node_lightning() -> void:
+	$LightningSpawnTimer.start()
+	lightning_unlocked = true
+
+func _on_lightning_spawn_timer_timeout() -> void:
+	if mob_array.size() > 0:
+		# Create a new lightning instance
+		var lightning_instance = lightning_scene.instantiate()
+		add_child(lightning_instance)
+		var offset = Vector2((randi() % 100)*10, 0)
+		# Set the starting position and target for the arrow
+		lightning_instance.start($LightningPosition.position + offset, 1)
+		lightning_instance.set_target($LightningPosition.position + Vector2(offset.x,800))
