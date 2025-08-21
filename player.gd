@@ -5,7 +5,7 @@ signal is_attacking
 # Stats
 var health = 100
 var max_health = 100
-var damage = 75
+var damage = 25
 var attack_speed = 1.0
 var num_enemies_strike = 1.0
 var move_speed = 400

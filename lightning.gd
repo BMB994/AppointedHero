@@ -11,16 +11,16 @@ func set_target(target: Vector2):
 func start(pos, lvl):
 	position = pos
 	
-	if(lvl == 1):
+	if(lvl == 0):
 		$AnimatedSprite2D.animation = "lightning_one"
 		damage = 150
-	elif(lvl == 2):
+	elif(lvl == 1):
 		$AnimatedSprite2D.animation = "lightning_two"
 		damage = 300
-	elif(lvl == 3):
+	elif(lvl == 2):
 		$AnimatedSprite2D.animation = "lightning_three"
 		damage = 1000
-	elif(lvl == 4):
+	elif(lvl == 3):
 		$AnimatedSprite2D.animation = "lightning_four"
 		damage = 1000
 	else:

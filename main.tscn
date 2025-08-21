@@ -26,16 +26,19 @@ texture = ExtResource("3_7mycd")
 flip_h = true
 
 [node name="PlayerPosition" type="Marker2D" parent="."]
-position = Vector2(234, 652)
+position = Vector2(1235, 702)
 
 [node name="MobStartPosition" type="Marker2D" parent="."]
-position = Vector2(1824, 638)
+position = Vector2(1831, 701)
 
 [node name="ArrowPosition" type="Marker2D" parent="."]
-position = Vector2(28, -125)
+position = Vector2(1056, -26)
 
 [node name="LightningPosition" type="Marker2D" parent="."]
-position = Vector2(860, 26)
+position = Vector2(1188, 31)
+
+[node name="CameraStartPosition" type="Marker2D" parent="."]
+position = Vector2(1423, 710)
 
 [node name="Player" parent="." instance=ExtResource("2_h2yge")]
 position = Vector2(-3, 5)
@@ -50,9 +53,10 @@ wait_time = 0.05
 [node name="HUD" parent="." instance=ExtResource("4_1bvp3")]
 
 [node name="DeathControlNode" parent="." instance=ExtResource("5_lquwl")]
+visible = false
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(959, 541)
+position = Vector2(959, 539)
 script = ExtResource("8_5vw27")
 
 [connection signal="dead" from="Player" to="." method="_on_player_dead"]
@@ -65,6 +69,7 @@ script = ExtResource("8_5vw27")
 [connection signal="arrows" from="DeathControlNode" to="." method="_on_death_control_node_arrows"]
 [connection signal="exit" from="DeathControlNode" to="." method="_on_death_control_node_exit"]
 [connection signal="lightning" from="DeathControlNode" to="." method="_on_death_control_node_lightning"]
+[connection signal="lightning_upgrade" from="DeathControlNode" to="." method="_on_death_control_node_lightning_upgrade"]
 [connection signal="new_game" from="DeathControlNode" to="." method="_on_death_control_node_new_game"]
 [connection signal="upgrade_attack_speed" from="DeathControlNode" to="." method="_on_death_control_node_upgrade_attack_speed"]
 [connection signal="upgrade_damage_button" from="DeathControlNode" to="." method="_on_death_control_node_upgrade_damage_button"]

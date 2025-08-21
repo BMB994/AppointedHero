@@ -5,7 +5,7 @@
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2ndhl"]
 radius = 1.0
-height = 72.0
+height = 76.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_acd0x"]
 atlas = ExtResource("1_l5ahi")
@@ -122,8 +122,8 @@ rotation = 1.5708
 shape = SubResource("CapsuleShape2D_2ndhl")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, -9.53674e-07)
-scale = Vector2(0.0949219, 0.0607422)
+position = Vector2(0.400001, -2.38419e-07)
+scale = Vector2(0.0515625, 0.027125)
 sprite_frames = SubResource("SpriteFrames_fo0gb")
 animation = &"upgrade_two"
 

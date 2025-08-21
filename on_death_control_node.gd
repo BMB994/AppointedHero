@@ -6,6 +6,7 @@ signal arrows
 signal arrow_level
 signal arrow_speed
 signal lightning
+signal lightning_upgrade
 signal new_game
 signal exit
 
@@ -47,3 +48,7 @@ func _on_increase_arrow_speed_pressed() -> void:
 
 func _on_unlock_lightning_pressed() -> void:
 	lightning.emit()
+
+
+func _on_upgrade_lightning_pressed() -> void:
+	lightning_upgrade.emit()

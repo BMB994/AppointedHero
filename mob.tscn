@@ -32,7 +32,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ieysi"]
-size = Vector2(137, 139.5)
+size = Vector2(136, 168.25)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s5nov"]
 bg_color = Color(0.834798, 0, 0.06098, 1)
@@ -42,6 +42,7 @@ anti_aliasing = false
 size = Vector2(13, 135)
 
 [node name="mob" type="CharacterBody2D" groups=["mob"]]
+scale = Vector2(0.2, 0.2)
 collision_mask = 7
 script = ExtResource("1_s5nov")
 
@@ -51,7 +52,8 @@ sprite_frames = SubResource("SpriteFrames_gfurk")
 animation = &"walk"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["mob"]]
-position = Vector2(67.5, 68.5)
+position = Vector2(68, 54.125)
+scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_ieysi")
 
 [node name="AttackTimer" type="Timer" parent="."]

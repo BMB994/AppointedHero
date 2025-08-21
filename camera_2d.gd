@@ -7,11 +7,23 @@ var target_zoom: Vector2 = Vector2(1, 1)
 var target_position: Vector2 = Vector2.ZERO
 
 func _ready():
-	var viewport_size = get_viewport_rect().size
-	var center_position = viewport_size / 2
-	target_position = center_position
+	#var viewport_size = get_viewport_rect().size
+	#var center_position = viewport_size / 2
+	#target_position = center_position
+	pass
 	
 # This function updates the camera's state every frame
 func _process(delta: float) -> void:
-	position = position.lerp(target_position, delta * scroll_speed)
-	zoom = zoom.lerp(target_zoom, delta * 5)
+	#position = position.lerp(target_position, delta * scroll_speed)
+	#zoom = zoom.lerp(target_zoom, delta * 5)
+	pass
+
+func set_middle():
+	position = get_viewport_rect().size/2
+	var tween = create_tween()
+	tween.tween_property(self, "zoom", Vector2(1, 1), 0)
+
+func set_main_screen(pos, zoom_level):
+	position = pos
+	var tween = create_tween()
+	tween.tween_property(self, "zoom", Vector2(zoom_level, zoom_level), 0)

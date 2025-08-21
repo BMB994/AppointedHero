@@ -6,7 +6,7 @@ signal is_attacking
 # Properties
 var health = 100
 var max_health = 100
-var damage = 100
+var damage = 10
 var attack_speed = 1.0
 var soul_worth = 1.0
 var mob_speed = 1500
