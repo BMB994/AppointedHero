@@ -42,7 +42,6 @@ anti_aliasing = false
 size = Vector2(13, 135)
 
 [node name="mob" type="CharacterBody2D" groups=["mob"]]
-scale = Vector2(0.2, 0.2)
 collision_mask = 7
 script = ExtResource("1_s5nov")
 
