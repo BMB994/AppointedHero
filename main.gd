@@ -64,9 +64,13 @@ func _on_mob_spawn_timer_timeout() -> void:
 		_spawn_mob()	
 
 func _on_player_is_attacking(damage: int, num_enemies_strike: int) -> void:
-	if(mob_array[0] != null):
-		mob_array[0].take_damage(damage)
-	
+		var mobbies = get_tree().get_nodes_in_group("mob")
+		var counter = 0
+		for mob in mobbies:
+			counter =  + 1
+			mob.take_damage(damage)
+			if(counter == num_enemies_strike):
+				break;
 func _on_mob_is_attacking(damage: int) -> void:
 	$Player.take_damage(damage)
 
@@ -87,7 +91,21 @@ func _spawn_mob():
 	
 func _on_player_dead() -> void:
 	_pause_game()
-	# Clear mobs
+
+func _on_death_control_node_upgrade_health_button() -> void:
+	$Player.increase_max_health(1)
+
+func _on_death_control_node_new_game() -> void:
+	_resume_game()
+	$Player._reset_player()
+	$DeathControlNode.hide()
+
+func _pause_game():
+	get_tree().paused = true
+	await get_tree().create_timer(1.0).timeout
+	get_tree().paused = false
+	
+		# Clear mobs
 	if(mob_array.size() > 0):
 		for mob in mob_array:
 			if is_instance_valid(mob):
@@ -99,24 +117,13 @@ func _on_player_dead() -> void:
 	var arrows = get_tree().get_nodes_in_group("Arrow")
 	for arrow in arrows:
 		arrow.queue_free()
-		
+	$Camera2D.set_middle()
 	$DeathControlNode.show()
-
-func _on_death_control_node_upgrade_health_button() -> void:
-	$Player.increase_max_health(1)
-
-func _on_death_control_node_new_game() -> void:
-	_resume_game()
-	$Player._reset_player()
-	$DeathControlNode.hide()
-
-func _pause_game():
 	$MobSpawnTimer.stop()
 	$Player.hide()
 	$ArrowSpawnTimer.stop()
 	
-	$Camera2D.set_middle()
-	
+
 func _resume_game():
 	dead_mobs = 0
 	level = 1

@@ -108,6 +108,7 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_h4f0u")
 text = "Unlock Lightning"
 
 [node name="UpgradeLightning" type="Button" parent="Panel" groups=["lightning"]]
+layout_mode = 0
 offset_left = 1094.0
 offset_top = 497.0
 offset_right = 1252.0

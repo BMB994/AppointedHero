@@ -53,7 +53,6 @@ animation = &"walk"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["mob"]]
 position = Vector2(68, 54.125)
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_ieysi")
 
 [node name="AttackTimer" type="Timer" parent="."]
