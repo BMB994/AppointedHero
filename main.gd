@@ -27,7 +27,10 @@ var screen_center_pos
 func _ready() -> void:
 	$DeathControlNode.hide()
 	current_camera_pos = $CameraStartPosition.position
-	$Camera2D.set_main_screen($CameraStartPosition.position, camera_zoom_level)
+	
+	#Removing camera setting for now
+	#$Camera2D.set_main_screen($CameraStartPosition.position, camera_zoom_level)
+	$Camera2D.set_middle()
 	screen_center_pos = $Camera2D.get_screen_center_position()
 	
 	# Start Player and spawn first mob
@@ -71,6 +74,7 @@ func _on_player_is_attacking(damage: int, num_enemies_strike: int) -> void:
 			mob.take_damage(damage)
 			if(counter == num_enemies_strike):
 				break;
+				
 func _on_mob_is_attacking(damage: int) -> void:
 	$Player.take_damage(damage)
 
@@ -117,13 +121,12 @@ func _pause_game():
 	var arrows = get_tree().get_nodes_in_group("Arrow")
 	for arrow in arrows:
 		arrow.queue_free()
-	$Camera2D.set_middle()
+	
 	$DeathControlNode.show()
 	$MobSpawnTimer.stop()
 	$Player.hide()
 	$ArrowSpawnTimer.stop()
 	
-
 func _resume_game():
 	dead_mobs = 0
 	level = 1
@@ -131,8 +134,10 @@ func _resume_game():
 	$MobSpawnTimer.start()
 	set_player_pos()
 	$Player.show()
-	$Camera2D.set_main_screen(current_camera_pos, camera_zoom_level)
 	
+	#Removing camera setting for now
+	#$Camera2D.set_main_screen(current_camera_pos, camera_zoom_level)
+	$Camera2D.set_middle()
 	if(arrows_unlocked):
 		$ArrowSpawnTimer.start()
 
@@ -146,7 +151,9 @@ func _on_death_control_node_upgrade_damage_button() -> void:
 	$Player.increase_damage(100)
 
 func _on_arrow_spawn_timer_timeout() -> void:
-	if mob_array.size() > 0:
+	var arrows = get_tree().get_nodes_in_group("Arrow")
+	var mobs = get_tree().get_nodes_in_group("mob")
+	if mobs.size() > arrows.size():
 		# Pick a random mob as the target
 		var random_mob = mob_array[randi() % mob_array.size()]
 
@@ -161,13 +168,15 @@ func _on_arrow_spawn_timer_timeout() -> void:
 func _on_death_control_node_arrows() -> void:
 	$ArrowSpawnTimer.start()
 	arrows_unlocked = true
-	if(camera_zoom_level > arrow_camera_zoom_dis):
-		camera_zoom_level = arrow_camera_zoom_dis
-		
-	if(current_camera_pos.x > $CameraStartPosition.position.x + arrow_camera_setpoint.x):
-		current_camera_pos = $CameraStartPosition.position + arrow_camera_setpoint
-		$PlayerPosition.position = $PlayerPosition.position + arrow_camera_setpoint
-		set_player_pos()
+	
+	#Removing camera setting for now
+	#if(camera_zoom_level > arrow_camera_zoom_dis):
+		#camera_zoom_level = arrow_camera_zoom_dis
+		#
+	#if(current_camera_pos.x > $CameraStartPosition.position.x + arrow_camera_setpoint.x):
+		#current_camera_pos = $CameraStartPosition.position + arrow_camera_setpoint
+		#$PlayerPosition.position = $PlayerPosition.position + arrow_camera_setpoint
+		#set_player_pos()
 	
 func _on_death_control_node_arrow_level() -> void:
 	if(arrow_level < 3):
@@ -180,23 +189,26 @@ func _on_death_control_node_lightning() -> void:
 	$LightningSpawnTimer.start()
 	lightning_unlocked = true
 
-	if(camera_zoom_level > lightning_camera_zoom_dis):
-		camera_zoom_level = lightning_camera_zoom_dis
-		
-	if(current_camera_pos.x > $CameraStartPosition.position.x + lightning_camera_setpoint.x):
-		current_camera_pos = screen_center_pos
-		$PlayerPosition.position = Vector2(screen_center_pos.x/2, $PlayerPosition.position.y)
-		set_player_pos()
+	#Removing camera setting for now
+	#if(camera_zoom_level > lightning_camera_zoom_dis):
+		#camera_zoom_level = lightning_camera_zoom_dis
+		#
+	#if(current_camera_pos.x > $CameraStartPosition.position.x + lightning_camera_setpoint.x):
+		#current_camera_pos = screen_center_pos
+		#$PlayerPosition.position = Vector2(screen_center_pos.x/2, $PlayerPosition.position.y)
+		#set_player_pos()
 		
 func _on_lightning_spawn_timer_timeout() -> void:
-	if mob_array.size() > 0:
+	var lightnings = get_tree().get_nodes_in_group("Lightning")
+	if mob_array.size() > 0 && lightnings.size() < 1:
+		
 		# Create a new lightning instance
 		var lightning_instance = lightning_scene.instantiate()
-		add_child(lightning_instance)
 		var offset = Vector2((randi() % 100)*10, 0)
 		# Set the starting position and target for the arrow
 		lightning_instance.start($LightningPosition.position + offset, lightning_level)
 		lightning_instance.set_target($LightningPosition.position + Vector2(offset.x,800))
+		add_child(lightning_instance)
 
 func _on_death_control_node_lightning_upgrade() -> void:
 	if(lightning_level < 3):

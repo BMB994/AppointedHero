@@ -17,7 +17,6 @@ arrow_scene = ExtResource("3_272bh")
 lightning_scene = ExtResource("4_kek77")
 
 [node name="Athens" type="TextureRect" parent="."]
-visible = false
 offset_left = 2.0
 offset_top = 2.0
 offset_right = 3836.0
@@ -27,25 +26,21 @@ texture = ExtResource("3_7mycd")
 flip_h = true
 
 [node name="PlayerPosition" type="Marker2D" parent="."]
-position = Vector2(1186, 648)
+position = Vector2(215, 643)
 
 [node name="MobStartPosition" type="Marker2D" parent="."]
 position = Vector2(1813, 626)
 
 [node name="ArrowPosition" type="Marker2D" parent="."]
-visible = false
-position = Vector2(1056, -26)
+position = Vector2(27, -17)
 
 [node name="LightningPosition" type="Marker2D" parent="."]
-visible = false
 position = Vector2(1188, 31)
 
 [node name="CameraStartPosition" type="Marker2D" parent="."]
-visible = false
 position = Vector2(1423, 710)
 
 [node name="Player" parent="." instance=ExtResource("2_h2yge")]
-visible = false
 position = Vector2(-3, 5)
 
 [node name="MobSpawnTimer" type="Timer" parent="."]
@@ -56,18 +51,15 @@ wait_time = 0.05
 [node name="LightningSpawnTimer" type="Timer" parent="."]
 
 [node name="HUD" parent="." instance=ExtResource("4_1bvp3")]
-visible = false
 
 [node name="DeathControlNode" parent="." instance=ExtResource("5_lquwl")]
 visible = false
 
 [node name="Camera2D" type="Camera2D" parent="."]
-visible = false
 position = Vector2(959, 539)
 script = ExtResource("8_5vw27")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="Camera2D"]
-visible = false
 
 [node name="ColorRect" type="ColorRect" parent="Camera2D/CanvasLayer"]
 visible = false

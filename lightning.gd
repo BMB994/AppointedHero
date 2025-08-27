@@ -15,13 +15,13 @@ func start(pos, lvl):
 		$AnimatedSprite2D.animation = "lightning_one"
 		damage = 150
 	elif(lvl == 1):
-		$AnimatedSprite2D.animation = "lightning_two"
+		#$AnimatedSprite2D.animation = "lightning_two"
 		damage = 300
 	elif(lvl == 2):
-		$AnimatedSprite2D.animation = "lightning_three"
+		#$AnimatedSprite2D.animation = "lightning_three"
 		damage = 1000
 	elif(lvl == 3):
-		$AnimatedSprite2D.animation = "lightning_four"
+		#$AnimatedSprite2D.animation = "lightning_four"
 		damage = 1000
 	else:
 		$AnimatedSprite2D.animation = "lightning_one"
@@ -36,15 +36,21 @@ func _increase_arrow_damage(amount):
 	
 func _process(delta):
 	# Move the arrow towards its target
-	var direction = (target_position - global_position).normalized()
-	global_position += direction * speed * delta
-
+	#var direction = (target_position - global_position).normalized()
+	#global_position += direction * speed * delta
+	pass
 	# If the arrow is close enough to the target, delete it
-	if global_position.distance_to(target_position) < 5:
-		queue_free()
+	if global_position.distance_to(target_position) < 1:
+		$DeleteTimer.start()
 
 func _on_body_entered(body: Node2D) -> void:
 	# This assumes your mobs have a "take_damage" function
 	if body.is_in_group("mob"):
 		body.take_damage(damage) # Example damage value
+	#$CollisionShape2D.set_deferred("disabled", true)
+	if($DeleteTimer.is_stopped()):
+		$DeleteTimer.start()
+
+
+func _on_delete_timer_timeout() -> void:
 	queue_free()
