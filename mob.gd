@@ -78,7 +78,7 @@ func _on_detection_area_body_entered(body):
 	if body.is_in_group("player"):
 		attack()
 		waiting_in_line = false
-	elif body.is_in_group("mob"):
+	else:
 		waiting_in_line = true	
 
 func _on_detection_area_body_exited(body):

@@ -61,7 +61,7 @@ func _on_mob_dead(mob_instance):
 func _on_mob_spawn_timer_timeout() -> void:
 	var mob_in_way = false
 	for i in range (mob_array.size()):
-			if (mob_array[i].position.x > $MobStartPosition.position.x - 10):
+			if (mob_array[i].position.x > $MobStartPosition.position.x - 20):
 				mob_in_way = true
 	if !mob_in_way:
 		_spawn_mob()	
@@ -121,7 +121,12 @@ func _pause_game():
 	var arrows = get_tree().get_nodes_in_group("Arrow")
 	for arrow in arrows:
 		arrow.queue_free()
-	
+		
+	#Clear lightning
+	var lights = get_tree().get_nodes_in_group("Lightning")
+	for light in lights:
+		light.queue_free()
+		
 	$DeathControlNode.show()
 	$MobSpawnTimer.stop()
 	$Player.hide()
@@ -200,7 +205,7 @@ func _on_death_control_node_lightning() -> void:
 		
 func _on_lightning_spawn_timer_timeout() -> void:
 	var lightnings = get_tree().get_nodes_in_group("Lightning")
-	if mob_array.size() > 0 && lightnings.size() < 1:
+	if mob_array.size() > 0 && lightnings.size() <= 1:
 		
 		# Create a new lightning instance
 		var lightning_instance = lightning_scene.instantiate()

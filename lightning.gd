@@ -44,7 +44,7 @@ func _process(delta):
 		$DeleteTimer.start()
 
 func _on_body_entered(body: Node2D) -> void:
-	# This assumes your mobs have a "take_damage" function
+	
 	if body.is_in_group("mob"):
 		body.take_damage(damage) # Example damage value
 	#$CollisionShape2D.set_deferred("disabled", true)
@@ -53,4 +53,6 @@ func _on_body_entered(body: Node2D) -> void:
 
 
 func _on_delete_timer_timeout() -> void:
+	$DeleteTimer.disconnect("timeout", Callable(self, "_on_timer_timeout"))
+	remove_from_group("lightning")
 	queue_free()
