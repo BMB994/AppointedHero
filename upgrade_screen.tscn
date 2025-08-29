@@ -1,7 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://bcwa2h6sj366q"]
+[gd_scene load_steps=6 format=3 uid="uid://cy0dueb87goup"]
 
-[ext_resource type="Script" uid="uid://6fqpksqn43ue" path="res://on_death_control_node.gd" id="1_lg0e3"]
-[ext_resource type="Texture2D" uid="uid://dmaw3ebnteib1" path="res://art/upgradeSky.png" id="2_6fywk"]
+[ext_resource type="Script" uid="uid://dyodh3bh7ehmm" path="res://upgrade_screen.gd" id="1_ovwte"]
 [ext_resource type="Texture2D" uid="uid://dcdrfd5swh8xp" path="res://art/button.png" id="3_0theg"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_h4f0u"]
@@ -13,12 +12,12 @@ texture = ExtResource("3_0theg")
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ubkj5"]
 texture = ExtResource("3_0theg")
 
-[node name="DeathControlNode" type="Control"]
+[node name="UpgradeScreen" type="Control"]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
-script = ExtResource("1_lg0e3")
+script = ExtResource("1_ovwte")
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 0
@@ -27,14 +26,6 @@ offset_top = -4.0
 offset_right = 1920.0
 offset_bottom = 1074.0
 mouse_default_cursor_shape = 3
-
-[node name="StarrySky" type="TextureRect" parent="Panel"]
-layout_mode = 0
-offset_left = -21.0
-offset_top = -9.0
-offset_right = 1949.0
-offset_bottom = 1158.0
-texture = ExtResource("2_6fywk")
 
 [node name="IncreaseHealthButton" type="Button" parent="Panel"]
 layout_mode = 2
@@ -108,6 +99,14 @@ offset_bottom = 534.0
 theme_override_styles/normal = SubResource("StyleBoxTexture_h4f0u")
 text = "Upgrade Lightning"
 
+[node name="BackToGame" type="Button" parent="Panel"]
+layout_mode = 0
+offset_left = 1201.0
+offset_top = 358.0
+offset_right = 1246.0
+offset_bottom = 389.0
+text = "X"
+
 [connection signal="pressed" from="Panel/IncreaseHealthButton" to="." method="_on_increase_health_button_pressed"]
 [connection signal="pressed" from="Panel/IncreaseAttackSpeed" to="." method="_on_increase_attack_speed_pressed"]
 [connection signal="pressed" from="Panel/IncreaseDamage" to="." method="_on_increase_damage_pressed"]
@@ -116,3 +115,4 @@ text = "Upgrade Lightning"
 [connection signal="pressed" from="Panel/IncreaseArrowSpeed" to="." method="_on_increase_arrow_speed_pressed"]
 [connection signal="pressed" from="Panel/UnlockLightning" to="." method="_on_unlock_lightning_pressed"]
 [connection signal="pressed" from="Panel/UpgradeLightning" to="." method="_on_upgrade_lightning_pressed"]
+[connection signal="pressed" from="Panel/BackToGame" to="." method="_on_back_to_game_pressed"]

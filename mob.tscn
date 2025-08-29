@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://ohwfgiojvi05"]
+[gd_scene load_steps=18 format=3 uid="uid://ohwfgiojvi05"]
 
 [ext_resource type="Script" uid="uid://dlvu6xhqnpjkj" path="res://mob.gd" id="1_s5nov"]
 [ext_resource type="Texture2D" uid="uid://cy3q1buw7cw25" path="res://art/HeroArt/snake-Sheet.png" id="2_nokgg"]
@@ -106,14 +106,11 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ieysi"]
-size = Vector2(34.5, 38.5)
+size = Vector2(48.5, 40)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s5nov"]
 bg_color = Color(0.834798, 0, 0.06098, 1)
 anti_aliasing = false
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_s5nov"]
-size = Vector2(11, 23.1667)
 
 [node name="mob" type="CharacterBody2D" groups=["mob"]]
 scale = Vector2(2, 2)
@@ -127,27 +124,20 @@ animation = &"idle"
 frame_progress = 0.980625
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(17.25, 19.25)
+position = Vector2(21.25, 18.5)
 shape = SubResource("RectangleShape2D_ieysi")
 
 [node name="AttackTimer" type="Timer" parent="."]
 
 [node name="HealthBar" type="ProgressBar" parent="."]
-offset_top = -10.8333
-offset_right = 43.0
-offset_bottom = -0.833333
+offset_left = 8.5
+offset_top = -4.0
+offset_right = 26.5
 theme_override_styles/fill = SubResource("StyleBoxFlat_s5nov")
 show_percentage = false
 
-[node name="detection_area" type="Area2D" parent="."]
-position = Vector2(4, 7)
-collision_layer = 3
-collision_mask = 7
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="detection_area"]
-position = Vector2(0.5, 12.5)
-shape = SubResource("RectangleShape2D_s5nov")
+[node name="RayCast2D" type="RayCast2D" parent="."]
+position = Vector2(3, 17.5)
+target_position = Vector2(-13, 0)
 
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
-[connection signal="body_entered" from="detection_area" to="." method="_on_detection_area_body_entered"]
-[connection signal="body_exited" from="detection_area" to="." method="_on_detection_area_body_exited"]

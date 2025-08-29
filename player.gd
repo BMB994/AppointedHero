@@ -53,16 +53,6 @@ func start(pos):
 func _on_attack_timer_timeout() -> void:
 	emit_signal("is_attacking", damage, num_enemies_strike)
 
-func _on_area_2d_area_shape_entered(area_rid: RID, area: Area2D, area_shape_index: int, local_shape_index: int) -> void:
-	$AnimatedSprite2D.animation = "attack"
-	if $AttackTimer.is_stopped():
-		emit_signal("is_attacking", damage, num_enemies_strike)
-		$AttackTimer.start()
-		$ReturnToIdleTimer.stop()
-
-func _on_area_2d_area_shape_exited(area_rid: RID, area: Area2D, area_shape_index: int, local_shape_index: int) -> void:
-	$AttackTimer.stop()
-	$ReturnToIdleTimer.start()
 
 func _on_return_to_idle_timer_timeout() -> void:
 	$AnimatedSprite2D.animation = "idle"
@@ -73,3 +63,17 @@ func _reset_player():
 	$HealthBar.max_value = max_health
 	$HealthBar.value = max_health
 	health = max_health
+
+
+func _on_area_2d_body_entered(body: Node2D) -> void:
+	if body.is_in_group("mob"):
+		$AnimatedSprite2D.animation = "attack"
+		if $AttackTimer.is_stopped():
+			emit_signal("is_attacking", damage, num_enemies_strike)
+			$AttackTimer.start()
+			$ReturnToIdleTimer.stop()
+
+
+func _on_area_2d_body_exited(body: Node2D) -> void:
+	$AttackTimer.stop()
+	$ReturnToIdleTimer.start()

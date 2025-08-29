@@ -7,10 +7,10 @@
 [ext_resource type="PackedScene" uid="uid://1ox8vl7a2jlc" path="res://arrow.tscn" id="3_272bh"]
 [ext_resource type="PackedScene" uid="uid://cbbv4pmkp1hlu" path="res://hud.tscn" id="4_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://crkk62d34epdx" path="res://lightning.tscn" id="4_kek77"]
+[ext_resource type="PackedScene" uid="uid://bog801j3flm1v" path="res://on_death_control_node.tscn" id="5_lquwl"]
 [ext_resource type="Script" uid="uid://bjxuq611sc0y8" path="res://camera_2d.gd" id="8_5vw27"]
 [ext_resource type="Texture2D" uid="uid://cdd17agn3jgid" path="res://art/exitButton.png" id="9_4c57u"]
 [ext_resource type="Texture2D" uid="uid://dhniumqnh24su" path="res://art/newGameButton.png" id="9_efxa6"]
-[ext_resource type="PackedScene" uid="uid://cy0dueb87goup" path="res://upgrade_screen.tscn" id="11_efxa6"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_dg77c"]
 texture = ExtResource("9_efxa6")
@@ -60,7 +60,8 @@ wait_time = 0.15
 
 [node name="HUD" parent="." instance=ExtResource("4_1bvp3")]
 
-[node name="UpgradeScreen" parent="." instance=ExtResource("11_efxa6")]
+[node name="DeathControlNode" parent="." instance=ExtResource("5_lquwl")]
+visible = false
 
 [node name="NewGame" type="Button" parent="."]
 offset_left = 1724.0
@@ -69,14 +70,6 @@ offset_right = 1844.0
 offset_bottom = 244.0
 theme_override_styles/normal = SubResource("StyleBoxTexture_dg77c")
 text = "Start New Run"
-
-[node name="Upgrade" type="Button" parent="."]
-offset_left = 1726.0
-offset_top = 157.0
-offset_right = 1846.0
-offset_bottom = 188.0
-theme_override_styles/normal = SubResource("StyleBoxTexture_dg77c")
-text = "Upgrade"
 
 [node name="Exit" type="Button" parent="."]
 offset_left = 1773.0
@@ -106,14 +99,15 @@ color = Color(0, 0, 0, 1)
 [connection signal="timeout" from="MobSpawnTimer" to="." method="_on_mob_spawn_timer_timeout"]
 [connection signal="timeout" from="ArrowSpawnTimer" to="." method="_on_arrow_spawn_timer_timeout"]
 [connection signal="timeout" from="LightningSpawnTimer" to="." method="_on_lightning_spawn_timer_timeout"]
-[connection signal="arrow_level" from="UpgradeScreen" to="." method="_on_upgrade_screen_arrow_level"]
-[connection signal="arrow_speed" from="UpgradeScreen" to="." method="_on_upgrade_screen_arrow_speed"]
-[connection signal="arrows" from="UpgradeScreen" to="." method="_on_upgrade_screen_arrows"]
-[connection signal="lightning" from="UpgradeScreen" to="." method="_on_upgrade_screen_lightning"]
-[connection signal="lightning_upgrade" from="UpgradeScreen" to="." method="_on_upgrade_screen_lightning_upgrade"]
-[connection signal="upgrade_attack_speed" from="UpgradeScreen" to="." method="_on_upgrade_screen_upgrade_attack_speed"]
-[connection signal="upgrade_damage_button" from="UpgradeScreen" to="." method="_on_upgrade_screen_upgrade_damage_button"]
-[connection signal="upgrade_health_button" from="UpgradeScreen" to="." method="_on_upgrade_screen_upgrade_health_button"]
+[connection signal="arrow_level" from="DeathControlNode" to="." method="_on_death_control_node_arrow_level"]
+[connection signal="arrow_speed" from="DeathControlNode" to="." method="_on_death_control_node_arrow_speed"]
+[connection signal="arrows" from="DeathControlNode" to="." method="_on_death_control_node_arrows"]
+[connection signal="exit" from="DeathControlNode" to="." method="_on_death_control_node_exit"]
+[connection signal="lightning" from="DeathControlNode" to="." method="_on_death_control_node_lightning"]
+[connection signal="lightning_upgrade" from="DeathControlNode" to="." method="_on_death_control_node_lightning_upgrade"]
+[connection signal="new_game" from="DeathControlNode" to="." method="_on_death_control_node_new_game"]
+[connection signal="upgrade_attack_speed" from="DeathControlNode" to="." method="_on_death_control_node_upgrade_attack_speed"]
+[connection signal="upgrade_damage_button" from="DeathControlNode" to="." method="_on_death_control_node_upgrade_damage_button"]
+[connection signal="upgrade_health_button" from="DeathControlNode" to="." method="_on_death_control_node_upgrade_health_button"]
 [connection signal="pressed" from="NewGame" to="." method="_on_new_game_pressed"]
-[connection signal="pressed" from="Upgrade" to="." method="_on_upgrade_pressed"]
 [connection signal="pressed" from="Exit" to="." method="_on_exit_pressed"]

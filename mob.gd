@@ -11,7 +11,7 @@ var attack_speed = 1.0
 var soul_worth = 1.0
 var mob_speed = 1500
 var is_attacking_player = false
-var waiting_in_line = false
+var blocked = false
 
 func _mob_difficult_scale(level):
 	soul_worth = soul_worth * level
@@ -41,20 +41,46 @@ func _ready():
 	$HealthBar.value = max_health
 	health = max_health
 
-func _physics_process(delta):
-	# Set velocity based on whether the mob is attacking
-	if not is_attacking_player && not waiting_in_line:
-		velocity = Vector2(-mob_speed, 0)
-		
-	else:
-		velocity = Vector2.ZERO
-	
-	#if velocity != Vector2.ZERO:
-		#$HealthBar.indeterminate = true
+#func _physics_process(delta):
+	## Set velocity based on whether the mob is attacking
+	#if not blocked:
+		#velocity = Vector2(-mob_speed, 0)
+		#
 	#else:
-		#$HealthBar.indeterminate = false
+		#velocity = Vector2.ZERO
+	#
+	##if velocity != Vector2.ZERO:
+		##$HealthBar.indeterminate = true
+	##else:
+		##$HealthBar.indeterminate = false
+	#
+	## Move the mob and handle collisions
+	#move_and_slide()
+func _physics_process(delta):
+	# Tell the raycast to check for collisions
+	$RayCast2D.force_raycast_update()
+
+	if $RayCast2D.is_colliding():
+		# Something is in front of us. Get a reference to it.
+		var collider = $RayCast2D.get_collider()
+		
+		if collider.is_in_group("player"):
+		# A player is in front, so attack
+			velocity = Vector2.ZERO
+			attack()
+		elif collider.is_in_group("mob"):
+			# Another mob is in front, stop and wait in line
+			velocity = Vector2.ZERO
+			$AnimatedSprite2D.animation = "idle"
+		else:
+			# It's not a player or mob, so keep moving
+			velocity = Vector2(-mob_speed, 0)
+			$AnimatedSprite2D.animation = "walk"
+	else:
+		# Nothing is in front, move forward
+		velocity = Vector2(-mob_speed, 0)
+		$AnimatedSprite2D.animation = "walk"
 	
-	# Move the mob and handle collisions
 	move_and_slide()
 
 func _process(delta):
@@ -73,19 +99,10 @@ func _on_attack_timer_timeout() -> void:
 	# Deal damage to the player
 	emit_signal("is_attacking", damage)
 
-func _on_detection_area_body_entered(body):
-	# Assumes you have an Area2D named "detection_area"
-	if body.is_in_group("player"):
-		attack()
-		waiting_in_line = false
-	else:
-		waiting_in_line = true	
-
-func _on_detection_area_body_exited(body):
 	## Stop attacking and start walking again
 	#if body.is_in_group("player"):
 		#is_attacking_player = false
 	$AnimatedSprite2D.animation = "walk"
-	waiting_in_line = false
+	blocked = false
 	is_attacking_player = false
 		#$AnimatedSprite2D.play()
