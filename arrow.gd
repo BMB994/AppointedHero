@@ -37,7 +37,7 @@ func _process(delta):
 	global_position += direction * speed * delta
 
 	# If the arrow is close enough to the target, delete it
-	if global_position.distance_to(target_position) < 5:
+	if global_position.distance_to(target_position) < 2:
 		queue_free()
 
 func _on_body_entered(body: Node2D) -> void:

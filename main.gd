@@ -179,6 +179,7 @@ func _on_upgrade_screen_upgrade_damage_button() -> void:
 func _on_arrow_spawn_timer_timeout() -> void:
 	var arrows = get_tree().get_nodes_in_group("Arrow")
 	var mobs = get_tree().get_nodes_in_group("mob")
+	var arrow_offset = Vector2(0 , 20)
 	if mobs.size() > arrows.size():
 		# Pick a random mob as the target
 		var random_mob = mobs[randi() % mobs.size()]
@@ -189,7 +190,7 @@ func _on_arrow_spawn_timer_timeout() -> void:
 
 		# Set the starting position and target for the arrow
 		arrow_instance.start($ArrowPosition.position, arrow_level)
-		arrow_instance.set_target(random_mob.global_position)
+		arrow_instance.set_target(random_mob.global_position + arrow_offset)
 
 func _on_upgrade_screen_arrows() -> void:
 	$ArrowSpawnTimer.start()

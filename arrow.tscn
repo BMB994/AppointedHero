@@ -4,8 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://dpf7jb2p6p2yu" path="res://art/Arrows_pack.png" id="1_l5ahi"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2ndhl"]
-radius = 1.0
-height = 76.0
+radius = 3.0
+height = 62.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_acd0x"]
 atlas = ExtResource("1_l5ahi")

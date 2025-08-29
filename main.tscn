@@ -52,7 +52,7 @@ position = Vector2(1423, 710)
 position = Vector2(-3, 5)
 
 [node name="MobSpawnTimer" type="Timer" parent="." groups=["timer"]]
-wait_time = 0.15
+wait_time = 0.02
 
 [node name="ArrowSpawnTimer" type="Timer" parent="." groups=["timer"]]
 

@@ -182,8 +182,8 @@ rotation = 1.5708
 shape = SubResource("RectangleShape2D_5cnhv")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(6.00003, 307.5)
-scale = Vector2(0.542, 2.058)
+position = Vector2(1.00002, 247)
+scale = Vector2(0.983, 2.058)
 sprite_frames = SubResource("SpriteFrames_wd73o")
 animation = &"lightning_one"
 frame_progress = 0.448516
