@@ -34,10 +34,10 @@ texture = ExtResource("3_7mycd")
 flip_h = true
 
 [node name="PlayerPosition" type="Marker2D" parent="."]
-position = Vector2(215, 643)
+position = Vector2(215, 665)
 
 [node name="MobStartPosition" type="Marker2D" parent="."]
-position = Vector2(1815, 652)
+position = Vector2(1815, 675)
 
 [node name="ArrowPosition" type="Marker2D" parent="."]
 position = Vector2(27, -17)
