@@ -43,7 +43,7 @@ position = Vector2(1815, 675)
 position = Vector2(27, -17)
 
 [node name="LightningPosition" type="Marker2D" parent="."]
-position = Vector2(1109, 65)
+position = Vector2(1109, 50)
 
 [node name="CameraStartPosition" type="Marker2D" parent="."]
 position = Vector2(1423, 710)
@@ -52,7 +52,7 @@ position = Vector2(1423, 710)
 position = Vector2(-3, 5)
 
 [node name="MobSpawnTimer" type="Timer" parent="." groups=["timer"]]
-wait_time = 0.02
+wait_time = 0.06
 
 [node name="ArrowSpawnTimer" type="Timer" parent="." groups=["timer"]]
 
