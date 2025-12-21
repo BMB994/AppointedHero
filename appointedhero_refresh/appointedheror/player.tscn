@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=3 uid="uid://4qbf4kqtq770"]
+
+[ext_resource type="PackedScene" uid="uid://gvbg3ootwovl" path="res://entity.tscn" id="1_4flbx"]
+[ext_resource type="Script" uid="uid://bhobgd87xn726" path="res://player.gd" id="2_onrkg"]
+[ext_resource type="PackedScene" uid="uid://ciq4oe4apij6w" path="res://sword.tscn" id="3_i3pqv"]
+
+[node name="Player" groups=["player"] instance=ExtResource("1_4flbx")]
+script = ExtResource("2_onrkg")
+starting_weapon = ExtResource("3_i3pqv")
+
+[node name="NeckPivotPoint" type="Node3D" parent="." index="4"]
+
+[node name="Camera3D" type="Camera3D" parent="NeckPivotPoint" index="0"]
