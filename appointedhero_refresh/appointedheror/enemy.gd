@@ -2,7 +2,10 @@ extends Entity
 
 enum State {WANDER, CHASE, ATTACK}
 var current_state = State.WANDER
+@export var enemy_weapon: PackedScene
 
+@export var attack_range: float = 2.0 # Default for melee
+@export var stop_distance: float = 1.5 # How close they get before stopping
 @export var wander_radius: float = 5.0
 @export var chase_speed: float = 3.0
 @export var wander_speed: float = 1.7
@@ -11,6 +14,8 @@ var player: CharacterBody3D = null
 
 func _ready():
 	target_position = global_position
+	if enemy_weapon:
+		equip_weapon(enemy_weapon)
 	$WanderTimer.timeout.connect(_on_wander_timer_timeout)
 	$WanderTimer.wait_time = randf_range(2.0, 5.0) # Each enemy waits a different amount
 	$WanderTimer.start()
@@ -46,13 +51,25 @@ func _wander_logic(delta):
 
 func _chase_logic(delta):
 	if player:
-		var direction = global_position.direction_to(player.global_position)
-		velocity.x = direction.x * chase_speed
-		velocity.z = direction.z * chase_speed
+		var dist = global_position.distance_to(player.global_position)
+		
+		# Move only if we are outside the attack range
+		if dist > stop_distance:
+			var direction = global_position.direction_to(player.global_position)
+			velocity.x = direction.x * chase_speed
+			velocity.z = direction.z * chase_speed
+		else:
+			# We are in range! Stop moving and face the player
+			velocity.x = 0
+			velocity.z = 0
+		
+		# Always look at the player when chasing/attacking
+		look_at(Vector3(player.global_position.x, global_position.y, player.global_position.z), Vector3.UP)
+		
 		move_and_slide()
 		
-		# If close enough, try to use weapon
-		if global_position.distance_to(player.global_position) < 2.0:
+		# Attack if within range
+		if dist <= attack_range:
 			perform_attack()
 
 func _on_agro_range_body_entered(body):

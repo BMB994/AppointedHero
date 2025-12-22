@@ -1,6 +1,6 @@
 extends Entity
 
-@export var starting_weapon: PackedScene
+@export var player_weapon: PackedScene
 @onready var neck = $NeckPivotPoint  # Reference to the pivot node
 @onready var camera = $NeckPivotPoint/Camera3D
 
@@ -9,9 +9,10 @@ const JUMP_VELOCITY = 4.5
 const LOOK_SENS = 2.5
 
 func _ready() -> void:
-	# This calls the function you wrote in Entity.gd
-	if starting_weapon:
-		equip_weapon(starting_weapon)
+	#TESTCODE: Allows my player to stay alive longer
+	upgrade_health(1000.0)
+	if player_weapon:
+		equip_weapon(player_weapon)
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
@@ -19,7 +20,7 @@ func _physics_process(delta: float) -> void:
 		velocity += get_gravity() * delta
 
 	# Handle jump.
-	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
+	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
 		
 	if Input.is_action_just_pressed("use"):# Define "attack" in Input Map (e.g., Left Click)
