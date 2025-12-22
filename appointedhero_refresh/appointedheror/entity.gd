@@ -9,10 +9,10 @@ signal health_changed(new_health, max_health)
 
 func equip_weapon(weapon_scene: PackedScene):
 	# find_child searches the whole scene tree of this entity for "RightHand"
-	var hand_node = find_child("RightHand")
+	var hand_node = find_child("RightHandWeapon")
 	
 	if hand_node == null:
-		print("Warning: ", name, " has no node named 'RightHand'. Check your scene!")
+		print("Warning: ", name, " has no node named 'RightHandWeapon'. Check your scene!")
 		return
 
 	if current_weapon:

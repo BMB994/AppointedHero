@@ -1,8 +1,8 @@
 extends Entity
 
 @export var player_weapon: PackedScene
-@onready var neck = $NeckPivotPoint  # Reference to the pivot node
-@onready var camera = $NeckPivotPoint/Camera3D
+@onready var neck = $Barbarian/Rig_Medium/Skeleton3D/Head/PivotPoint
+@onready var camera = $Barbarian/Rig_Medium/Skeleton3D/Head/PivotPoint/Camera3D
 
 const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
@@ -24,6 +24,7 @@ func _physics_process(delta: float) -> void:
 		velocity.y = JUMP_VELOCITY
 		
 	if Input.is_action_just_pressed("use"):# Define "attack" in Input Map (e.g., Left Click)
+		$Barbarian/AnimationPlayer.play("player/Melee_1H_Attack_Slice_Diagonal")
 		perform_attack()
 		
 	# Get the input direction and handle the movement/deceleration.
