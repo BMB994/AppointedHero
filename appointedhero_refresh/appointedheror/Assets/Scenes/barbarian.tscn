@@ -1,4 +1,4 @@
-[gd_scene load_steps=57 format=3 uid="uid://528q1w0lvykn"]
+[gd_scene load_steps=59 format=3 uid="uid://528q1w0lvykn"]
 
 [ext_resource type="PackedScene" uid="uid://dnricyhqt75rw" path="res://Assets/Characters/Barbarian.glb" id="1_pewin"]
 [ext_resource type="Animation" uid="uid://dqq2kw3vat6sa" path="res://Assets/Animations/Rig_Medium/animations/Jump_Full_Long.res" id="2_rssw3"]
@@ -104,6 +104,9 @@ animation = &"player/Idle_A"
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_rssw3"]
 animation = &"player/Melee_1H_Attack_Slice_Diagonal"
 
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_klnkb"]
+animation = &"player/Melee_1H_Attack_Stab"
+
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_tdjv3"]
 animation = &"player/Running_A"
 
@@ -125,6 +128,10 @@ advance_condition = &"is_idle"
 switch_mode = 2
 advance_mode = 2
 
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_2s5v1"]
+switch_mode = 2
+advance_mode = 2
+
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_51o63"]
 states/End/position = Vector2(1064, 100)
 states/Start/position = Vector2(53, 38)
@@ -132,10 +139,12 @@ states/player_Idle_A/node = SubResource("AnimationNodeAnimation_4qrni")
 states/player_Idle_A/position = Vector2(571, 147)
 states/player_Melee_1H_Attack_Slice_Diagonal/node = SubResource("AnimationNodeAnimation_rssw3")
 states/player_Melee_1H_Attack_Slice_Diagonal/position = Vector2(222, 185)
+states/player_Melee_1H_Attack_Stab/node = SubResource("AnimationNodeAnimation_klnkb")
+states/player_Melee_1H_Attack_Stab/position = Vector2(571, 251)
 states/player_Running_A/node = SubResource("AnimationNodeAnimation_tdjv3")
 states/player_Running_A/position = Vector2(578, 61)
-transitions = ["Start", "player_Idle_A", SubResource("AnimationNodeStateMachineTransition_klnkb"), "player_Idle_A", "player_Running_A", SubResource("AnimationNodeStateMachineTransition_h8dwp"), "player_Running_A", "player_Idle_A", SubResource("AnimationNodeStateMachineTransition_qy16u"), "player_Melee_1H_Attack_Slice_Diagonal", "player_Idle_A", SubResource("AnimationNodeStateMachineTransition_h1u77")]
-graph_offset = Vector2(319.688, 0)
+transitions = ["Start", "player_Idle_A", SubResource("AnimationNodeStateMachineTransition_klnkb"), "player_Idle_A", "player_Running_A", SubResource("AnimationNodeStateMachineTransition_h8dwp"), "player_Running_A", "player_Idle_A", SubResource("AnimationNodeStateMachineTransition_qy16u"), "player_Melee_1H_Attack_Slice_Diagonal", "player_Idle_A", SubResource("AnimationNodeStateMachineTransition_h1u77"), "player_Melee_1H_Attack_Stab", "player_Idle_A", SubResource("AnimationNodeStateMachineTransition_2s5v1")]
+graph_offset = Vector2(-17.3123, 73)
 
 [node name="Barbarian" instance=ExtResource("1_pewin")]
 

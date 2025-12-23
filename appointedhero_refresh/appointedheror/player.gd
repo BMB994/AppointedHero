@@ -23,9 +23,11 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
 		
-	if Input.is_action_just_pressed("use"):# Define "attack" in Input Map (e.g., Left Click)
-		#$Barbarian/AnimationPlayer.play("player/Melee_1H_Attack_Slice_Diagonal")
+	if Input.is_action_just_pressed("use"):
 		perform_attack()
+		
+	if Input.is_action_just_pressed("light_attack"):
+		perform_attack("player_Melee_1H_Attack_Stab")
 		
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
