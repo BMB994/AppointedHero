@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://dfb0o7po7b7c5"]
-
-[ext_resource type="PackedScene" uid="uid://c35up713xnlyv" path="res://enemy.tscn" id="1_m68dy"]
-
-[node name="Gobloon" instance=ExtResource("1_m68dy")]
-enemy_weapon = null

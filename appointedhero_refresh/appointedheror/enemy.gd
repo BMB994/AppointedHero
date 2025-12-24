@@ -16,19 +16,19 @@ func _ready():
 	target_position = global_position
 	if enemy_weapon:
 		equip_weapon(enemy_weapon)
-	$WanderTimer.timeout.connect(_on_wander_timer_timeout)
+#	$WanderTimer.timeout.connect(_on_wander_timer_timeout)
 	$WanderTimer.wait_time = randf_range(2.0, 5.0) # Each enemy waits a different amount
 	$WanderTimer.start()
 
-func _physics_process(delta):
+func _physics_process(_delta):
 		# Add the gravity.
 	if not is_on_floor():
-		velocity += get_gravity() * delta
+		velocity += get_gravity() * _delta
 	match current_state:
 		State.WANDER:
-			_wander_logic(delta)
+			_wander_logic(_delta)
 		State.CHASE:
-			_chase_logic(delta)
+			_chase_logic(_delta)
 
 func _wander_logic(delta):
 	# Calculate distance to target

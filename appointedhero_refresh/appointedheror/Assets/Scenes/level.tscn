@@ -1,0 +1,19 @@
+[gd_scene load_steps=5 format=3 uid="uid://gcpcaxqutf3j"]
+
+[ext_resource type="PackedScene" uid="uid://dwqh8ep367wnx" path="res://Assets/Scenes/level_floor.tscn" id="1_u52ul"]
+[ext_resource type="Script" uid="uid://davydnvonpf2" path="res://csg_box_3d.gd" id="2_vonw3"]
+[ext_resource type="PackedScene" uid="uid://c35up713xnlyv" path="res://Assets/Scenes/enemy.tscn" id="3_oi3di"]
+[ext_resource type="PackedScene" uid="uid://bfpctvsst717g" path="res://Assets/Scenes/hud.tscn" id="4_0b4ue"]
+
+[node name="level" type="Node3D"]
+
+[node name="LevelFloor" parent="." instance=ExtResource("1_u52ul")]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.5, 2.73015, 10)
+layers = 0
+size = Vector3(16, 3, 15)
+script = ExtResource("2_vonw3")
+enemy_scene = ExtResource("3_oi3di")
+
+[node name="CanvasLayer" parent="." instance=ExtResource("4_0b4ue")]
