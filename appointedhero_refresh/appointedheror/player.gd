@@ -3,7 +3,7 @@ extends Entity
 @export var player_weapon: PackedScene
 @onready var neck = $SpringArm3D/PivotPoint
 @onready var camera = $SpringArm3D/PivotPoint/Camera3D
-@onready var barbie = $Barbarian
+@onready var slected_char = $Barbarian
 @onready var springy = $SpringArm3D
 @onready var dodgey = $DodgeTimer
 var is_attacking = false
@@ -39,11 +39,11 @@ func _physics_process(delta: float) -> void:
 	# Heavy Attack	
 	if Input.is_action_just_pressed("heavy_attack") and is_on_floor():
 		perform_attack("player_Melee_1H_Attack_Stab")
-		velocity = barbie.global_transform.basis.z * HEAVY_ATK_LUNG
+		velocity = slected_char.global_transform.basis.z * HEAVY_ATK_LUNG
 	# Light Attack
 	if Input.is_action_just_pressed("light_attack") and is_on_floor():
 		perform_attack("player_Melee_1H_Attack_Slice_Diagonal")
-		velocity = barbie.global_transform.basis.z * LIGHT_ATK_LUNG
+		velocity = slected_char.global_transform.basis.z * LIGHT_ATK_LUNG
 		
 	_looking_process(delta)
 	_moving_process(delta)
@@ -89,7 +89,7 @@ func _moving_process(delta) -> void:
 			velocity.z = move_toward(velocity.z, direction.z * SPEED, delta * SPEED * 2.0)
 			
 		var target_angle = atan2(-direction.x, -direction.z) + deg_to_rad(ANGLE_CONVERSION)
-		barbie.rotation.y = lerp_angle(barbie.rotation.y, target_angle, delta * 10.0)
+		slected_char.rotation.y = lerp_angle(slected_char.rotation.y, target_angle, delta * 10.0)
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.z = move_toward(velocity.z, 0, SPEED)
@@ -106,7 +106,7 @@ func execute_dodge():
 	if dodge_dir.length() > 0.1:
 		# Snap the Barbarian's mesh
 		var target_angle = atan2(-dodge_dir.x, -dodge_dir.z) + deg_to_rad(ANGLE_CONVERSION)
-		barbie.rotation.y = target_angle
+		slected_char.rotation.y = target_angle
 		
 		# Play the forward roll animation
 		anim_state.travel("player_Dodge_Forward")
@@ -114,4 +114,4 @@ func execute_dodge():
 	else:
 		# Backstep
 		anim_state.travel("player_Dodge_Backward")
-		velocity = barbie.global_transform.basis.z * BWK_DODGE_DIS
+		velocity = slected_char.global_transform.basis.z * BWK_DODGE_DIS

@@ -21,6 +21,14 @@ func _ready():
 	$WanderTimer.start()
 
 func _physics_process(_delta):
+	var current_dir = velocity
+	current_dir.y = 0
+	
+	if current_dir.length() > 0.1:
+		current_dir = current_dir.normalized()
+	else:
+		current_dir = Vector3.ZERO
+	update_animations(current_dir)
 		# Add the gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * _delta
@@ -70,13 +78,13 @@ func _chase_logic(delta):
 		
 		# Attack if within range
 		if dist <= attack_range:
-			perform_attack()
+			perform_attack("player_Melee_1H_Attack_Slice_Diagonal")
 
 func _on_agro_range_body_entered(body):
-	if body.is_in_group("player"): # Make sure your Player is in a group called "player"
+	
+	if body.is_in_group("player"):
 		player = body
 		current_state = State.CHASE
-
 func _on_wander_timer_timeout():
 	var random_x = randf_range(-wander_radius, wander_radius)
 	var random_z = randf_range(-wander_radius, wander_radius)
