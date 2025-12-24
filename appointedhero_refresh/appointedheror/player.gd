@@ -53,18 +53,9 @@ func _looking_process(delta) -> void:
 	var look_dir = Input.get_vector("look_left", "look_right", "look_up", "look_down")
 	
 	if look_dir.length() > 0:
-		# 2. HORIZONTAL: Rotate the entire rig around the player
-		# We rotate the SpringArm itself so the camera orbits the character
 		springy.rotate_y(-look_dir.x * LOOK_SENS * delta)
-		
-		# 3. VERTICAL: Rotate only the neck/pivot point
 		neck.rotate_x(-look_dir.y * LOOK_SENS * delta)
-		
-		# 4. CLAMP: Keep the camera from flipping upside down
 		neck.rotation.x = clamp(neck.rotation.x, deg_to_rad(-80), deg_to_rad(80))
-		
-		# 5. FIX TILT: Joysticks can sometimes cause "Z-roll" (leaning)
-		# This keeps the horizon perfectly level
 		springy.rotation.z = 0
 		neck.rotation.z = 0
 
@@ -74,7 +65,6 @@ func _moving_process(delta) -> void:
 		var current_node = anim_state.get_current_node()
 		is_attacking = current_node.contains("Attack")
 		
-	# Add the gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 	var input_dir := Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
