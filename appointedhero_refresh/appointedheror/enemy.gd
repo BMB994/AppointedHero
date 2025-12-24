@@ -1,11 +1,11 @@
 extends Entity
 
-enum State {WANDER, CHASE, ATTACK}
+enum State {WANDER, CHASE, DEAD}
 var current_state = State.WANDER
 @export var enemy_weapon: PackedScene
 
-@export var attack_range: float = 2.0 # Default for melee
-@export var stop_distance: float = 1.5 # How close they get before stopping
+@export var attack_range: float = 2.0
+@export var stop_distance: float = 1.5 
 @export var wander_radius: float = 5.0
 @export var chase_speed: float = 3.0
 @export var wander_speed: float = 1.7
@@ -16,11 +16,15 @@ func _ready():
 	target_position = global_position
 	if enemy_weapon:
 		equip_weapon(enemy_weapon)
-#	$WanderTimer.timeout.connect(_on_wander_timer_timeout)
-	$WanderTimer.wait_time = randf_range(2.0, 5.0) # Each enemy waits a different amount
+
+	$WanderTimer.wait_time = randf_range(2.0, 5.0)
 	$WanderTimer.start()
 
 func _physics_process(_delta):
+	if current_health <= 0:
+		current_state = State.DEAD
+		
+	check_weapon_hitbox()	
 	var current_dir = velocity
 	current_dir.y = 0
 	
@@ -37,23 +41,21 @@ func _physics_process(_delta):
 			_wander_logic(_delta)
 		State.CHASE:
 			_chase_logic(_delta)
+		State.DEAD:
+			velocity = Vector3 (0,0,0)
+			return
 
 func _wander_logic(delta):
-	# Calculate distance to target
+	is_attacking = false
+	# Calculate distance to target and follow and look at it
 	var dist = global_position.distance_to(target_position)
-	
-	# Only move if we aren't "there" yet
 	if dist > 0.5:
 		var direction = global_position.direction_to(target_position)
 		velocity.x = direction.x * wander_speed
 		velocity.z = direction.z * wander_speed
-		# Optional: Make the enemy face where they are walking
 		look_at(Vector3(target_position.x, global_position.y, target_position.z), Vector3.UP)
 	else:
 		velocity = Vector3.ZERO # Stop moving when arrived
-		#$WanderTimer.stop()
-		#$WanderTimer.wait_time = randf_range(2.0, 5.0) # Each enemy waits a different amount
-		#$WanderTimer.start()
 		
 	move_and_slide()
 
@@ -66,8 +68,9 @@ func _chase_logic(delta):
 			var direction = global_position.direction_to(player.global_position)
 			velocity.x = direction.x * chase_speed
 			velocity.z = direction.z * chase_speed
+			is_attacking = false
 		else:
-			# We are in range! Stop moving and face the player
+			is_attacking = true
 			velocity.x = 0
 			velocity.z = 0
 		
@@ -78,19 +81,19 @@ func _chase_logic(delta):
 		
 		# Attack if within range
 		if dist <= attack_range:
-			perform_attack("player_Melee_1H_Attack_Slice_Diagonal")
+			perform_attack("player_Melee_1H_Attack_Slice_Diagonal_Light")
 
 func _on_agro_range_body_entered(body):
 	
 	if body.is_in_group("player"):
 		player = body
 		current_state = State.CHASE
+		
 func _on_wander_timer_timeout():
 	var random_x = randf_range(-wander_radius, wander_radius)
 	var random_z = randf_range(-wander_radius, wander_radius)
-	# We set Y to the enemy's CURRENT Y position so they don't 
-	# try to "fly" or "dig" toward the target.
 	target_position = global_position + Vector3(random_x, 0, random_z)
+	
 func _on_agro_range_body_exited(body):
 	if body == player:
 		player = null

@@ -8,8 +8,8 @@ bottom_radius = 0.03
 height = 0.7
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_74bdg"]
-radius = 0.0723557
-height = 0.47221
+radius = 0.1
+height = 0.75
 
 [node name="Sword" instance=ExtResource("1_74bdg")]
 

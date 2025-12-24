@@ -3,9 +3,12 @@
 [ext_resource type="PackedScene" uid="uid://gvbg3ootwovl" path="res://Assets/Scenes/entity.tscn" id="1_7k104"]
 [ext_resource type="Script" uid="uid://b8op68tv7qy0f" path="res://enemy.gd" id="2_4gyqm"]
 [ext_resource type="PackedScene" uid="uid://ciq4oe4apij6w" path="res://Assets/Scenes/sword.tscn" id="3_qi2p4"]
-[ext_resource type="PackedScene" uid="uid://cjec5tjsct6x8" path="res://Assets/Scenes/rogue.tscn" id="4_4ye20"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4ye20"]
+size = Vector3(1.2, 1.2, 1.2)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_7k104"]
+radius = 3.5
 
 [node name="Gobloon" instance=ExtResource("1_7k104")]
 script = ExtResource("2_4gyqm")
@@ -16,14 +19,14 @@ wander_radius = 5.0
 chase_speed = 3.0
 wander_speed = 1.7
 
-[node name="Rogue" parent="." index="0" groups=["enemy"] instance=ExtResource("4_4ye20")]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 0)
+[node name="CollisionShape3D" parent="." index="0"]
+shape = SubResource("BoxShape3D_4ye20")
 
-[node name="WanderTimer" type="Timer" parent="." index="2"]
+[node name="WanderTimer" type="Timer" parent="." index="1"]
 wait_time = 3.0
 autostart = true
 
-[node name="AgroRange" type="Area3D" parent="." index="3"]
+[node name="AgroRange" type="Area3D" parent="." index="2"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="AgroRange" index="0"]
 transform = Transform3D(7, 0, 0, 0, 7, 0, 0, 0, 7, 0, 0, 0)
