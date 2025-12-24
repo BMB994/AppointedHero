@@ -5,13 +5,18 @@ extends Entity
 @onready var camera = $SpringArm3D/PivotPoint/Camera3D
 @onready var barbie = $Barbarian
 @onready var springy = $SpringArm3D
+@onready var dodgey = $DodgeTimer
 var is_attacking = false
 
-const SPEED = 5.0
+const SPEED = 7.0
 const JUMP_VELOCITY = 4.5
+const DODGE_TIME = 0.55
+const FWD_DODGE_DIS = 10
+const BWK_DODGE_DIS = -5
 const LOOK_SENS = 2.5
 const LIGHT_ATK_LUNG = 10
 const HEAVY_ATK_LUNG = 15
+const ANGLE_CONVERSION = 75
 
 func _ready() -> void:
 	#TESTCODE: Allows my player to stay alive longer
@@ -22,22 +27,22 @@ func _ready() -> void:
 		equip_weapon(player_weapon)
 
 func _physics_process(delta: float) -> void:
-
-	if Input.is_action_just_pressed("dodge") and is_on_floor() and not is_attacking:
+	
+	# Dodge
+	if Input.is_action_just_pressed("dodge") and is_on_floor() and not is_attacking and dodgey.is_stopped():
+		dodgey.start(DODGE_TIME)
 		execute_dodge()
-	# Handle jump.
+	# Jump
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
 		anim_state.travel("player_Jump_Start")
-		
+	# Heavy Attack	
 	if Input.is_action_just_pressed("heavy_attack") and is_on_floor():
-		perform_attack("player_Melee_1H_Attack_Slice_Diagonal")
-		# Add a little forward lunge
-		velocity = barbie.global_transform.basis.z * HEAVY_ATK_LUNG
-		
-	if Input.is_action_just_pressed("light_attack") and is_on_floor():
 		perform_attack("player_Melee_1H_Attack_Stab")
-		# Add a little forward lunge
+		velocity = barbie.global_transform.basis.z * HEAVY_ATK_LUNG
+	# Light Attack
+	if Input.is_action_just_pressed("light_attack") and is_on_floor():
+		perform_attack("player_Melee_1H_Attack_Slice_Diagonal")
 		velocity = barbie.global_transform.basis.z * LIGHT_ATK_LUNG
 		
 	_looking_process(delta)
@@ -81,10 +86,19 @@ func _moving_process(delta) -> void:
 	if is_attacking and is_on_floor():
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.z = move_toward(velocity.z, 0, SPEED)
+	elif not dodgey.is_stopped():
+		velocity.x = move_toward(velocity.x, 0, 2.0 * delta)
+		velocity.z = move_toward(velocity.z, 0, 2.0 * delta)	
 	elif direction:
-		velocity.x = direction.x * SPEED
-		velocity.z = direction.z * SPEED
-		var target_angle = atan2(-direction.x, -direction.z) + deg_to_rad(45)
+		if is_on_floor():
+			velocity.x = direction.x * SPEED
+			velocity.z = direction.z * SPEED
+		else:
+			# Moving at 50% speed in air
+			velocity.x = move_toward(velocity.x, direction.x * SPEED, delta * SPEED * 2.0)
+			velocity.z = move_toward(velocity.z, direction.z * SPEED, delta * SPEED * 2.0)
+			
+		var target_angle = atan2(-direction.x, -direction.z) + deg_to_rad(ANGLE_CONVERSION)
 		barbie.rotation.y = lerp_angle(barbie.rotation.y, target_angle, delta * 10.0)
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
@@ -94,24 +108,20 @@ func _moving_process(delta) -> void:
 
 func execute_dodge():
 	var input_dir := Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
-	# Calculate world direction relative to camera (same as your movement math)
+	# Calculate world direction relative to camera
 	var look_basis = springy.global_transform.basis
 	var dodge_dir = (look_basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	dodge_dir.y = 0
 
 	if dodge_dir.length() > 0.1:
-		# 1. DIRECTIONAL ROLL
-		# Snap the Barbarian's mesh to face exactly where we are rolling
-		var target_angle = atan2(-dodge_dir.x, -dodge_dir.z) + deg_to_rad(45) # Your 45-degree offset
+		# Snap the Barbarian's mesh
+		var target_angle = atan2(-dodge_dir.x, -dodge_dir.z) + deg_to_rad(ANGLE_CONVERSION)
 		barbie.rotation.y = target_angle
 		
 		# Play the forward roll animation
 		anim_state.travel("player_Dodge_Forward")
-		
-		# Apply a strong forward burst based on the mesh's new facing direction
-		velocity = dodge_dir * 12.0
+		velocity = dodge_dir * FWD_DODGE_DIS
 	else:
-		# 2. NEUTRAL BACKSTEP
+		# Backstep
 		anim_state.travel("player_Dodge_Backward")
-		# Push player backward relative to where the mesh is currently facing
-		velocity = barbie.global_transform.basis.z * 6.0
+		velocity = barbie.global_transform.basis.z * BWK_DODGE_DIS

@@ -8,7 +8,7 @@ albedo_color = Color(0.563811, 0.21724, 0, 1)
 uv1_scale = Vector3(0.5, 0.5, 0.5)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_oj3tl"]
-size = Vector3(10, 1, 10)
+size = Vector3(10.4, 1.4, 10.4)
 
 [node name="Floor" type="Node3D"]
 
@@ -21,4 +21,5 @@ mesh = SubResource("BoxMesh_ryoud")
 surface_material_override/0 = SubResource("StandardMaterial3D_ryoud")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.001)
 shape = SubResource("BoxShape3D_oj3tl")
