@@ -9,8 +9,8 @@ func _ready():
 	# before we start throwing enemies into it.
 	await get_tree().process_frame
 	
-	for i in range(spawn_count):
-		spawn_in_zone()
+	#for i in range(spawn_count):
+		#spawn_in_zone()
 
 func spawn_in_zone():
 	if not enemy_scene: return

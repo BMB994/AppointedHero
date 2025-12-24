@@ -1,51 +1,117 @@
 extends Entity
 
 @export var player_weapon: PackedScene
-@onready var neck = $PivotPoint
-@onready var camera = $PivotPoint/Camera3D
+@onready var neck = $SpringArm3D/PivotPoint
+@onready var camera = $SpringArm3D/PivotPoint/Camera3D
+@onready var barbie = $Barbarian
+@onready var springy = $SpringArm3D
+var is_attacking = false
 
 const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
 const LOOK_SENS = 2.5
+const LIGHT_ATK_LUNG = 10
+const HEAVY_ATK_LUNG = 15
 
 func _ready() -> void:
 	#TESTCODE: Allows my player to stay alive longer
 	upgrade_health(1000.0)
+	print(" spawned with health: ", current_health)
+	#END
 	if player_weapon:
 		equip_weapon(player_weapon)
 
 func _physics_process(delta: float) -> void:
-	# Add the gravity.
-	if not is_on_floor():
-		velocity += get_gravity() * delta
 
+	if Input.is_action_just_pressed("dodge") and is_on_floor() and not is_attacking:
+		execute_dodge()
 	# Handle jump.
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
+		anim_state.travel("player_Jump_Start")
 		
-	if Input.is_action_just_pressed("use"):
-		perform_attack()
+	if Input.is_action_just_pressed("heavy_attack") and is_on_floor():
+		perform_attack("player_Melee_1H_Attack_Slice_Diagonal")
+		# Add a little forward lunge
+		velocity = barbie.global_transform.basis.z * HEAVY_ATK_LUNG
 		
-	if Input.is_action_just_pressed("light_attack"):
+	if Input.is_action_just_pressed("light_attack") and is_on_floor():
 		perform_attack("player_Melee_1H_Attack_Stab")
+		# Add a little forward lunge
+		velocity = barbie.global_transform.basis.z * LIGHT_ATK_LUNG
 		
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
+	_looking_process(delta)
+	_moving_process(delta)
+	move_and_slide()
+
+func _looking_process(delta) -> void:
+	var look_dir = Input.get_vector("look_left", "look_right", "look_up", "look_down")
+	
+	if look_dir.length() > 0:
+		# 2. HORIZONTAL: Rotate the entire rig around the player
+		# We rotate the SpringArm itself so the camera orbits the character
+		springy.rotate_y(-look_dir.x * LOOK_SENS * delta)
+		
+		# 3. VERTICAL: Rotate only the neck/pivot point
+		neck.rotate_x(-look_dir.y * LOOK_SENS * delta)
+		
+		# 4. CLAMP: Keep the camera from flipping upside down
+		neck.rotation.x = clamp(neck.rotation.x, deg_to_rad(-80), deg_to_rad(80))
+		
+		# 5. FIX TILT: Joysticks can sometimes cause "Z-roll" (leaning)
+		# This keeps the horizon perfectly level
+		springy.rotation.z = 0
+		neck.rotation.z = 0
+
+func _moving_process(delta) -> void:
+	
+	if anim_state:
+		var current_node = anim_state.get_current_node()
+		is_attacking = current_node.contains("Attack")
+		
+	# Add the gravity.
+	if not is_on_floor():
+		velocity += get_gravity() * delta
 	var input_dir := Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
-	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-	if direction:
+
+	# Calculate direction based on the SPRING ARM'S orientation, not the player's
+	var direction : Vector3 = (springy.global_transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	direction.y = 0 # Keep us from flying into the air if the camera is tilted
+
+	if is_attacking and is_on_floor():
+		velocity.x = move_toward(velocity.x, 0, SPEED)
+		velocity.z = move_toward(velocity.z, 0, SPEED)
+	elif direction:
 		velocity.x = direction.x * SPEED
 		velocity.z = direction.z * SPEED
+		var target_angle = atan2(-direction.x, -direction.z) + deg_to_rad(45)
+		barbie.rotation.y = lerp_angle(barbie.rotation.y, target_angle, delta * 10.0)
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 		
-	var look_dir = Input.get_vector("look_left", "look_right", "look_up", "look_down")
-	
-	# Rotate the whole player body left/right
-	rotate_y(-look_dir.x * LOOK_SENS * delta)
-	# Rotate ONLY the neck up/down
-	neck.rotate_x(look_dir.y * LOOK_SENS * delta)
-	neck.rotation.x = clamp(neck.rotation.x, deg_to_rad(-80), deg_to_rad(80))
 	update_animations(direction)
-	move_and_slide()
+
+func execute_dodge():
+	var input_dir := Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+	# Calculate world direction relative to camera (same as your movement math)
+	var look_basis = springy.global_transform.basis
+	var dodge_dir = (look_basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	dodge_dir.y = 0
+
+	if dodge_dir.length() > 0.1:
+		# 1. DIRECTIONAL ROLL
+		# Snap the Barbarian's mesh to face exactly where we are rolling
+		var target_angle = atan2(-dodge_dir.x, -dodge_dir.z) + deg_to_rad(45) # Your 45-degree offset
+		barbie.rotation.y = target_angle
+		
+		# Play the forward roll animation
+		anim_state.travel("player_Dodge_Forward")
+		
+		# Apply a strong forward burst based on the mesh's new facing direction
+		velocity = dodge_dir * 12.0
+	else:
+		# 2. NEUTRAL BACKSTEP
+		anim_state.travel("player_Dodge_Backward")
+		# Push player backward relative to where the mesh is currently facing
+		velocity = barbie.global_transform.basis.z * 6.0

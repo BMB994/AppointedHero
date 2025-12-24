@@ -6,30 +6,31 @@ class_name Entity
 @onready var anim_state = anim_tree.get("parameters/playback") if anim_tree else null
 
 var current_weapon = null
+var dead = false
 signal health_changed(new_health, max_health)
 @export var max_health: float = 100.0
 @onready var current_health: float = max_health
 
-# --- NEW ANIMATION FUNCTION ---
+	
 func update_animations(direction: Vector3):
 	if not anim_tree: return
 	
-	## NEW: Get the name of what is currently playing
-	#var current_node = anim_state.get_current_node()
-	#
-	## If we are attacking, DO NOT update the idle/moving conditions.
-	## This lets the attack finish without being interrupted.
-	#if current_node.contains("Attack"):
-		#return
-	print("Speed: ", direction.length(), " | Moving: ", anim_tree.get("parameters/conditions/is_running"))
-	if is_on_floor():
-		var is_running = direction.length() > 0.1
-		# These strings must match the "Conditions" we set in the Editor
-		anim_tree.set("parameters/conditions/is_running", is_running)
-		anim_tree.set("parameters/conditions/is_idle", not is_running)
+	var grounded = is_on_floor()
+	var moving = direction.length() > 0.1
+	
+	# Update ALL conditions based on the current frame's physics
+	anim_tree.set("parameters/conditions/is_falling", not grounded and not dead)
+	anim_tree.set("parameters/conditions/is_done_falling", grounded and not dead)
+	anim_tree.set("parameters/conditions/is_running", grounded and moving and not dead)
+	anim_tree.set("parameters/conditions/is_idle", grounded and not moving and not dead)
+	anim_tree.set("parameters/conditions/is_dead", dead)
+		
+
 
 # Modified to trigger the visual swing as well
-func perform_attack(anim_name: String = "player_Melee_1H_Attack_Slice_Diagonal"):
+func perform_attack(anim_name: String = "start"):
+	if dead:
+		return
 	# 1. Trigger the Visual Animation
 	if anim_state:
 		anim_state.travel(anim_name)
@@ -74,6 +75,7 @@ func take_damage(amount: float):
 		die()
 
 func die():
-	# For now, just remove them. Later, you can add death animations or loot!
+	dead = true
 	print(name, " has died.")
+	await get_tree().create_timer(2.0).timeout
 	queue_free()
