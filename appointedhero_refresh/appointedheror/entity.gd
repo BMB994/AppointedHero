@@ -48,6 +48,7 @@ func perform_attack(anim_name: String = "start"):
 		print(name, " tried to attack but has no weapon or weapon has no 'use' function")
 		
 func equip_weapon(weapon_scene: PackedScene):
+	
 	# find_child searches the whole scene tree of this entity for "RightHand"
 	var hand_node = find_child("RightHandWeapon")
 	

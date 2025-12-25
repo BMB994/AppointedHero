@@ -7,8 +7,7 @@ class_name BaseWeapon
 @export var heavy_damage = 20.0
 @export var attack_speed: float = 1.0
 @export var animation_name: String = "sword_attack_one"
-@onready var anim_player = $AnimationPlayer
-@onready var hitbox: Area3D = $Pivot/Hitbox
+@onready var hitbox: Area3D = $Hitbox
 var owner_entity: Entity = null
 
 func use(type_attack: String = "default"):
@@ -17,11 +16,6 @@ func use(type_attack: String = "default"):
 		damage = light_damage
 	elif type_attack == "heavy":
 		damage = heavy_damage
-		
-	if anim_player.has_animation(animation_name):
-		anim_player.play(animation_name)
-	else:
-		print("Warning: Animation " + animation_name + " not found on this weapon!")
 		
 func enable_hitbox():
 	if hitbox:

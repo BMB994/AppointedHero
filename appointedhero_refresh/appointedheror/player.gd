@@ -1,9 +1,10 @@
 extends Entity
 
-@export var player_weapon: PackedScene
 @onready var neck = $SpringArm3D/PivotPoint
 @onready var camera = $SpringArm3D/PivotPoint/Camera3D
 @onready var slected_char = $Barbarian
+@onready var right_hand = $Barbarian/Rig_Medium/Skeleton3D/RightHand/RightHandWeapon
+@onready var starting_weapon = $samurai_sword
 @onready var springy = $SpringArm3D
 @onready var dodgey = $DodgeTimer
 @onready var weapon_timey = $DodgeTimer
@@ -28,8 +29,17 @@ func _ready() -> void:
 	#TESTCODE: Allows my player to stay alive longer
 	upgrade_health(1000.0)
 	#END
-	if player_weapon:
-		equip_weapon(player_weapon)
+	if starting_weapon and right_hand:
+		# 1. Move the node to the hand slot
+		starting_weapon.reparent(right_hand)
+		# 2. Reset transforms so it snaps to (0,0,0) of the hand
+		starting_weapon.position = Vector3.ZERO
+		starting_weapon.rotation = Vector3.ZERO
+		# 3. Assign it to current_weapon so Entity.gd knows it exists
+		current_weapon = starting_weapon
+		current_weapon.owner_entity = self
+		print("Sword successfully snapped to hand!")
+	#equip_weapon(starting_weapon)
 
 func _physics_process(delta: float) -> void:
 	check_weapon_hitbox()
