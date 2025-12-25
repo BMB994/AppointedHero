@@ -10,6 +10,9 @@ var dead = false
 signal health_changed(new_health, max_health)
 @export var max_health: float = 100.0
 @onready var current_health: float = max_health
+var is_locked_on = false
+var is_attacking = false
+@onready var hitbox_delay = $HBoxDelay
 
 	
 func update_animations(direction: Vector3):
@@ -25,23 +28,27 @@ func update_animations(direction: Vector3):
 	anim_tree.set("parameters/conditions/is_idle", grounded and not moving and not dead)
 	anim_tree.set("parameters/conditions/is_dead", dead)
 		
-
-
-# Modified to trigger the visual swing as well
 func perform_attack(anim_name: String = "start"):
+	hitbox_delay.start()
 	if dead:
 		return
-	# 1. Trigger the Visual Animation
+	# Trigger the Visual Animation
 	if anim_state:
 		anim_state.travel(anim_name)
 	
-	# 2. Trigger the Weapon Logic (Hitboxes, etc)
+	# Weapon animation. This includes the hitbox turning on
 	if current_weapon and current_weapon.has_method("use"):
-		current_weapon.use()
+		if anim_name.contains("Light"):
+			current_weapon.use("light")
+		elif anim_name.contains("Heavy"):
+			current_weapon.use("heavy")
+		else:
+			current_weapon.use()
 	else:
 		print(name, " tried to attack but has no weapon or weapon has no 'use' function")
 		
 func equip_weapon(weapon_scene: PackedScene):
+	
 	# find_child searches the whole scene tree of this entity for "RightHand"
 	var hand_node = find_child("RightHandWeapon")
 	
@@ -53,6 +60,7 @@ func equip_weapon(weapon_scene: PackedScene):
 		current_weapon.queue_free()
 	
 	current_weapon = weapon_scene.instantiate()
+	current_weapon.owner_entity = self
 	hand_node.add_child(current_weapon)
 	
 	# Reset transform so it snaps to the hand
@@ -74,6 +82,14 @@ func take_damage(amount: float):
 	if current_health <= 0:
 		die()
 
+func check_weapon_hitbox():
+	if is_attacking and current_weapon:
+		if hitbox_delay.is_stopped():
+			current_weapon.enable_hitbox()
+
+	elif current_weapon:
+		current_weapon.disable_hitbox()
+		
 func die():
 	dead = true
 	print(name, " has died.")

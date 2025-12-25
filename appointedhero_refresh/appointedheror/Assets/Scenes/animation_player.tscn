@@ -1,0 +1,290 @@
+[gd_scene load_steps=94 format=3 uid="uid://c1oaikfieeoon"]
+
+[ext_resource type="Animation" uid="uid://blgt2blxo277v" path="res://Assets/Animations/Rig_Medium/animations/Crawling.res" id="1_0tp11"]
+[ext_resource type="Animation" uid="uid://dq5dqvulc5tkd" path="res://Assets/Animations/Rig_Medium/animations/Crouching.res" id="2_j33jm"]
+[ext_resource type="Animation" uid="uid://dvxf0d0e6grh8" path="res://Assets/Animations/Rig_Medium/animations/Death_A.res" id="3_2xdn5"]
+[ext_resource type="Animation" uid="uid://d1sg55eb387i7" path="res://Assets/Animations/Rig_Medium/animations/Death_A_Pose.res" id="4_g5m6r"]
+[ext_resource type="Animation" uid="uid://vvnaxib4f658" path="res://Assets/Animations/Rig_Medium/animations/Death_B.res" id="5_cyux3"]
+[ext_resource type="Animation" uid="uid://bpbhnqs8e7sg6" path="res://Assets/Animations/Rig_Medium/animations/Death_B_Pose.res" id="6_ei78o"]
+[ext_resource type="Animation" uid="uid://d4jka5v7wq1hg" path="res://Assets/Animations/Rig_Medium/animations/Dodge_Backward.res" id="7_c1j3u"]
+[ext_resource type="Animation" uid="uid://d6ioxj00fglx" path="res://Assets/Animations/Rig_Medium/animations/Dodge_Forward.res" id="8_c252r"]
+[ext_resource type="Animation" uid="uid://blymfwr24kcrx" path="res://Assets/Animations/Rig_Medium/animations/Dodge_Left.res" id="9_7knj7"]
+[ext_resource type="Animation" uid="uid://4vvkpau5k76n" path="res://Assets/Animations/Rig_Medium/animations/Dodge_Right.res" id="10_ovvg8"]
+[ext_resource type="Animation" uid="uid://ef1nunlf1212" path="res://Assets/Animations/Rig_Medium/animations/Hit_A.res" id="11_6mekx"]
+[ext_resource type="Animation" uid="uid://m03jvhdr0fw1" path="res://Assets/Animations/Rig_Medium/animations/Hit_B.res" id="12_bwxsj"]
+[ext_resource type="Animation" uid="uid://co4wksq52nfnx" path="res://Assets/Animations/Rig_Medium/animations/Idle_A.res" id="13_v70kj"]
+[ext_resource type="Animation" uid="uid://barjtkk1t2fnv" path="res://Assets/Animations/Rig_Medium/animations/Idle_B.res" id="14_weewa"]
+[ext_resource type="Animation" uid="uid://cr1bnltvvq7i3" path="res://Assets/Animations/Rig_Medium/animations/Interact.res" id="15_hlo54"]
+[ext_resource type="Animation" uid="uid://dqq2kw3vat6sa" path="res://Assets/Animations/Rig_Medium/animations/Jump_Full_Long.res" id="16_ykued"]
+[ext_resource type="Animation" uid="uid://bn3b451py3a2m" path="res://Assets/Animations/Rig_Medium/animations/Jump_Full_Short.res" id="17_txcdp"]
+[ext_resource type="Animation" uid="uid://dpt68nvbmyj45" path="res://Assets/Animations/Rig_Medium/animations/Jump_Idle.res" id="18_tywq1"]
+[ext_resource type="Animation" uid="uid://2jj35nslglu6" path="res://Assets/Animations/Rig_Medium/animations/Jump_Land.res" id="19_q0d1c"]
+[ext_resource type="Animation" uid="uid://1m67b26n1j4h" path="res://Assets/Animations/Rig_Medium/animations/Jump_Start.res" id="20_xdsnk"]
+[ext_resource type="Animation" uid="uid://buwfdkyei4neg" path="res://Assets/Animations/Rig_Medium/animations/Melee_1H_Attack_Chop.res" id="21_6rdk2"]
+[ext_resource type="Animation" uid="uid://clvn247k4tows" path="res://Assets/Animations/Rig_Medium/animations/Melee_1H_Attack_Jump_Chop.res" id="22_atg4t"]
+[ext_resource type="Animation" uid="uid://dqiremh5nayku" path="res://Assets/Animations/Rig_Medium/animations/Melee_1H_Attack_Slice_Diagonal.res" id="23_kgufc"]
+[ext_resource type="Animation" uid="uid://bxna0mvouxvl5" path="res://Assets/Animations/Rig_Medium/animations/Melee_1H_Attack_Slice_Horizontal.res" id="24_rlar4"]
+[ext_resource type="Animation" uid="uid://btestfm5ud8ha" path="res://Assets/Animations/Rig_Medium/animations/Melee_1H_Attack_Stab.res" id="25_vk3ba"]
+[ext_resource type="Animation" uid="uid://cv0pgd1aedf63" path="res://Assets/Animations/Rig_Medium/animations/Melee_2H_Attack_Chop.res" id="26_801cj"]
+[ext_resource type="Animation" uid="uid://bh5qpskff8401" path="res://Assets/Animations/Rig_Medium/animations/Melee_2H_Attack_Slice.res" id="27_0tshi"]
+[ext_resource type="Animation" uid="uid://mege1wfey2lm" path="res://Assets/Animations/Rig_Medium/animations/Melee_2H_Attack_Spin.res" id="28_yg2aa"]
+[ext_resource type="Animation" uid="uid://dq1pcni5amqsx" path="res://Assets/Animations/Rig_Medium/animations/Melee_2H_Attack_Spinning.res" id="29_6h3bm"]
+[ext_resource type="Animation" uid="uid://f5m0oupb1gwg" path="res://Assets/Animations/Rig_Medium/animations/Melee_2H_Attack_Stab.res" id="30_76ba5"]
+[ext_resource type="Animation" uid="uid://ceo32602j643k" path="res://Assets/Animations/Rig_Medium/animations/Melee_2H_Idle.res" id="31_43qiu"]
+[ext_resource type="Animation" uid="uid://d0tb2chsqawwi" path="res://Assets/Animations/Rig_Medium/animations/Melee_Block.res" id="32_am66c"]
+[ext_resource type="Animation" uid="uid://b6prpx6wbbdmq" path="res://Assets/Animations/Rig_Medium/animations/Melee_Block_Attack.res" id="33_np456"]
+[ext_resource type="Animation" uid="uid://dls2w4vugj5xc" path="res://Assets/Animations/Rig_Medium/animations/Melee_Block_Hit.res" id="34_pq85t"]
+[ext_resource type="Animation" uid="uid://bk0gpf05ydxe5" path="res://Assets/Animations/Rig_Medium/animations/Melee_Blocking.res" id="35_nqm5t"]
+[ext_resource type="Animation" uid="uid://dl5y6h18lvhhk" path="res://Assets/Animations/Rig_Medium/animations/Melee_Dualwield_Attack_Chop.res" id="36_o43qm"]
+[ext_resource type="Animation" uid="uid://esg2do84hal3" path="res://Assets/Animations/Rig_Medium/animations/Melee_Dualwield_Attack_Slice.res" id="37_6mytp"]
+[ext_resource type="Animation" uid="uid://b6bkkgjjbk4i2" path="res://Assets/Animations/Rig_Medium/animations/Melee_Dualwield_Attack_Stab.res" id="38_hgnhn"]
+[ext_resource type="Animation" uid="uid://xoh7xdpptjjc" path="res://Assets/Animations/Rig_Medium/animations/Melee_Unarmed_Attack_Kick.res" id="39_nsrre"]
+[ext_resource type="Animation" uid="uid://cqn6rvxdq5c1r" path="res://Assets/Animations/Rig_Medium/animations/Melee_Unarmed_Attack_Punch_A.res" id="40_f8qqu"]
+[ext_resource type="Animation" uid="uid://hh7wd44jeqoy" path="res://Assets/Animations/Rig_Medium/animations/Melee_Unarmed_Idle.res" id="41_aix2g"]
+[ext_resource type="Animation" uid="uid://c6uydtcytvu4j" path="res://Assets/Animations/Rig_Medium/animations/PickUp.res" id="42_rcfhp"]
+[ext_resource type="Animation" uid="uid://brdeb2l7r2w83" path="res://Assets/Animations/Rig_Medium/animations/Running_A.res" id="43_qp5qp"]
+[ext_resource type="Animation" uid="uid://c554rqj1bq6xp" path="res://Assets/Animations/Rig_Medium/animations/Running_B.res" id="44_aqvjq"]
+[ext_resource type="Animation" uid="uid://drplalaelwsvl" path="res://Assets/Animations/Rig_Medium/animations/Running_HoldingBow.res" id="45_rh4ph"]
+[ext_resource type="Animation" uid="uid://djxk0x3es57v1" path="res://Assets/Animations/Rig_Medium/animations/Running_HoldingRifle.res" id="46_n3hrv"]
+[ext_resource type="Animation" uid="uid://b4ksmtksnf6kk" path="res://Assets/Animations/Rig_Medium/animations/Running_Strafe_Left.res" id="47_w3sfw"]
+[ext_resource type="Animation" uid="uid://dr7r8yf16x2yp" path="res://Assets/Animations/Rig_Medium/animations/Running_Strafe_Right.res" id="48_op506"]
+[ext_resource type="Animation" uid="uid://dyhjl6kgcugan" path="res://Assets/Animations/Rig_Medium/animations/Sneaking.res" id="49_wpkiu"]
+[ext_resource type="Animation" uid="uid://df6jcq83hay0r" path="res://Assets/Animations/Rig_Medium/animations/Spawn_Air.res" id="50_5hc3i"]
+[ext_resource type="Animation" uid="uid://c6e1veejoa173" path="res://Assets/Animations/Rig_Medium/animations/Spawn_Ground.res" id="51_xtxhm"]
+[ext_resource type="Animation" uid="uid://cke6lax3h7gyd" path="res://Assets/Animations/Rig_Medium/animations/T-Pose.res" id="52_xblyd"]
+[ext_resource type="Animation" uid="uid://k01o2d8mgk4l" path="res://Assets/Animations/Rig_Medium/animations/Throw.res" id="53_shym7"]
+[ext_resource type="Animation" uid="uid://d3me7tiqfj523" path="res://Assets/Animations/Rig_Medium/animations/Use_Item.res" id="54_rdxyv"]
+[ext_resource type="Animation" uid="uid://posr3g8doe6v" path="res://Assets/Animations/Rig_Medium/animations/Walking_A.res" id="55_njibh"]
+[ext_resource type="Animation" uid="uid://la8pwaq4hmd4" path="res://Assets/Animations/Rig_Medium/animations/Walking_B.res" id="56_a7wk0"]
+[ext_resource type="Animation" uid="uid://bdldlsklbugn3" path="res://Assets/Animations/Rig_Medium/animations/Walking_Backwards.res" id="57_20t3c"]
+[ext_resource type="Animation" uid="uid://cp4x58ifiv7wu" path="res://Assets/Animations/Rig_Medium/animations/Walking_C.res" id="58_gvi6n"]
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qk1pc"]
+_data = {
+&"Crawling": ExtResource("1_0tp11"),
+&"Crouching": ExtResource("2_j33jm"),
+&"Death_A": ExtResource("3_2xdn5"),
+&"Death_A_Pose": ExtResource("4_g5m6r"),
+&"Death_B": ExtResource("5_cyux3"),
+&"Death_B_Pose": ExtResource("6_ei78o"),
+&"Dodge_Backward": ExtResource("7_c1j3u"),
+&"Dodge_Forward": ExtResource("8_c252r"),
+&"Dodge_Left": ExtResource("9_7knj7"),
+&"Dodge_Right": ExtResource("10_ovvg8"),
+&"Hit_A": ExtResource("11_6mekx"),
+&"Hit_B": ExtResource("12_bwxsj"),
+&"Idle_A": ExtResource("13_v70kj"),
+&"Idle_B": ExtResource("14_weewa"),
+&"Interact": ExtResource("15_hlo54"),
+&"Jump_Full_Long": ExtResource("16_ykued"),
+&"Jump_Full_Short": ExtResource("17_txcdp"),
+&"Jump_Idle": ExtResource("18_tywq1"),
+&"Jump_Land": ExtResource("19_q0d1c"),
+&"Jump_Start": ExtResource("20_xdsnk"),
+&"Melee_1H_Attack_Chop": ExtResource("21_6rdk2"),
+&"Melee_1H_Attack_Jump_Chop": ExtResource("22_atg4t"),
+&"Melee_1H_Attack_Slice_Diagonal": ExtResource("23_kgufc"),
+&"Melee_1H_Attack_Slice_Horizontal": ExtResource("24_rlar4"),
+&"Melee_1H_Attack_Stab": ExtResource("25_vk3ba"),
+&"Melee_2H_Attack_Chop": ExtResource("26_801cj"),
+&"Melee_2H_Attack_Slice": ExtResource("27_0tshi"),
+&"Melee_2H_Attack_Spin": ExtResource("28_yg2aa"),
+&"Melee_2H_Attack_Spinning": ExtResource("29_6h3bm"),
+&"Melee_2H_Attack_Stab": ExtResource("30_76ba5"),
+&"Melee_2H_Idle": ExtResource("31_43qiu"),
+&"Melee_Block": ExtResource("32_am66c"),
+&"Melee_Block_Attack": ExtResource("33_np456"),
+&"Melee_Block_Hit": ExtResource("34_pq85t"),
+&"Melee_Blocking": ExtResource("35_nqm5t"),
+&"Melee_Dualwield_Attack_Chop": ExtResource("36_o43qm"),
+&"Melee_Dualwield_Attack_Slice": ExtResource("37_6mytp"),
+&"Melee_Dualwield_Attack_Stab": ExtResource("38_hgnhn"),
+&"Melee_Unarmed_Attack_Kick": ExtResource("39_nsrre"),
+&"Melee_Unarmed_Attack_Punch_A": ExtResource("40_f8qqu"),
+&"Melee_Unarmed_Idle": ExtResource("41_aix2g"),
+&"PickUp": ExtResource("42_rcfhp"),
+&"Running_A": ExtResource("43_qp5qp"),
+&"Running_B": ExtResource("44_aqvjq"),
+&"Running_HoldingBow": ExtResource("45_rh4ph"),
+&"Running_HoldingRifle": ExtResource("46_n3hrv"),
+&"Running_Strafe_Left": ExtResource("47_w3sfw"),
+&"Running_Strafe_Right": ExtResource("48_op506"),
+&"Sneaking": ExtResource("49_wpkiu"),
+&"Spawn_Air": ExtResource("50_5hc3i"),
+&"Spawn_Ground": ExtResource("51_xtxhm"),
+&"T-Pose": ExtResource("52_xblyd"),
+&"Throw": ExtResource("53_shym7"),
+&"Use_Item": ExtResource("54_rdxyv"),
+&"Walking_A": ExtResource("55_njibh"),
+&"Walking_B": ExtResource("56_a7wk0"),
+&"Walking_Backwards": ExtResource("57_20t3c"),
+&"Walking_C": ExtResource("58_gvi6n")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_2s5v1"]
+animation = &"player/Death_A"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_itrf6"]
+animation = &"player/Dodge_Backward"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_oyyum"]
+animation = &"player/Dodge_Forward"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_xknwg"]
+animation = &"player/Dodge_Left"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ibrwj"]
+animation = &"player/Dodge_Right"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_4qrni"]
+animation = &"player/Idle_A"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_h8dwp"]
+animation = &"player/Jump_Idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_qy16u"]
+animation = &"player/Jump_Land"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_h1u77"]
+animation = &"player/Jump_Start"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_rssw3"]
+animation = &"player/Melee_1H_Attack_Slice_Diagonal"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_klnkb"]
+animation = &"player/Melee_1H_Attack_Stab"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_tdjv3"]
+animation = &"player/Running_A"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_klnkb"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_h8dwp"]
+break_loop_at_end = true
+advance_mode = 2
+advance_condition = &"is_running"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_qy16u"]
+break_loop_at_end = true
+advance_mode = 2
+advance_condition = &"is_idle"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_h1u77"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_2s5v1"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ekidk"]
+advance_mode = 2
+advance_condition = &"is_falling"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_3q3xd"]
+break_loop_at_end = true
+advance_mode = 2
+advance_condition = &"is_done_falling"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_dtf7i"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_nciaw"]
+advance_mode = 2
+advance_condition = &"is_falling"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_oxgky"]
+advance_mode = 2
+advance_condition = &"is_falling"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_f66mv"]
+advance_mode = 2
+advance_condition = &"is_dead"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_6j388"]
+advance_mode = 2
+advance_condition = &"is_dead"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_vtmvh"]
+advance_mode = 2
+advance_condition = &"is_dead"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_g8tkl"]
+advance_mode = 2
+advance_condition = &"is_dead"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ruobk"]
+advance_mode = 2
+advance_condition = &"is_dead"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_0ahec"]
+advance_mode = 2
+advance_condition = &"is_dead"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_reqed"]
+advance_mode = 2
+advance_condition = &"is_dead"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_wlch4"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_kjw7v"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_020sy"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_nqr6q"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_ycqy7"]
+states/End/position = Vector2(1342, 81)
+states/Start/position = Vector2(53, 38)
+states/player_Death_A/node = SubResource("AnimationNodeAnimation_2s5v1")
+states/player_Death_A/position = Vector2(1215.29, 157)
+states/player_Dodge_Backward/node = SubResource("AnimationNodeAnimation_itrf6")
+states/player_Dodge_Backward/position = Vector2(569.524, 540.596)
+states/player_Dodge_Forward/node = SubResource("AnimationNodeAnimation_oyyum")
+states/player_Dodge_Forward/position = Vector2(598.524, 380.596)
+states/player_Dodge_Left/node = SubResource("AnimationNodeAnimation_xknwg")
+states/player_Dodge_Left/position = Vector2(424.524, 427.596)
+states/player_Dodge_Right/node = SubResource("AnimationNodeAnimation_ibrwj")
+states/player_Dodge_Right/position = Vector2(779.524, 427.596)
+states/player_Idle_B/node = SubResource("AnimationNodeAnimation_4qrni")
+states/player_Idle_B/position = Vector2(578, 147)
+states/player_Jump_Idle/node = SubResource("AnimationNodeAnimation_h8dwp")
+states/player_Jump_Idle/position = Vector2(920.688, 162)
+states/player_Jump_Land/node = SubResource("AnimationNodeAnimation_qy16u")
+states/player_Jump_Land/position = Vector2(920.688, 238)
+states/player_Jump_Start/node = SubResource("AnimationNodeAnimation_h1u77")
+states/player_Jump_Start/position = Vector2(920.688, 69)
+states/player_Melee_1H_Attack_Slice_Diagonal_Light/node = SubResource("AnimationNodeAnimation_rssw3")
+states/player_Melee_1H_Attack_Slice_Diagonal_Light/position = Vector2(294, 309)
+states/player_Melee_1H_Attack_Stab_Heavy/node = SubResource("AnimationNodeAnimation_klnkb")
+states/player_Melee_1H_Attack_Stab_Heavy/position = Vector2(245, 225)
+states/player_Running_A/node = SubResource("AnimationNodeAnimation_tdjv3")
+states/player_Running_A/position = Vector2(578, 61)
+transitions = ["Start", "player_Idle_B", SubResource("AnimationNodeStateMachineTransition_klnkb"), "player_Idle_B", "player_Running_A", SubResource("AnimationNodeStateMachineTransition_h8dwp"), "player_Running_A", "player_Idle_B", SubResource("AnimationNodeStateMachineTransition_qy16u"), "player_Melee_1H_Attack_Slice_Diagonal_Light", "player_Idle_B", SubResource("AnimationNodeStateMachineTransition_h1u77"), "player_Melee_1H_Attack_Stab_Heavy", "player_Idle_B", SubResource("AnimationNodeStateMachineTransition_2s5v1"), "player_Jump_Start", "player_Jump_Idle", SubResource("AnimationNodeStateMachineTransition_ekidk"), "player_Jump_Idle", "player_Jump_Land", SubResource("AnimationNodeStateMachineTransition_3q3xd"), "player_Jump_Land", "player_Idle_B", SubResource("AnimationNodeStateMachineTransition_dtf7i"), "player_Running_A", "player_Jump_Idle", SubResource("AnimationNodeStateMachineTransition_nciaw"), "player_Idle_B", "player_Jump_Idle", SubResource("AnimationNodeStateMachineTransition_oxgky"), "player_Running_A", "player_Death_A", SubResource("AnimationNodeStateMachineTransition_f66mv"), "player_Jump_Start", "player_Death_A", SubResource("AnimationNodeStateMachineTransition_6j388"), "player_Idle_B", "player_Death_A", SubResource("AnimationNodeStateMachineTransition_vtmvh"), "player_Jump_Idle", "player_Death_A", SubResource("AnimationNodeStateMachineTransition_g8tkl"), "player_Jump_Land", "player_Death_A", SubResource("AnimationNodeStateMachineTransition_ruobk"), "player_Melee_1H_Attack_Slice_Diagonal_Light", "player_Death_A", SubResource("AnimationNodeStateMachineTransition_0ahec"), "player_Melee_1H_Attack_Stab_Heavy", "player_Death_A", SubResource("AnimationNodeStateMachineTransition_reqed"), "player_Dodge_Backward", "player_Idle_B", SubResource("AnimationNodeStateMachineTransition_wlch4"), "player_Dodge_Forward", "player_Idle_B", SubResource("AnimationNodeStateMachineTransition_kjw7v"), "player_Dodge_Left", "player_Idle_B", SubResource("AnimationNodeStateMachineTransition_020sy"), "player_Dodge_Right", "player_Idle_B", SubResource("AnimationNodeStateMachineTransition_nqr6q")]
+graph_offset = Vector2(-69.476, 173.547)
+
+[node name="AnimationPlayer" type="AnimationPlayer"]
+libraries = {
+&"player": SubResource("AnimationLibrary_qk1pc")
+}
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+root_node = NodePath("../..")
+tree_root = SubResource("AnimationNodeStateMachine_ycqy7")
+anim_player = NodePath("..")
+parameters/conditions/is_dead = false
+parameters/conditions/is_done_falling = false
+parameters/conditions/is_falling = false
+parameters/conditions/is_idle = false
+parameters/conditions/is_running = false
