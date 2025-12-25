@@ -10,6 +10,8 @@ extends Entity
 @onready var weapon_timey = $DodgeTimer
 @onready var searchy = $LockOnArea
 @onready var searchy_shape = $LockOnArea/CollisionShape3D
+@onready var inventory_ui = $InventoryUI
+@onready var ruck_sacked = $Inventory
 
 var target_enemy: Entity = null
 
@@ -43,7 +45,10 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	check_weapon_hitbox()
-	
+	# Inventory
+	if Input.is_action_just_released("inventory") and is_on_floor() and not is_attacking and dodgey.is_stopped():
+		toggle_inventory()
+		
 	# Dodge
 	if Input.is_action_just_pressed("dodge") and is_on_floor() and not is_attacking and dodgey.is_stopped():
 		dodgey.start(DODGE_TIME)
@@ -207,3 +212,11 @@ func execute_dodge():
 		# Backstep
 		anim_state.travel("player_Dodge_Backward")
 		velocity = slected_char.global_transform.basis.z * BWK_DODGE_DIS
+			
+func toggle_inventory():
+	inventory_ui.visible = !inventory_ui.visible
+	
+	if inventory_ui.visible:
+		inventory_ui.update_display(ruck_sacked) 
+		#Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		#Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
