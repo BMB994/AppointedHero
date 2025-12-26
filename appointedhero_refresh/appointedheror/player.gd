@@ -2,81 +2,147 @@ extends Entity
 
 @onready var neck = $SpringArm3D/PivotPoint
 @onready var camera = $SpringArm3D/PivotPoint/Camera3D
-@onready var slected_char = $Barbarian
-@onready var right_hand = $Barbarian/Rig_Medium/Skeleton3D/RightHand/RightHandWeapon
-@onready var starting_weapon = $samurai_sword
+@onready var slected_char = $Rogue
+@onready var right_hand = $Rogue/Rig_Medium/Skeleton3D/RightHand/RightHandWeapon
+@onready var left_hand = $Rig_Medium/Skeleton3D/LeftHand/LeftHandWeapon
 @onready var springy = $SpringArm3D
 @onready var dodgey = $DodgeTimer
 @onready var weapon_timey = $DodgeTimer
 @onready var searchy = $LockOnArea
 @onready var searchy_shape = $LockOnArea/CollisionShape3D
 @onready var inventory_ui = $InventoryUI
-@onready var ruck_sacked = $Inventory
+
+@export var test_weapon_resource: ItemData
 
 var target_enemy: Entity = null
+var equipped_right: Node3D = null
+var equipped_left: Node3D = null
+var ruck_sacked: Array[ItemData] = []
 
 const SPEED = 7.0
-const JUMP_VELOCITY = 4.5
+const JUMP_VELOCITY = 8
 const DODGE_TIME = 0.55
 const FWD_DODGE_DIS = 10
 const BWK_DODGE_DIS = -5
 const LOOK_SENS = 2.5
 const LIGHT_ATK_LUNG = 5
 const HEAVY_ATK_LUNG = 7
-const ANGLE_CONVERSION = 75
+const ANGLE_CONVERSION = 180
 const LOCKED_H_OFFSET = 1.5
 const OFFSET_SPEED = 4.0
 
 func _ready() -> void:
-	#TESTCODE: Allows my player to stay alive longer
-	upgrade_health(1000.0)
+	#TESTCODE:
+	#upgrade_health(1000.0)
+	print("Test Resource is: ", test_weapon_resource)
+	add_item_to_ruck(test_weapon_resource)
+	add_item_to_ruck(test_weapon_resource)
+	equip_from_data(test_weapon_resource)
 	#END
-	if starting_weapon and right_hand:
-		# 1. Move the node to the hand slot
-		starting_weapon.reparent(right_hand)
-		# 2. Reset transforms so it snaps to (0,0,0) of the hand
-		starting_weapon.position = Vector3.ZERO
-		starting_weapon.rotation = Vector3.ZERO
-		# 3. Assign it to current_weapon so Entity.gd knows it exists
-		current_weapon = starting_weapon
-		current_weapon.owner_entity = self
-		print("Sword successfully snapped to hand!")
-	#equip_weapon(starting_weapon)
+
+func equip_from_data(data: ItemData):
+	match data.type:
+		ItemData.SlotType.ONE_HAND:
+			# 1. Clear ONLY the right hand
+			_clear_slot("right")
+			# 2. If we were holding a 2H weapon, the left hand is now empty too
+			if equipped_left and equipped_left.has_meta("is_2h"):
+				_clear_slot("left")
+			
+			equipped_right = _spawn_model(data, right_hand)
+			current_weapon = equipped_right
+
+		ItemData.SlotType.TWO_HAND:
+			# 1. Clear BOTH hands
+			_clear_slot("right")
+			_clear_slot("left")
+			
+			equipped_right = _spawn_model(data, right_hand)
+			equipped_right.set_meta("is_2h", true) # Mark it as 2H
+			current_weapon = equipped_right
+
+		ItemData.SlotType.SHIELD:
+			# 1. Clear ONLY the left hand
+			_clear_slot("left")
+			# 2. If right hand has a 2H weapon, it must go
+			if equipped_right and equipped_right.has_meta("is_2h"):
+				_clear_slot("right")
+				current_weapon = null
+				
+			equipped_left = _spawn_model(data, left_hand)
+
+func _clear_slot(side: String):
+	if side == "right" and equipped_right:
+		equipped_right.queue_free()
+		equipped_right = null
+	elif side == "left" and equipped_left:
+		equipped_left.queue_free()
+		equipped_left = null
+
+func _spawn_model(data: ItemData, socket: Node3D) -> Node3D:
+	if data.scene_to_spawn == null:
+		print("Error: No scene assigned to this resource")
+		return null
+		
+	var instance = data.scene_to_spawn.instantiate()
+	
+	if instance.has_method("apply_item_data"):
+		instance.apply_item_data(data)	
+		
+	if instance is BaseWeapon:
+		instance.owner_entity = self
+		
+	socket.add_child(instance)
+	instance.transform = Transform3D.IDENTITY
+
+	return instance
 
 func _physics_process(delta: float) -> void:
 	check_weapon_hitbox()
-	# Inventory
-	if Input.is_action_just_released("inventory") and is_on_floor() and not is_attacking and dodgey.is_stopped():
+	if not is_on_floor():
+		velocity += get_gravity() * delta
+
+	if Input.is_action_just_released("inventory"):
 		toggle_inventory()
+
+	if inventory_ui.visible:
+		velocity.x = move_toward(velocity.x, 0, SPEED)
+		velocity.z = move_toward(velocity.z, 0, SPEED)
+		move_and_slide()
+		return 
 		
-	# Dodge
-	if Input.is_action_just_pressed("dodge") and is_on_floor() and not is_attacking and dodgey.is_stopped():
-		dodgey.start(DODGE_TIME)
-		execute_dodge()
-	# Jump
-	if Input.is_action_just_pressed("jump") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
-		anim_state.travel("player_Jump_Start")
-	# Heavy Attack	
-	if Input.is_action_just_pressed("heavy_attack") and is_on_floor():
-		perform_attack("player_Melee_1H_Attack_Stab_Heavy")
-		if is_locked_on and target_enemy:
-			rotate_towards_target(target_enemy.global_position, delta, true)
-		velocity = slected_char.global_transform.basis.z * HEAVY_ATK_LUNG
-	# Light Attack
-	if Input.is_action_just_pressed("light_attack") and is_on_floor():
-		perform_attack("player_Melee_1H_Attack_Slice_Diagonal_Light")
-		if is_locked_on and target_enemy:
-			rotate_towards_target(target_enemy.global_position, delta, true)
-		velocity = slected_char.global_transform.basis.z * LIGHT_ATK_LUNG
-	# Lock On
-	if Input.is_action_just_pressed("lock_on") and is_on_floor():
-		_lock_on()
-		
+
+	_handle_combat_inputs(delta)
 	_looking_process(delta)
 	_moving_process(delta)
 	move_and_slide()
 	
+func _handle_combat_inputs(delta: float):
+
+	if Input.is_action_just_pressed("jump"):
+		velocity.y = JUMP_VELOCITY
+		anim_state.travel("player_Jump_Start")
+		return
+
+	if is_attacking or not dodgey.is_stopped():
+		return
+
+	if Input.is_action_just_pressed("dodge"):
+		dodgey.start(DODGE_TIME)
+		execute_dodge()
+	elif Input.is_action_just_pressed("heavy_attack"):
+		_start_attack("player_Melee_1H_Attack_Stab_Heavy", HEAVY_ATK_LUNG, delta)
+	elif Input.is_action_just_pressed("light_attack"):
+		_start_attack("player_Melee_1H_Attack_Slice_Diagonal_Light", LIGHT_ATK_LUNG, delta)
+	elif Input.is_action_just_pressed("lock_on"):
+		_lock_on()
+
+func _start_attack(anim: String, lunge: float, delta: float):
+	perform_attack(anim)
+	if is_locked_on and target_enemy:
+		rotate_towards_target(target_enemy.global_position, delta, true)
+	velocity = slected_char.global_transform.basis.z * lunge
+		
 func _lock_on() -> void:
 	
 	# Find all enemies within radius
@@ -151,8 +217,11 @@ func _moving_process(delta) -> void:
 		
 	if not is_on_floor():
 		velocity += get_gravity() * delta
-	var input_dir := Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
-
+	var input_dir := Input.get_vector("move_left", "move_right", "move_up", "move_down")
+	
+	if inventory_ui.visible: # Dont allow char movement when in inventory
+		return
+		
 	# Calculate direction based on the SPRING ARM'S orientation, not the player's
 	var direction : Vector3 = (springy.global_transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	direction.y = 0 # Keep us from flying into the air if the camera is tilted
@@ -217,6 +286,9 @@ func toggle_inventory():
 	inventory_ui.visible = !inventory_ui.visible
 	
 	if inventory_ui.visible:
-		inventory_ui.update_display(ruck_sacked) 
+		inventory_ui.update_display(ruck_sacked, self) 
 		#Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 		#Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+
+func add_item_to_ruck(data: ItemData):
+	ruck_sacked.append(data)

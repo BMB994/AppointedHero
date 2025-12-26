@@ -16,7 +16,12 @@ func use(type_attack: String = "default"):
 		damage = light_damage
 	elif type_attack == "heavy":
 		damage = heavy_damage
-		
+
+func apply_item_data(data: ItemData):
+	light_damage = data.light_damage
+	heavy_damage = data.heavy_damage
+
+			
 func enable_hitbox():
 	if hitbox:
 		hitbox.monitoring = true

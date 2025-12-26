@@ -2,74 +2,17 @@
 
 [ext_resource type="PackedScene" uid="uid://gvbg3ootwovl" path="res://Assets/Scenes/entity.tscn" id="1_4flbx"]
 [ext_resource type="Script" uid="uid://bhobgd87xn726" path="res://player.gd" id="2_onrkg"]
-[ext_resource type="PackedScene" uid="uid://528q1w0lvykn" path="res://Assets/Scenes/barbarian.tscn" id="3_38rej"]
-[ext_resource type="PackedScene" uid="uid://bdtb7uocwfgh3" path="res://Assets/Scenes/samurai_sword.tscn" id="3_t1xgp"]
+[ext_resource type="Resource" uid="uid://bdkbtqsayohs1" path="res://Assets/Resource/katana.tres" id="3_c3tg1"]
+[ext_resource type="PackedScene" uid="uid://cjec5tjsct6x8" path="res://Assets/Scenes/rogue.tscn" id="3_w3t24"]
 [ext_resource type="PackedScene" uid="uid://2cjh2pnngioc" path="res://Assets/Scenes/inventory_ui.tscn" id="5_23lac"]
 [ext_resource type="PackedScene" uid="uid://bfpctvsst717g" path="res://Assets/Scenes/hud.tscn" id="6_w3t24"]
 
 [node name="Player" groups=["player"] instance=ExtResource("1_4flbx")]
 wall_min_slide_angle = 0.00174533
 script = ExtResource("2_onrkg")
+test_weapon_resource = ExtResource("3_c3tg1")
 
-[node name="Barbarian" parent="." index="0" instance=ExtResource("3_38rej")]
-
-[node name="Skeleton3D" parent="Barbarian/Rig_Medium" index="0"]
-bones/1/position = Vector3(0, 0.391099, 0)
-bones/1/rotation = Quaternion(0.00066308, 0.0431577, 2.86465e-05, 0.999068)
-bones/1/scale = Vector3(1, 1, 1)
-bones/2/rotation = Quaternion(0.00122247, 3.71466e-09, 0.000105814, 0.999999)
-bones/2/scale = Vector3(1, 1, 1)
-bones/3/rotation = Quaternion(0.00392762, 5.58186e-09, 0.000339966, 0.999992)
-bones/3/scale = Vector3(1, 1, 1)
-bones/4/position = Vector3(0.212007, 0.134132, 8.2165e-08)
-bones/4/rotation = Quaternion(-0.534208, -0.115373, -0.770902, 0.327142)
-bones/4/scale = Vector3(0.999999, 0.999999, 1)
-bones/5/rotation = Quaternion(4.66747e-09, -6.38051e-08, -0.360619, 0.932713)
-bones/5/scale = Vector3(1, 1, 1)
-bones/6/rotation = Quaternion(1.51457e-08, -7.35844e-09, 0.0266581, 0.999645)
-bones/6/scale = Vector3(1, 1, 1)
-bones/7/rotation = Quaternion(-0.221886, -0.345519, 0.183896, 0.893065)
-bones/7/scale = Vector3(1, 1, 1)
-bones/8/position = Vector3(5.13849e-10, 0.0961251, -0.0575)
-bones/8/rotation = Quaternion(0.000241588, 0.000241588, -0.70622, 0.707993)
-bones/9/rotation = Quaternion(-0.0063465, -0.0313411, -0.000349384, 0.999489)
-bones/9/scale = Vector3(1, 1, 1)
-bones/10/position = Vector3(-0.212007, 0.134132, 8.62731e-08)
-bones/10/rotation = Quaternion(-0.561162, 0.0454475, 0.73603, 0.375887)
-bones/10/scale = Vector3(0.999999, 0.999999, 1)
-bones/11/rotation = Quaternion(1.37302e-08, 5.98923e-08, 0.377874, 0.925857)
-bones/11/scale = Vector3(1, 1, 1)
-bones/12/rotation = Quaternion(2.24975e-10, 6.82468e-09, -0.0266581, 0.999645)
-bones/12/scale = Vector3(1, 1, 1)
-bones/13/rotation = Quaternion(-0.212242, 0.383674, -0.139436, 0.887866)
-bones/13/scale = Vector3(1, 1, 1)
-bones/14/position = Vector3(-1.5415e-08, 0.0961252, -0.0575)
-bones/14/rotation = Quaternion(0.000241588, -0.000241588, 0.70622, 0.707993)
-bones/14/scale = Vector3(1, 1, 1)
-bones/15/position = Vector3(0.170945, 0.113587, 1.59941e-08)
-bones/15/rotation = Quaternion(0.992075, 0.0580717, 0.0705436, 0.0862452)
-bones/15/scale = Vector3(1, 1, 1)
-bones/16/rotation = Quaternion(0.270295, 6.45606e-08, -1.82016e-07, 0.962778)
-bones/16/scale = Vector3(1, 1, 1)
-bones/17/rotation = Quaternion(-0.534203, -0.114163, 0.0424885, 0.836534)
-bones/17/scale = Vector3(1, 1, 0.999999)
-bones/18/rotation = Quaternion(9.60474e-06, 0.920251, -0.391328, -2.10143e-06)
-bones/18/scale = Vector3(1, 0.999997, 1)
-bones/19/position = Vector3(-0.170945, 0.113587, 1.55755e-08)
-bones/19/rotation = Quaternion(0.997129, -0.0296248, 0.0314707, 0.0621796)
-bones/19/scale = Vector3(1, 1, 1)
-bones/20/rotation = Quaternion(0.281286, -6.51039e-08, 1.97857e-07, 0.959624)
-bones/20/scale = Vector3(1, 1, 1)
-bones/21/rotation = Quaternion(-0.56302, 0.114466, -0.00924372, 0.818426)
-bones/21/scale = Vector3(1, 1, 0.999999)
-bones/22/rotation = Quaternion(-8.93489e-05, 0.920222, -0.391398, 2.0291e-05)
-bones/22/scale = Vector3(1, 0.999998, 1)
-
-[node name="RightHand" parent="Barbarian/Rig_Medium/Skeleton3D" index="7"]
-transform = Transform3D(0.26286, 2.02656e-06, -0.964834, 0.000428647, -0.999999, 0.000115842, -0.964833, -0.000444531, -0.26286, -0.479617, 0.630928, 0.0664729)
-
-[node name="Head" parent="Barbarian/Rig_Medium/Skeleton3D" index="8"]
-transform = Transform3D(0.99972, -1.28057e-09, 0.0236466, -2.47372e-05, 0.999999, 0.00104589, -0.0236466, -0.00104619, 0.99972, -4.26407e-09, 1.22684, 0.00480858)
+[node name="Rogue" parent="." index="0" instance=ExtResource("3_w3t24")]
 
 [node name="SpringArm3D" type="SpringArm3D" parent="." index="2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, 0)
@@ -86,15 +29,8 @@ one_shot = true
 [node name="HBoxDelay" parent="." index="5"]
 wait_time = 0.35
 
-[node name="samurai_sword" parent="." index="6" instance=ExtResource("3_t1xgp")]
+[node name="CanvasLayer" parent="." index="6" instance=ExtResource("6_w3t24")]
 
-[node name="Inventory" type="Node3D" parent="." index="7"]
-visible = false
+[node name="InventoryUI" parent="." index="7" instance=ExtResource("5_23lac")]
 
-[node name="samurai_sword" parent="Inventory" index="0" instance=ExtResource("3_t1xgp")]
-
-[node name="InventoryUI" parent="." index="8" instance=ExtResource("5_23lac")]
-
-[node name="CanvasLayer" parent="." index="9" instance=ExtResource("6_w3t24")]
-
-[editable path="Barbarian"]
+[editable path="InventoryUI"]
