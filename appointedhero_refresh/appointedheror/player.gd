@@ -18,6 +18,11 @@ var target_enemy: Entity = null
 var equipped_right: Node3D = null
 var equipped_left: Node3D = null
 var ruck_sacked: Array[ItemData] = []
+var active_right_hand_data: ItemData = null
+var active_left_hand_data: ItemData = null
+var active_head_data: ItemData = null
+var active_chest_data: ItemData = null
+var active_leg_data: ItemData = null
 
 const SPEED = 7.0
 const JUMP_VELOCITY = 8
@@ -43,28 +48,28 @@ func _ready() -> void:
 func equip_from_data(data: ItemData):
 	match data.type:
 		ItemData.SlotType.ONE_HAND:
-			# 1. Clear ONLY the right hand
 			_clear_slot("right")
-			# 2. If we were holding a 2H weapon, the left hand is now empty too
+			
 			if equipped_left and equipped_left.has_meta("is_2h"):
 				_clear_slot("left")
-			
+			active_right_hand_data = data
 			equipped_right = _spawn_model(data, right_hand)
 			current_weapon = equipped_right
 
 		ItemData.SlotType.TWO_HAND:
-			# 1. Clear BOTH hands
 			_clear_slot("right")
 			_clear_slot("left")
-			
+			active_right_hand_data = data
+			active_left_hand_data = data
 			equipped_right = _spawn_model(data, right_hand)
-			equipped_right.set_meta("is_2h", true) # Mark it as 2H
+			equipped_right.set_meta("is_2h", true)
 			current_weapon = equipped_right
 
 		ItemData.SlotType.SHIELD:
-			# 1. Clear ONLY the left hand
+
 			_clear_slot("left")
-			# 2. If right hand has a 2H weapon, it must go
+			active_left_hand_data = data
+
 			if equipped_right and equipped_right.has_meta("is_2h"):
 				_clear_slot("right")
 				current_weapon = null
@@ -74,9 +79,11 @@ func equip_from_data(data: ItemData):
 func _clear_slot(side: String):
 	if side == "right" and equipped_right:
 		equipped_right.queue_free()
+		active_right_hand_data.queue_free()
 		equipped_right = null
 	elif side == "left" and equipped_left:
 		equipped_left.queue_free()
+		active_left_hand_data.queue_free()
 		equipped_left = null
 
 func _spawn_model(data: ItemData, socket: Node3D) -> Node3D:

@@ -32,5 +32,3 @@ wait_time = 0.35
 [node name="CanvasLayer" parent="." index="6" instance=ExtResource("6_w3t24")]
 
 [node name="InventoryUI" parent="." index="7" instance=ExtResource("5_23lac")]
-
-[editable path="InventoryUI"]

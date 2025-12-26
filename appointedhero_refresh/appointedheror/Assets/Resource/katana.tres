@@ -5,6 +5,7 @@
 
 [resource]
 script = ExtResource("1_ul7vw")
+type = 0
 item_id = "01"
 display_name = "Katana"
 scene_to_spawn = ExtResource("1_8frqg")
