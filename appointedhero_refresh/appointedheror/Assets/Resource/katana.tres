@@ -1,5 +1,6 @@
-[gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3 uid="uid://bdkbtqsayohs1"]
+[gd_resource type="Resource" script_class="ItemData" load_steps=4 format=3 uid="uid://bdkbtqsayohs1"]
 
+[ext_resource type="Texture2D" uid="uid://ci0cjx127pv0r" path="res://Assets/ItemPNGs/samurai_sword_basic.png" id="1_5ha0y"]
 [ext_resource type="PackedScene" uid="uid://bdtb7uocwfgh3" path="res://Assets/Scenes/samurai_sword.tscn" id="1_8frqg"]
 [ext_resource type="Script" uid="uid://dgcko2iodnuoh" path="res://ItemData.gd" id="1_ul7vw"]
 
@@ -8,6 +9,7 @@ script = ExtResource("1_ul7vw")
 type = 0
 item_id = "01"
 display_name = "Katana"
+icon = ExtResource("1_5ha0y")
 scene_to_spawn = ExtResource("1_8frqg")
 description = "A sharp blade for anime nerds"
 light_damage = 10.0

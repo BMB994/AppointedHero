@@ -1,5 +1,7 @@
 extends Entity
 
+signal inventory_changed(rucksack: Array[ItemData], equipment: Dictionary)
+
 @onready var neck = $SpringArm3D/PivotPoint
 @onready var camera = $SpringArm3D/PivotPoint/Camera3D
 @onready var slected_char = $Rogue
@@ -18,11 +20,10 @@ var target_enemy: Entity = null
 var equipped_right: Node3D = null
 var equipped_left: Node3D = null
 var ruck_sacked: Array[ItemData] = []
-var active_right_hand_data: ItemData = null
-var active_left_hand_data: ItemData = null
-var active_head_data: ItemData = null
-var active_chest_data: ItemData = null
-var active_leg_data: ItemData = null
+var equipment_slots = {
+	"RIGHT_HAND": null,
+	"LEFT_HAND": null
+}
 
 const SPEED = 7.0
 const JUMP_VELOCITY = 8
@@ -42,25 +43,25 @@ func _ready() -> void:
 	print("Test Resource is: ", test_weapon_resource)
 	add_item_to_ruck(test_weapon_resource)
 	add_item_to_ruck(test_weapon_resource)
-	equip_from_data(test_weapon_resource)
+	equip_from_inventory(1) # Equip one of the katanas
+	#equip_from_data(test_weapon_resource)
 	#END
-
-func equip_from_data(data: ItemData):
+func equip_from_data(data: ItemData): # Process resource file and equip
 	match data.type:
 		ItemData.SlotType.ONE_HAND:
 			_clear_slot("right")
 			
 			if equipped_left and equipped_left.has_meta("is_2h"):
 				_clear_slot("left")
-			active_right_hand_data = data
+			equipment_slots.RIGHT_HAND = data
 			equipped_right = _spawn_model(data, right_hand)
 			current_weapon = equipped_right
 
 		ItemData.SlotType.TWO_HAND:
 			_clear_slot("right")
 			_clear_slot("left")
-			active_right_hand_data = data
-			active_left_hand_data = data
+			equipment_slots.RIGHT_HAND = data
+			equipment_slots.LEFT_HAND = data
 			equipped_right = _spawn_model(data, right_hand)
 			equipped_right.set_meta("is_2h", true)
 			current_weapon = equipped_right
@@ -68,24 +69,36 @@ func equip_from_data(data: ItemData):
 		ItemData.SlotType.SHIELD:
 
 			_clear_slot("left")
-			active_left_hand_data = data
+			equipment_slots.LEFT_HAND = data
 
 			if equipped_right and equipped_right.has_meta("is_2h"):
 				_clear_slot("right")
 				current_weapon = null
 				
 			equipped_left = _spawn_model(data, left_hand)
-
+func equip_from_inventory(index: int): # item picked from UI inventory and then equipped
+	var new_data = ruck_sacked[index]
+	var slot_key = "RIGHT_HAND"
+	
+	if new_data.type == ItemData.SlotType.SHIELD:
+		slot_key = "LEFT_HAND"
+	
+	# Swap logic
+	var old_data = equipment_slots[slot_key]
+	ruck_sacked.remove_at(index)
+	
+	if old_data:
+		ruck_sacked.append(old_data)
+	equipment_slots[slot_key] = new_data
+	equip_from_data(new_data)
+	inventory_changed.emit(ruck_sacked, equipment_slots)
 func _clear_slot(side: String):
 	if side == "right" and equipped_right:
 		equipped_right.queue_free()
-		active_right_hand_data.queue_free()
 		equipped_right = null
 	elif side == "left" and equipped_left:
 		equipped_left.queue_free()
-		active_left_hand_data.queue_free()
 		equipped_left = null
-
 func _spawn_model(data: ItemData, socket: Node3D) -> Node3D:
 	if data.scene_to_spawn == null:
 		print("Error: No scene assigned to this resource")
@@ -103,7 +116,6 @@ func _spawn_model(data: ItemData, socket: Node3D) -> Node3D:
 	instance.transform = Transform3D.IDENTITY
 
 	return instance
-
 func _physics_process(delta: float) -> void:
 	check_weapon_hitbox()
 	if not is_on_floor():
@@ -123,9 +135,7 @@ func _physics_process(delta: float) -> void:
 	_looking_process(delta)
 	_moving_process(delta)
 	move_and_slide()
-	
 func _handle_combat_inputs(delta: float):
-
 	if Input.is_action_just_pressed("jump"):
 		velocity.y = JUMP_VELOCITY
 		anim_state.travel("player_Jump_Start")
@@ -143,13 +153,11 @@ func _handle_combat_inputs(delta: float):
 		_start_attack("player_Melee_1H_Attack_Slice_Diagonal_Light", LIGHT_ATK_LUNG, delta)
 	elif Input.is_action_just_pressed("lock_on"):
 		_lock_on()
-
 func _start_attack(anim: String, lunge: float, delta: float):
 	perform_attack(anim)
 	if is_locked_on and target_enemy:
 		rotate_towards_target(target_enemy.global_position, delta, true)
 	velocity = slected_char.global_transform.basis.z * lunge
-		
 func _lock_on() -> void:
 	
 	# Find all enemies within radius
@@ -187,7 +195,6 @@ func _lock_on() -> void:
 		print("Found enemy lock on")
 		target_enemy = closest_enemy
 		is_locked_on = true
-	
 func _looking_process(delta) -> void:
 	if is_locked_on and target_enemy:
 		# 1. Check if target is still valid (alive/in range)
@@ -215,9 +222,7 @@ func _looking_process(delta) -> void:
 			neck.rotation.x = clamp(neck.rotation.x, deg_to_rad(-80), deg_to_rad(80))
 			springy.rotation.z = 0
 			neck.rotation.z = 0
-
 func _moving_process(delta) -> void:
-	
 	if anim_state:
 		var current_node = anim_state.get_current_node()
 		is_attacking = current_node.contains("Attack")
@@ -258,7 +263,6 @@ func _moving_process(delta) -> void:
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 		
 	update_animations(direction)
-
 func rotate_towards_target(target_pos: Vector3, delta: float, instant: bool = false):
 	var dir_to_target = (target_pos - global_position).normalized()
 	var target_angle = atan2(-dir_to_target.x, -dir_to_target.z) + deg_to_rad(ANGLE_CONVERSION)
@@ -268,7 +272,6 @@ func rotate_towards_target(target_pos: Vector3, delta: float, instant: bool = fa
 	else:
 		# 20.0 is a good 'tracking' speed for attacks
 		slected_char.rotation.y = lerp_angle(slected_char.rotation.y, target_angle, delta * 20.0)
-		
 func execute_dodge():
 	var input_dir := Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 	# Calculate world direction relative to camera
@@ -287,15 +290,12 @@ func execute_dodge():
 	else:
 		# Backstep
 		anim_state.travel("player_Dodge_Backward")
-		velocity = slected_char.global_transform.basis.z * BWK_DODGE_DIS
-			
+		velocity = slected_char.global_transform.basis.z * BWK_DODGE_DIS			
 func toggle_inventory():
 	inventory_ui.visible = !inventory_ui.visible
 	
 	if inventory_ui.visible:
-		inventory_ui.update_display(ruck_sacked, self) 
-		#Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-		#Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-
+		inventory_changed.emit(ruck_sacked, equipment_slots) 
 func add_item_to_ruck(data: ItemData):
 	ruck_sacked.append(data)
+	inventory_changed.emit(ruck_sacked, equipment_slots)

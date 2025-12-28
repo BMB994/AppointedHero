@@ -1,7 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://2cjh2pnngioc"]
+[gd_scene load_steps=2 format=3 uid="uid://2cjh2pnngioc"]
 
 [ext_resource type="Script" uid="uid://dvs3wg7f2m6cq" path="res://Assets/Scenes/inventory_ui.gd" id="1_cnpfd"]
-[ext_resource type="PackedScene" uid="uid://3kmkcrdgjbe6" path="res://Assets/Scenes/inventory_slots.tscn" id="2_n2m3u"]
 
 [node name="InventoryUI" type="Control"]
 layout_mode = 3
@@ -36,7 +35,17 @@ theme_override_constants/margin_bottom = 50
 layout_mode = 2
 theme_override_constants/separation = 250
 
-[node name="InventorySlots" parent="MarginContainer/HBoxContainer" instance=ExtResource("2_n2m3u")]
+[node name="LeftSide" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/LeftSide"]
+layout_mode = 2
+text = "INVENTORY"
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/HBoxContainer/LeftSide"]
+layout_mode = 2
+
+[node name="ItemList" type="VBoxContainer" parent="MarginContainer/HBoxContainer/LeftSide"]
 layout_mode = 2
 
 [node name="Middle" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
