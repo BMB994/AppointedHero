@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://2cjh2pnngioc"]
+[gd_scene load_steps=4 format=3 uid="uid://2cjh2pnngioc"]
 
 [ext_resource type="Script" uid="uid://dvs3wg7f2m6cq" path="res://Assets/Scenes/inventory_ui.gd" id="1_cnpfd"]
 [ext_resource type="PackedScene" uid="uid://3kmkcrdgjbe6" path="res://Assets/Scenes/inventory_slots.tscn" id="2_n2m3u"]
+[ext_resource type="PackedScene" uid="uid://c85b8hsx21vtd" path="res://Assets/Scenes/equipment_slots.tscn" id="3_s1djs"]
 
 [node name="InventoryUI" type="Control"]
 layout_mode = 3
@@ -34,29 +35,12 @@ theme_override_constants/margin_bottom = 50
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
 layout_mode = 2
-theme_override_constants/separation = 250
+theme_override_constants/separation = 100
 
 [node name="InventorySlots" parent="MarginContainer/HBoxContainer" instance=ExtResource("2_n2m3u")]
 layout_mode = 2
 
-[node name="Middle" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/Middle"]
-layout_mode = 2
-text = "CHARACTER
-Model with armor slots"
-
-[node name="HSeparator" type="HSeparator" parent="MarginContainer/HBoxContainer/Middle"]
-layout_mode = 2
-
-[node name="RightHandSlot" type="TextureButton" parent="MarginContainer/HBoxContainer/Middle"]
-layout_mode = 2
-
-[node name="LeftHandSlot" type="TextureButton" parent="MarginContainer/HBoxContainer/Middle"]
-layout_mode = 2
-
-[node name="TextureButton3" type="TextureButton" parent="MarginContainer/HBoxContainer/Middle"]
+[node name="EquipmentSlots" parent="MarginContainer/HBoxContainer" instance=ExtResource("3_s1djs")]
 layout_mode = 2
 
 [node name="RightSide" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
@@ -65,9 +49,3 @@ layout_mode = 2
 [node name="Label" type="Label" parent="MarginContainer/HBoxContainer/RightSide"]
 layout_mode = 2
 text = "STATS"
-
-[node name="HSeparator" type="HSeparator" parent="MarginContainer/HBoxContainer/RightSide"]
-layout_mode = 2
-
-[node name="ItemList" type="VBoxContainer" parent="MarginContainer/HBoxContainer/RightSide"]
-layout_mode = 2

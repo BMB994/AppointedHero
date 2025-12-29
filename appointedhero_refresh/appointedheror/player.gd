@@ -159,17 +159,11 @@ func _start_attack(anim: String, lunge: float, delta: float):
 		rotate_towards_target(target_enemy.global_position, delta, true)
 	velocity = slected_char.global_transform.basis.z * lunge
 func _lock_on() -> void:
-	
-	# Find all enemies within radius
-	# Sort them off distance
-	# Pick closest one
-	# If locked on is true and we get here, turn it off and clear list
 	if is_locked_on:
 		is_locked_on = false
 		target_enemy = null
 		return
 
-	# Get the radius from the collision shape to use as our limit
 	var shape = searchy_shape.shape
 	var max_range = 0.0
 	

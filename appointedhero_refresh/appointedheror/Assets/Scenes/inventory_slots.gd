@@ -6,13 +6,16 @@ const ITEM_SLOT_SCENE = preload("res://Assets/Scenes/item_slot.tscn")
 @export var cols: int = 6
 var current_capacity: int = 12
 
-func _ready():
-	# Create the full 6x8 physical grid
-	for i in range(rows * cols):
+func setup_grid(grid_cols: int, grid_rows: int, capacity: int):
+	self.columns = grid_cols
+	
+	# Clear any editor-placeholders
+	for child in get_children():
+		child.queue_free()
+		
+	for i in range(grid_cols * grid_rows):
 		var slot = ITEM_SLOT_SCENE.instantiate()
 		add_child(slot)
 		
-		# Visually lock slots that are beyond current capacity
-		if i >= current_capacity:
-			slot.modulate = Color(0.2, 0.2, 0.2, 0.5) # Dark/Hidden
-			slot.disabled = true # Prevent interaction
+		if i < capacity:
+			slot.display(null)
