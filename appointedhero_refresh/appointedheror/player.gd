@@ -77,20 +77,31 @@ func equip_from_data(data: ItemData): # Process resource file and equip
 				
 			equipped_left = _spawn_model(data, left_hand)
 func equip_from_inventory(index: int): # item picked from UI inventory and then equipped
-	var new_data = ruck_sacked[index]
-	var slot_key = "RIGHT_HAND"
+	if index >= ruck_sacked.size(): return
 	
+	var new_data = ruck_sacked[index]
+	
+	# Determine target slot based on ItemData type
+	var slot_key = "RIGHT_HAND" 
 	if new_data.type == ItemData.SlotType.SHIELD:
 		slot_key = "LEFT_HAND"
+	# Add more logic here for HEAD, CHEST etc.
 	
-	# Swap logic
+	# 1. Grab the item currently in that slot (if any)
 	var old_data = equipment_slots[slot_key]
-	ruck_sacked.remove_at(index)
 	
+	# 2. Swap them in the data structures
+	ruck_sacked.remove_at(index)
+	equipment_slots[slot_key] = new_data
+	
+	# 3. If there was an old item, put it back in the rucksack
 	if old_data:
 		ruck_sacked.append(old_data)
-	equipment_slots[slot_key] = new_data
+	
+	# 4. Update 3D Visuals
 	equip_from_data(new_data)
+	
+	# 5. Sync UI
 	inventory_changed.emit(ruck_sacked, equipment_slots)
 func _clear_slot(side: String):
 	if side == "right" and equipped_right:
@@ -289,7 +300,30 @@ func toggle_inventory():
 	inventory_ui.visible = !inventory_ui.visible
 	
 	if inventory_ui.visible:
-		inventory_changed.emit(ruck_sacked, equipment_slots) 
+		inventory_changed.emit(ruck_sacked, equipment_slots)
+		inventory_ui.focus_first_slot() 
 func add_item_to_ruck(data: ItemData):
 	ruck_sacked.append(data)
+	inventory_changed.emit(ruck_sacked, equipment_slots)
+func unequip_item(slot_key: String):
+	if not equipment_slots.has(slot_key) or equipment_slots[slot_key] == null:
+		return
+		
+	var item_to_return = equipment_slots[slot_key]
+	
+	# 1. Remove from equipment data
+	equipment_slots[slot_key] = null
+	
+	# 2. Clear 3D model
+	if slot_key == "RIGHT_HAND":
+		_clear_slot("right")
+		current_weapon = null
+	elif slot_key == "LEFT_HAND":
+		_clear_slot("left")
+	# TODO: Add other cases (HEAD, CHEST, etc) as needed
+		
+	# 3. Put back in rucksack
+	add_item_to_ruck(item_to_return)
+	
+	# 4. Notify UI
 	inventory_changed.emit(ruck_sacked, equipment_slots)
