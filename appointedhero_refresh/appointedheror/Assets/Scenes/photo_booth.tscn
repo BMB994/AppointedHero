@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://xl7wq1pkkpfx"]
+[gd_scene load_steps=7 format=3 uid="uid://xl7wq1pkkpfx"]
 
 [ext_resource type="PackedScene" uid="uid://5mep1xr1g4qh" path="res://Assets/Weapons/Ninja_Katana.gltf" id="1_vsda5"]
 [ext_resource type="Texture2D" uid="uid://bnvque1ihgro" path="res://Assets/Weapons/ninja_texture_A.png" id="2_boot6"]
@@ -9,13 +9,26 @@ albedo_texture = ExtResource("2_boot6")
 [sub_resource type="PlaneMesh" id="PlaneMesh_5oaql"]
 size = Vector2(5, 5)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w1tyb"]
+albedo_color = Color(0.513517, 0.251413, 0.00398243, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_vsda5"]
+material = SubResource("StandardMaterial3D_w1tyb")
+top_radius = 0.25
+bottom_radius = 0.1
+
 [node name="Ninja_Katana" instance=ExtResource("1_vsda5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 2.317, 1)
 
 [node name="Ninja_Katana" parent="." index="0"]
 transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 1, 0, 1)
+visible = false
 material_override = SubResource("StandardMaterial3D_rdu30")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." index="1"]
 transform = Transform3D(0.707107, 0.707107, -3.09086e-08, 0, -4.37114e-08, -1, -0.707107, 0.707107, -3.09086e-08, 0, 0, 0)
 mesh = SubResource("PlaneMesh_5oaql")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.579993, 0)
+mesh = SubResource("CylinderMesh_vsda5")

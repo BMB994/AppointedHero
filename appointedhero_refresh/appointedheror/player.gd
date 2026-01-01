@@ -14,7 +14,8 @@ signal inventory_changed(rucksack: Array[ItemData], equipment: Dictionary)
 @onready var searchy_shape = $LockOnArea/CollisionShape3D
 @onready var inventory_ui = $InventoryUI
 
-@export var test_weapon_resource: ItemData
+@export var katana_test: ItemData
+@export var club_test: ItemData
 
 var target_enemy: Entity = null
 var equipped_right: Node3D = null
@@ -40,10 +41,9 @@ const OFFSET_SPEED = 4.0
 func _ready() -> void:
 	#TESTCODE:
 	#upgrade_health(1000.0)
-	print("Test Resource is: ", test_weapon_resource)
-	add_item_to_ruck(test_weapon_resource)
-	add_item_to_ruck(test_weapon_resource)
-	equip_from_inventory(1) # Equip one of the katanas
+	add_item_to_ruck(katana_test)
+	add_item_to_ruck(club_test)
+
 	#equip_from_data(test_weapon_resource)
 	#END
 func equip_from_data(data: ItemData): # Process resource file and equip

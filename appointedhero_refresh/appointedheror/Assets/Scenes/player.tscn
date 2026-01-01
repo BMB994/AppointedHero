@@ -1,16 +1,18 @@
-[gd_scene load_steps=7 format=3 uid="uid://4qbf4kqtq770"]
+[gd_scene load_steps=8 format=3 uid="uid://4qbf4kqtq770"]
 
 [ext_resource type="PackedScene" uid="uid://gvbg3ootwovl" path="res://Assets/Scenes/entity.tscn" id="1_4flbx"]
 [ext_resource type="Script" uid="uid://bhobgd87xn726" path="res://player.gd" id="2_onrkg"]
 [ext_resource type="Resource" uid="uid://bdkbtqsayohs1" path="res://Assets/Resource/katana.tres" id="3_c3tg1"]
 [ext_resource type="PackedScene" uid="uid://cjec5tjsct6x8" path="res://Assets/Scenes/rogue.tscn" id="3_w3t24"]
+[ext_resource type="Resource" uid="uid://dof3pulwqqwme" path="res://Assets/Resource/club.tres" id="4_c3tg1"]
 [ext_resource type="PackedScene" uid="uid://2cjh2pnngioc" path="res://Assets/Scenes/inventory_ui.tscn" id="5_23lac"]
 [ext_resource type="PackedScene" uid="uid://bfpctvsst717g" path="res://Assets/Scenes/hud.tscn" id="6_w3t24"]
 
 [node name="Player" groups=["player"] instance=ExtResource("1_4flbx")]
 wall_min_slide_angle = 0.00174533
 script = ExtResource("2_onrkg")
-test_weapon_resource = ExtResource("3_c3tg1")
+katana_test = ExtResource("3_c3tg1")
+club_test = ExtResource("4_c3tg1")
 
 [node name="Rogue" parent="." index="0" instance=ExtResource("3_w3t24")]
 
