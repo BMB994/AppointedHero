@@ -1,10 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://2cjh2pnngioc"]
+[gd_scene load_steps=6 format=3 uid="uid://2cjh2pnngioc"]
 
 [ext_resource type="Script" uid="uid://dvs3wg7f2m6cq" path="res://Assets/Scenes/inventory_ui.gd" id="1_cnpfd"]
+[ext_resource type="PackedScene" uid="uid://de5vupmrwjc50" path="res://player_preview.tscn" id="2_3kr4a"]
 [ext_resource type="PackedScene" uid="uid://3kmkcrdgjbe6" path="res://Assets/Scenes/inventory_slots.tscn" id="2_n2m3u"]
 [ext_resource type="PackedScene" uid="uid://c85b8hsx21vtd" path="res://Assets/Scenes/equipment_slots.tscn" id="3_s1djs"]
+[ext_resource type="PackedScene" uid="uid://bjel22vaolu8e" path="res://statscreen.tscn" id="4_i6l4o"]
 
 [node name="InventoryUI" type="Control"]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -12,6 +15,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_cnpfd")
+doll_scene = ExtResource("2_3kr4a")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
@@ -43,9 +47,12 @@ layout_mode = 2
 [node name="EquipmentSlots" parent="MarginContainer/HBoxContainer" instance=ExtResource("3_s1djs")]
 layout_mode = 2
 
-[node name="RightSide" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+[node name="Statscreen" parent="MarginContainer/HBoxContainer" instance=ExtResource("4_i6l4o")]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/RightSide"]
-layout_mode = 2
-text = "STATS"
+[node name="SubViewport" parent="MarginContainer/HBoxContainer/Statscreen" index="0"]
+render_target_update_mode = 0
+
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
+
+[editable path="MarginContainer/HBoxContainer/Statscreen"]

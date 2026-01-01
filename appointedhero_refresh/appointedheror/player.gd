@@ -6,7 +6,7 @@ signal inventory_changed(rucksack: Array[ItemData], equipment: Dictionary)
 @onready var camera = $SpringArm3D/PivotPoint/Camera3D
 @onready var slected_char = $Rogue
 @onready var right_hand = $Rogue/Rig_Medium/Skeleton3D/RightHand/RightHandWeapon
-@onready var left_hand = $Rig_Medium/Skeleton3D/LeftHand/LeftHandWeapon
+@onready var left_hand = $Rogue/Rig_Medium/Skeleton3D/LeftHand/LeftHandWeapon
 @onready var springy = $SpringArm3D
 @onready var dodgey = $DodgeTimer
 @onready var weapon_timey = $DodgeTimer

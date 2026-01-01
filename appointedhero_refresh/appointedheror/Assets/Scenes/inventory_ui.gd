@@ -1,22 +1,32 @@
 extends Control
 
-@onready var item_list = $MarginContainer/HBoxContainer/LeftSide/ItemList
-@onready var right_hand_slot = $MarginContainer/HBoxContainer/Middle/RightHandSlot
-@onready var left_hand_slot = $MarginContainer/HBoxContainer/Middle/LeftHandSlot
-
 @onready var rucksack_grid = $MarginContainer/HBoxContainer/InventorySlots
 @onready var equipment_grid = $MarginContainer/HBoxContainer/EquipmentSlots
+@onready var stats_section = $MarginContainer/HBoxContainer/Statscreen/SubViewport
+@export var doll_scene: PackedScene
+var current_doll: Node3D = null
+
 var player
 
 const COLS = 6
 const ROWS = 8
-
+func _on_visibility_changed():
+	if visible:
+		_spawn_doll()
+	else:
+		_despawn_doll()
 func _ready():
 	player = get_tree().get_first_node_in_group("player")
 	rucksack_grid.setup_grid(COLS, ROWS, 12)
 	if player:
 		player.inventory_changed.connect(_on_inventory_changed)
-
+func _process(delta):
+	if visible:
+		if is_instance_valid(current_doll):
+			var rotate_dir = Input.get_axis("look_left", "look_right")
+			if rotate_dir != 0:
+				current_doll.rotate_y(rotate_dir * delta * 5.0)
+		
 func _on_inventory_changed(rucksack: Array[ItemData], equipment: Dictionary):
 	_update_rucksack_ui(rucksack)
 	_update_equipment_ui(equipment)
@@ -27,30 +37,23 @@ func _update_rucksack_ui(rucksack_array: Array[ItemData]):
 	for i in range(slots.size()):
 		var slot = slots[i]
 		
-		# 1. Boilerplate: Disconnect old signals to avoid "double equipping"
-		if slot.pressed.is_connected(_on_ruck_slot_pressed):
-			slot.pressed.disconnect(_on_ruck_slot_pressed)
-		
-		# 2. Check Capacity
 		if i < rucksack_grid.current_capacity:
-			# 3. Check if there is actually an item at this index
+			slot.show()
+			# Disconnect old signals to avoid double equipping
+			if slot.pressed.is_connected(_on_ruck_slot_pressed):
+				slot.pressed.disconnect(_on_ruck_slot_pressed)
+		
+			# 3. Check if there is an item at this index
 			if i < rucksack_array.size():
 				slot.display(rucksack_array[i])
-				
-				# 4. THE EQUIP TRIGGER: 
-				# Connect the "A" button/Click to our equip function
 				slot.pressed.connect(_on_ruck_slot_pressed.bind(i))
-				
-				# Ensure the controller can select this slot
 				slot.focus_mode = Control.FOCUS_ALL
 			else:
-				# Slot is empty
 				slot.display(null)
-				# Optional: Allow focusing empty slots, or disable focus
 				slot.focus_mode = Control.FOCUS_ALL 
 		else:
-			# Slot is locked/not yet unlocked
-			slot.display(null)
+			# 4. LOCKED: Hide the slot so it doesn't show up in the grid at all
+			slot.hide()
 			slot.focus_mode = Control.FOCUS_NONE
 
 func _update_equipment_ui(equipment: Dictionary):
@@ -76,7 +79,6 @@ func _on_ruck_slot_pressed(index: int):
 	if player:
 		# Check if the player actually has an item at this index
 		if index < player.ruck_sacked.size():
-			print("Controller: Equipping item at index ", index)
 			player.equip_from_inventory(index)
 			
 func _on_equipment_slot_pressed(slot_key: String):
@@ -87,3 +89,18 @@ func focus_first_slot():
 	# Grab the first available rucksack slot
 	if rucksack_grid.get_child_count() > 0:
 		rucksack_grid.get_child(0).grab_focus()
+
+func _spawn_doll():
+	
+	if doll_scene:
+		current_doll = doll_scene.instantiate()
+		stats_section.add_child(current_doll)
+		
+		if player:
+			current_doll.update_preview_visuals(player.equipment_slots)
+			
+			
+func _despawn_doll():
+	if current_doll:
+		current_doll.queue_free()
+		current_doll = null
