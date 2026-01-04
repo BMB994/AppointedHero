@@ -13,6 +13,7 @@ wall_min_slide_angle = 0.00174533
 script = ExtResource("2_onrkg")
 katana_test = ExtResource("3_c3tg1")
 club_test = ExtResource("4_c3tg1")
+wooden_shield_test = null
 
 [node name="Rogue" parent="." index="0" instance=ExtResource("3_w3t24")]
 

@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://b22tyolk1ja60"]
+[gd_scene load_steps=5 format=3 uid="uid://b22tyolk1ja60"]
 
 [ext_resource type="Script" uid="uid://cxwo2cllacydk" path="res://main.gd" id="1_h2yge"]
 [ext_resource type="PackedScene" uid="uid://4qbf4kqtq770" path="res://Assets/Scenes/player.tscn" id="2_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://gcpcaxqutf3j" path="res://Assets/Scenes/level.tscn" id="4_1bvp3"]
+[ext_resource type="Resource" uid="uid://1kvqmpnxwm77" path="res://Assets/Resource/wood_shield.tres" id="4_guoxd"]
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_h2yge")
@@ -11,3 +12,4 @@ script = ExtResource("1_h2yge")
 
 [node name="Player" parent="." instance=ExtResource("2_0xm2m")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.34337, 0)
+wooden_shield_test = ExtResource("4_guoxd")

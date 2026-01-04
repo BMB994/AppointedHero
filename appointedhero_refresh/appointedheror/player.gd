@@ -14,8 +14,11 @@ signal inventory_changed(rucksack: Array[ItemData], equipment: Dictionary)
 @onready var searchy_shape = $LockOnArea/CollisionShape3D
 @onready var inventory_ui = $InventoryUI
 
+# TEST vars
 @export var katana_test: ItemData
 @export var club_test: ItemData
+@export var wooden_shield_test: ItemData
+# END TEST vars
 
 var target_enemy: Entity = null
 var equipped_right: Node3D = null
@@ -43,40 +46,23 @@ func _ready() -> void:
 	#upgrade_health(1000.0)
 	add_item_to_ruck(katana_test)
 	add_item_to_ruck(club_test)
+	add_item_to_ruck(wooden_shield_test)
 
 	#equip_from_data(test_weapon_resource)
 	#END
-func equip_from_data(data: ItemData): # Process resource file and equip
+func equip_from_data(data: ItemData):
 	match data.type:
 		ItemData.SlotType.ONE_HAND:
 			_clear_slot("right")
+			equipment_slots.RIGHT_HAND = data
+			equipped_right = _spawn_model(data, right_hand)
+			current_weapon = equipped_right
 			
-			if equipped_left and equipped_left.has_meta("is_2h"):
-				_clear_slot("left")
-			equipment_slots.RIGHT_HAND = data
-			equipped_right = _spawn_model(data, right_hand)
-			current_weapon = equipped_right
-
-		ItemData.SlotType.TWO_HAND:
-			_clear_slot("right")
-			_clear_slot("left")
-			equipment_slots.RIGHT_HAND = data
-			equipment_slots.LEFT_HAND = data
-			equipped_right = _spawn_model(data, right_hand)
-			equipped_right.set_meta("is_2h", true)
-			current_weapon = equipped_right
-
 		ItemData.SlotType.SHIELD:
-
 			_clear_slot("left")
 			equipment_slots.LEFT_HAND = data
-
-			if equipped_right and equipped_right.has_meta("is_2h"):
-				_clear_slot("right")
-				current_weapon = null
-				
 			equipped_left = _spawn_model(data, left_hand)
-func equip_from_inventory(index: int): # item picked from UI inventory and then equipped
+func equip_from_inventory(index: int): 
 	if index >= ruck_sacked.size(): return
 	
 	var new_data = ruck_sacked[index]
@@ -89,7 +75,7 @@ func equip_from_inventory(index: int): # item picked from UI inventory and then 
 	
 	# 1. Grab the item currently in that slot (if any)
 	var old_data = equipment_slots[slot_key]
-	
+
 	# 2. Swap them in the data structures
 	ruck_sacked.remove_at(index)
 	equipment_slots[slot_key] = new_data
@@ -105,8 +91,11 @@ func equip_from_inventory(index: int): # item picked from UI inventory and then 
 	inventory_changed.emit(ruck_sacked, equipment_slots)
 func _clear_slot(side: String):
 	if side == "right" and equipped_right:
+		
 		equipped_right.queue_free()
-		equipped_right = null
+		equipped_right = null	
+		# Reset Left Hand position just in case
+		left_hand.transform = Transform3D.IDENTITY
 	elif side == "left" and equipped_left:
 		equipped_left.queue_free()
 		equipped_left = null
@@ -306,23 +295,17 @@ func add_item_to_ruck(data: ItemData):
 	ruck_sacked.append(data)
 	inventory_changed.emit(ruck_sacked, equipment_slots)
 func unequip_item(slot_key: String):
-	if not equipment_slots.has(slot_key) or equipment_slots[slot_key] == null:
-		return
-		
 	var item_to_return = equipment_slots[slot_key]
-	
-	# 1. Remove from equipment data
+	if item_to_return == null: return
+	# Reset the data
 	equipment_slots[slot_key] = null
-	
-	# 2. Clear 3D model
+	# Clear the 3D model based on the side
 	if slot_key == "RIGHT_HAND":
 		_clear_slot("right")
 		current_weapon = null
 	elif slot_key == "LEFT_HAND":
 		_clear_slot("left")
-	# TODO: Add other cases (HEAD, CHEST, etc) as needed
 		
-	# 3. Put back in rucksack
 	add_item_to_ruck(item_to_return)
 	
 	# 4. Notify UI

@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=4 format=3 uid="uid://1kvqmpnxwm77"]
+
+[ext_resource type="Texture2D" uid="uid://dttpvgphfyohg" path="res://Assets/ItemPNGs/wooden_shield.png" id="1_mtby8"]
+[ext_resource type="PackedScene" uid="uid://biqi7erh3b8tj" path="res://Assets/Scenes/wooden_shield.tscn" id="2_mtby8"]
+[ext_resource type="Script" uid="uid://dgcko2iodnuoh" path="res://ItemData.gd" id="3_6ltxj"]
+
+[resource]
+script = ExtResource("3_6ltxj")
+type = 1
+item_id = "03"
+display_name = "Wooden Shield"
+icon = ExtResource("1_mtby8")
+scene_to_spawn = ExtResource("2_mtby8")
+description = "A sturdy wooden shield"
+light_damage = 0.0
+heavy_damage = 0.0
+blocking_power = 5.0
+weight = 1.2
+metadata/_custom_type_script = "uid://dgcko2iodnuoh"
