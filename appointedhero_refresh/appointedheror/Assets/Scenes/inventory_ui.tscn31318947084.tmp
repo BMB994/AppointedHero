@@ -1,0 +1,82 @@
+[gd_scene load_steps=2 format=3 uid="uid://2cjh2pnngioc"]
+
+[ext_resource type="Script" uid="uid://dvs3wg7f2m6cq" path="res://Assets/Scenes/inventory_ui.gd" id="1_cnpfd"]
+
+[node name="InventoryUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_cnpfd")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.568627, 0.568627, 0.568627, 0.294118)
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 111.0
+offset_bottom = 60.0
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 250
+
+[node name="LeftSide" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/LeftSide"]
+layout_mode = 2
+text = "INVENTORY"
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/HBoxContainer/LeftSide"]
+layout_mode = 2
+
+[node name="ItemList" type="VBoxContainer" parent="MarginContainer/HBoxContainer/LeftSide"]
+layout_mode = 2
+
+[node name="Middle" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/Middle"]
+layout_mode = 2
+text = "CHARACTER
+Model with armor slots"
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/HBoxContainer/Middle"]
+layout_mode = 2
+
+[node name="RightHandSlot" type="TextureButton" parent="MarginContainer/HBoxContainer/Middle"]
+layout_mode = 2
+
+[node name="LeftHandSlot" type="TextureButton" parent="MarginContainer/HBoxContainer/Middle"]
+layout_mode = 2
+
+[node name="TextureButton3" type="TextureButton" parent="MarginContainer/HBoxContainer/Middle"]
+layout_mode = 2
+
+[node name="RightSide" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/RightSide"]
+layout_mode = 2
+text = "STATS"
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/HBoxContainer/RightSide"]
+layout_mode = 2
+
+[node name="ItemList" type="VBoxContainer" parent="MarginContainer/HBoxContainer/RightSide"]
+layout_mode = 2

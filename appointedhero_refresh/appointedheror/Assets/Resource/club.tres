@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=4 format=3 uid="uid://dof3pulwqqwme"]
+
+[ext_resource type="Texture2D" uid="uid://b847b2c1wjqj5" path="res://Assets/ItemPNGs/club.png" id="1_jhy5c"]
+[ext_resource type="PackedScene" uid="uid://cskey5eljkb7n" path="res://Assets/Scenes/club.tscn" id="2_55adb"]
+[ext_resource type="Script" uid="uid://dgcko2iodnuoh" path="res://ItemData.gd" id="3_ohg8t"]
+
+[resource]
+script = ExtResource("3_ohg8t")
+type = 0
+item_id = "02"
+display_name = "Club"
+icon = ExtResource("1_jhy5c")
+scene_to_spawn = ExtResource("2_55adb")
+description = "A stick. Nothing more"
+light_damage = 2.0
+heavy_damage = 7.0
+weight = 2.0
+metadata/_custom_type_script = "uid://dgcko2iodnuoh"

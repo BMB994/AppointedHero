@@ -1,9 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://gcpcaxqutf3j"]
+[gd_scene load_steps=4 format=3 uid="uid://gcpcaxqutf3j"]
 
 [ext_resource type="PackedScene" uid="uid://dwqh8ep367wnx" path="res://Assets/Scenes/level_floor.tscn" id="1_u52ul"]
 [ext_resource type="Script" uid="uid://davydnvonpf2" path="res://csg_box_3d.gd" id="2_vonw3"]
 [ext_resource type="PackedScene" uid="uid://dfb0o7po7b7c5" path="res://Assets/Scenes/gobloon.tscn" id="3_jviae"]
-[ext_resource type="PackedScene" uid="uid://bfpctvsst717g" path="res://Assets/Scenes/hud.tscn" id="4_0b4ue"]
 
 [node name="level" type="Node3D"]
 
@@ -15,5 +14,3 @@ layers = 0
 size = Vector3(4.58252, 3, 8.72314)
 script = ExtResource("2_vonw3")
 enemy_scene = ExtResource("3_jviae")
-
-[node name="CanvasLayer" parent="." instance=ExtResource("4_0b4ue")]

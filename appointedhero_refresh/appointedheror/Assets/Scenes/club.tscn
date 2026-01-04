@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://cskey5eljkb7n"]
+
+[ext_resource type="PackedScene" uid="uid://bvrun6sw12a4" path="res://Assets/Scenes/base_weapon.tscn" id="1_w1tyb"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w1tyb"]
+albedo_color = Color(0.513517, 0.251413, 0.00398243, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_t7pl4"]
+material = SubResource("StandardMaterial3D_w1tyb")
+top_radius = 0.12
+bottom_radius = 0.05
+height = 1.25
+
+[node name="Club" instance=ExtResource("1_w1tyb")]
+
+[node name="Hitbox" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0180751, 0)
+collision_mask = 3
+
+[node name="CollisionShape3D" parent="Hitbox" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.691345, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.579993, 0)
+mesh = SubResource("CylinderMesh_t7pl4")

@@ -1,0 +1,48 @@
+[gd_scene load_steps=2 format=3 uid="uid://c85b8hsx21vtd"]
+
+[ext_resource type="PackedScene" uid="uid://bwieifx8q8gof" path="res://Assets/Scenes/item_slot.tscn" id="2_xk4wl"]
+
+[node name="EquipmentSlots" type="HBoxContainer"]
+offset_right = 422.0
+offset_bottom = 158.0
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Control2" type="Control" parent="VBoxContainer3"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+
+[node name="RightArmArmor" parent="VBoxContainer3" instance=ExtResource("2_xk4wl")]
+layout_mode = 2
+
+[node name="RightHandWeapon" parent="VBoxContainer3" instance=ExtResource("2_xk4wl")]
+layout_mode = 2
+slot_name = "RIGHT_HAND"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="HEAD" parent="VBoxContainer2" instance=ExtResource("2_xk4wl")]
+layout_mode = 2
+slot_name = "HEAD"
+
+[node name="ChestArmor" parent="VBoxContainer2" instance=ExtResource("2_xk4wl")]
+layout_mode = 2
+
+[node name="LegArmor" parent="VBoxContainer2" instance=ExtResource("2_xk4wl")]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="VBoxContainer"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+
+[node name="LeftArmArmor" parent="VBoxContainer" instance=ExtResource("2_xk4wl")]
+layout_mode = 2
+
+[node name="LeftHandWeapon" parent="VBoxContainer" instance=ExtResource("2_xk4wl")]
+layout_mode = 2
+slot_name = "LEFT_HAND"
