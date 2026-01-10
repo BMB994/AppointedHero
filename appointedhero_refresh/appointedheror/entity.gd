@@ -32,11 +32,10 @@ func perform_attack(anim_name: String = "start"):
 	hitbox_delay.start()
 	if dead:
 		return
-	# Trigger the Visual Animation
+
 	if anim_state:
 		anim_state.travel(anim_name)
 	
-	# Weapon animation. This includes the hitbox turning on
 	if current_weapon and current_weapon.has_method("use"):
 		if anim_name.contains("Light"):
 			current_weapon.use("light")
@@ -48,8 +47,6 @@ func perform_attack(anim_name: String = "start"):
 		print(name, " tried to attack but has no weapon or weapon has no 'use' function")
 		
 func equip_weapon(weapon_scene: PackedScene):
-	
-	# find_child searches the whole scene tree of this entity for "RightHand"
 	var hand_node = find_child("RightHandWeapon")
 	
 	if hand_node == null:

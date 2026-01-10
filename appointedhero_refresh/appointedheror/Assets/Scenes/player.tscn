@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://4qbf4kqtq770"]
+[gd_scene load_steps=16 format=3 uid="uid://4qbf4kqtq770"]
 
 [ext_resource type="PackedScene" uid="uid://gvbg3ootwovl" path="res://Assets/Scenes/entity.tscn" id="1_4flbx"]
 [ext_resource type="Script" uid="uid://bhobgd87xn726" path="res://player.gd" id="2_onrkg"]
@@ -7,6 +7,14 @@
 [ext_resource type="Resource" uid="uid://dof3pulwqqwme" path="res://Assets/Resource/club.tres" id="4_c3tg1"]
 [ext_resource type="PackedScene" uid="uid://2cjh2pnngioc" path="res://Assets/Scenes/inventory_ui.tscn" id="5_23lac"]
 [ext_resource type="PackedScene" uid="uid://bfpctvsst717g" path="res://Assets/Scenes/hud.tscn" id="6_w3t24"]
+[ext_resource type="Script" uid="uid://vbpw2tpiv7m0" path="res://Assets/Scenes/state_machine.gd" id="8_lerqx"]
+[ext_resource type="Script" uid="uid://d34ajbg0muyr0" path="res://Assets/Scenes/idle.gd" id="9_jp3cw"]
+[ext_resource type="Script" uid="uid://cwiwg7leiw7gd" path="res://Assets/Scenes/move.gd" id="10_ecf78"]
+[ext_resource type="Script" uid="uid://cer0ayqshxnpt" path="res://Assets/Scenes/attack.gd" id="11_vy5gb"]
+[ext_resource type="Script" uid="uid://bhj24ig5xhs6h" path="res://Assets/Scenes/dodge.gd" id="12_rsrmw"]
+[ext_resource type="Script" uid="uid://dq5k1yl1uxmt8" path="res://Assets/Scenes/inventory.gd" id="13_o8kuu"]
+[ext_resource type="Script" uid="uid://33y0bnodce3b" path="res://Assets/Scenes/jump.gd" id="14_xv74q"]
+[ext_resource type="Script" uid="uid://bdh7op4ypnie3" path="res://Assets/Scenes/blocking.gd" id="15_8qq7w"]
 
 [node name="Player" groups=["player"] instance=ExtResource("1_4flbx")]
 wall_min_slide_angle = 0.00174533
@@ -35,3 +43,28 @@ wait_time = 0.35
 [node name="CanvasLayer" parent="." index="6" instance=ExtResource("6_w3t24")]
 
 [node name="InventoryUI" parent="." index="7" instance=ExtResource("5_23lac")]
+
+[node name="StateMachine" type="Node3D" parent="." index="8" node_paths=PackedStringArray("initial_state")]
+script = ExtResource("8_lerqx")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node3D" parent="StateMachine" index="0"]
+script = ExtResource("9_jp3cw")
+
+[node name="Move" type="Node3D" parent="StateMachine" index="1"]
+script = ExtResource("10_ecf78")
+
+[node name="Attack" type="Node3D" parent="StateMachine" index="2"]
+script = ExtResource("11_vy5gb")
+
+[node name="Dodge" type="Node3D" parent="StateMachine" index="3"]
+script = ExtResource("12_rsrmw")
+
+[node name="Inventory" type="Node3D" parent="StateMachine" index="4"]
+script = ExtResource("13_o8kuu")
+
+[node name="Jump" type="Node3D" parent="StateMachine" index="5"]
+script = ExtResource("14_xv74q")
+
+[node name="Blocking" type="Node3D" parent="StateMachine" index="6"]
+script = ExtResource("15_8qq7w")

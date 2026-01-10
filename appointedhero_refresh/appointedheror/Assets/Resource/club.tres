@@ -14,5 +14,6 @@ scene_to_spawn = ExtResource("2_55adb")
 description = "A stick. Nothing more"
 light_damage = 2.0
 heavy_damage = 7.0
+blocking_power = 0.0
 weight = 2.0
 metadata/_custom_type_script = "uid://dgcko2iodnuoh"

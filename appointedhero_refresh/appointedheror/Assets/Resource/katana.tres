@@ -14,5 +14,6 @@ scene_to_spawn = ExtResource("1_8frqg")
 description = "A sharp blade for anime nerds"
 light_damage = 10.0
 heavy_damage = 20.0
+blocking_power = 0.0
 weight = 2.0
 metadata/_custom_type_script = "uid://dgcko2iodnuoh"
